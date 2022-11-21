@@ -14,7 +14,7 @@
 - 移动端：  uniapp
 - 数据库：  MySQL5.7
 
-![输入图片说明](https://www.jjjshop.net/gitee/single-java/jjjshop.jpg)
+![输入图片说明](https://www.jjjshop.net/gitee/multi-java/jjjshop.png)
 ### 目录结构
 
 - db：  数据库脚本
