@@ -1,10 +1,10 @@
-### 三勾商城小程、支持多端发布，一套代码发布到8个平台，面向开发，方便二次开发
+### 三勾多商户商城小程序、支持多端发布，一套代码发布到8个平台，面向开发，方便二次开发
 
 
 ### 项目介绍
 
 
-三勾小程序商城基于springboot+element-ui+uniapp打造的面向开发的小程序商城，方便二次开发或直接使用，可发布到多端，包括微信小程序、微信公众号、QQ小程序、支付宝小程序、字节跳动小程序、百度小程序、android端、ios端。
+三勾多商户小程序商城基于springboot+element-ui+uniapp打造的面向开发的小程序商城，方便二次开发或直接使用，可发布到多端，包括微信小程序、微信公众号、QQ小程序、支付宝小程序、字节跳动小程序、百度小程序、android端、ios端。
 
 
 ### 软件架构
@@ -18,10 +18,11 @@
 ### 目录结构
 
 - db：  数据库脚本
-- jjj_shop_single：  java端源码
-- jjj_shop_single_admin：  saas管理端vue页面
-- jjj_shop_single_shop：  shop商城后台vue页面
-- jjj_shop_single_app：  移动端代码
+- jjj_shop_multi：  java端源码
+- jjj_shop_multi_admin：  saas管理端vue页面
+- jjj_shop_multi_shop：  shop商城后台vue页面
+- jjj_shop_multi_supplier：  supplier商户端商城后台vue页面
+- jjj_shop_multi_app：  移动端代码
 
 ### 技术特点
 - 前后分离 (分工协助 开发效率高)
@@ -34,17 +35,17 @@
 
 [官网链接](http://www.jjjshop.net)
 
-[安装部署文档](https://www.kancloud.cn/wxw850227/jjjshop-java/3049924)
+[安装部署文档](https://www.kancloud.cn/wxw850227/jjjshop-multi-java/3089838)
 
 
 ### 项目演示 
 
 - 官网地址：http://www.jjjshop.net/      
 
-- shop端后台演示：http://demo-single-java.jjjshop.net/shop     
+- shop端后台演示：http://demo-multi-java.jjjshop.net/shop     
 账号密码1：admin/123456 **[不可修改数据]** 
 账号密码2：test/123456 **[可修改数据]** 
-- saas端演示：http://demo-single-java.jjjshop.net/admin     账号密码：admin/123456
+- saas端演示：http://demo-multi-java.jjjshop.net/admin     账号密码：admin/123456
 
 
 - 本地运行saas端和shop端账号密码均为    **admin/123456** 
