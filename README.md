@@ -40,12 +40,17 @@
 
 ### 项目演示 
 
-- 官网地址：http://www.jjjshop.net/      
+- 官网地址：https://www.jjjshop.net/      
 
-- shop端后台演示：http://demo-multi-java.jjjshop.net/shop     
+- shop端后台演示：https://demo-multi-java.jjjshop.net/shop     
 账号密码1：admin/123456 **[不可修改数据]** 
 账号密码2：test/123456 **[可修改数据]** 
-- saas端演示：http://demo-multi-java.jjjshop.net/admin     账号密码：admin/123456
+
+- supplier端后台演示：https://demo-multi-java.jjjshop.net/supplier
+账号密码1：admin/123456 **[不可修改数据]** 
+账号密码2：test/123456 **[可修改数据]** 
+
+- saas端演示：https://demo-multi-java.jjjshop.net/admin     账号密码：admin/123456
 
 
 - 本地运行saas端和shop端账号密码均为    **admin/123456** 
