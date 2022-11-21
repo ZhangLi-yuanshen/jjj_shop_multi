@@ -58,7 +58,7 @@
 - 本地运行移动端建议运行到浏览器，方便调试 账号密码 **13888888888/123456** 正式发布选择发布到微信小程序
 
  ### 扫码体验微信小程序，更多演示请扫码公众号查看 
-![输入图片说明](https://www.jjjshop.net/gitee/single-java/demo.png "demo.png")
+![输入图片说明](https://www.jjjshop.net/gitee/multi-java/demo.png "demo.png")
 
 
  ### 如果对您有帮助，您可以点右上角 "Star" 支持一下，这样我们才有继续免费下去的动力，谢谢！
