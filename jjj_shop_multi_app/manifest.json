@@ -1,0 +1,203 @@
+{
+    "name" : "三勾商城",
+    "appid" : "__UNI__C635ABD",
+    "description" : "三勾商城java",
+    "versionName" : "1.0.0",
+    "versionCode" : 100,
+    "transformPx" : false,
+    "app-plus" : {
+        "compatible" : {
+            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持  
+        },
+        /* 5+App特有相关 */
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        "modules" : {
+            "OAuth" : {},
+            "LivePusher" : {},
+            "Share" : {},
+            "VideoPlayer" : {},
+            "Payment" : {},
+            "Geolocation" : {},
+            "Push" : {}
+        },
+        /* 模块配置 */
+        "distribute" : {
+            /* 应用发布信息 */
+            "android" : {
+                /* android打包配置 */
+                "permissions" : [
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
+            },
+            "ios" : {
+                "idfa" : false,
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "评论时需要上传评论图片",
+                    "NSCameraUsageDescription" : "评论时需要上传评论图片",
+                    "NSLocationWhenInUseUsageDescription" : "需要获取您的地理位置，为您推荐最近门店"
+                }
+            },
+            /* ios打包配置 */
+            "sdkConfigs" : {
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wxf16a5e84b3e8ac5d",
+                        "appsecret" : "",
+                        "UniversalLinks" : "https://business.jjjshop.net/"
+                    },
+                    "apple" : {}
+                },
+                "push" : {
+                    "unipush" : {}
+                },
+                "ad" : {},
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wxf16a5e84b3e8ac5d",
+                        "UniversalLinks" : "https://business.jjjshop.net/"
+                    }
+                },
+                "payment" : {
+                    "weixin" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appid" : "wxf16a5e84b3e8ac5d",
+                        "UniversalLinks" : "https://business.jjjshop.net/"
+                    },
+                    "alipay" : {
+                        "__platform__" : [ "ios", "android" ]
+                    }
+                },
+                "geolocation" : {
+                    "amap" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "9491f4a5d4efd1fe3e31874caff48ff9",
+                        "appkey_android" : "ede3e65ba8ba017e040e7a001d659e48"
+                    }
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "",
+                    "xhdpi" : "",
+                    "xxhdpi" : "",
+                    "xxxhdpi" : ""
+                },
+                "ios" : {
+                    "appstore" : "",
+                    "ipad" : {
+                        "app" : "",
+                        "app@2x" : "",
+                        "notification" : "",
+                        "notification@2x" : "",
+                        "proapp@2x" : "",
+                        "settings" : "",
+                        "settings@2x" : "",
+                        "spotlight" : "",
+                        "spotlight@2x" : ""
+                    },
+                    "iphone" : {
+                        "app@2x" : "",
+                        "app@3x" : "",
+                        "notification@2x" : "",
+                        "notification@3x" : "",
+                        "settings@2x" : "",
+                        "settings@3x" : "",
+                        "spotlight@2x" : "",
+                        "spotlight@3x" : ""
+                    }
+                }
+            },
+            "splashscreen" : {
+                "androidStyle" : "default",
+                "iosStyle" : "common",
+                "android" : {
+                    "hdpi" : "E:/工作/项目/公司产品/分销商城/android/1.png",
+                    "xhdpi" : "E:/工作/项目/公司产品/分销商城/android/2.png",
+                    "xxhdpi" : "E:/工作/项目/公司产品/分销商城/android/3.png"
+                }
+            }
+        }
+    },
+    /* SDK配置 */
+    "quickapp" : {},
+    /* 快应用特有相关 */
+    "mp-weixin" : {
+        /* 小程序特有相关 */
+        "appid" : "wx22004db34ee885f0",
+        "setting" : {
+            "urlCheck" : true,
+            "es6" : true,
+            "postcss" : true,
+            "minified" : true
+        },
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于小程序位置接口的效果展示"
+            }
+        }
+    },
+    /*,
+        "plugins" : {
+            "live-player-plugin" : {
+                "version" : "1.3.2",
+                "provider" : "wx2b03c6e691cd7370"
+            }
+        }*/
+    "h5" : {
+        "router" : {
+            "mode" : "hash",
+            "base" : "/h5/"
+        },
+        "devServer" : {
+            "https" : false,
+            "proxy" : {
+                "/" : {
+                    "ws" : false,
+                    "target" : "http://127.0.0.1:8890",
+                    "changeOrigin" : true,
+                    "secure" : false
+                }
+            }
+        },
+        "title" : "三勾商城",
+        "sdkConfigs" : {
+            "maps" : {
+                "amap" : {
+                    "key" : "",
+                    "securityJsCode" : "",
+                    "serviceHost" : ""
+                }
+            }
+        },
+        "unipush" : {
+            "enable" : true
+        }
+    }
+}
