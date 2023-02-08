@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.file.UploadFile;
 import net.jjjshop.common.entity.file.UploadGroup;
 import net.jjjshop.common.mapper.file.UploadGroupMapper;
-import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.util.SupplierLoginUtil;
 import net.jjjshop.supplier.service.file.UploadFileService;
@@ -49,7 +48,6 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
         UploadGroup group = new UploadGroup();
         group.setGroupName(groupName);
         group.setGroupType(groupType);
-        group.setShopSupplierId(SupplierLoginUtil.getShopSupplierId());
         return this.save(group);
     }
 
@@ -60,10 +58,6 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @return
      */
     public boolean editGroup(Integer groupId, String groupName){
-        UploadGroup group = this.getById(groupId);
-        if(group == null || group.getShopSupplierId().intValue() != SupplierLoginUtil.getShopSupplierId().intValue()){
-            throw new BusinessException("分组不存在");
-        }
         return this.update(new LambdaUpdateWrapper<UploadGroup>().eq(UploadGroup::getGroupId, groupId)
                 .set(UploadGroup::getGroupName, groupName));
     }
@@ -75,10 +69,6 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteGroup(Integer groupId){
-        UploadGroup group = this.getById(groupId);
-        if(group == null || group.getShopSupplierId().intValue() != SupplierLoginUtil.getShopSupplierId().intValue()){
-            throw new BusinessException("分组不存在");
-        }
         // 更新该分组下的所有文件
         uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().eq(UploadFile::getGroupId, groupId)
                 .set(UploadFile::getGroupId, 0));

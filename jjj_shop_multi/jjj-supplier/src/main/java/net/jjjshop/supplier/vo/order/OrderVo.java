@@ -75,4 +75,7 @@ public class OrderVo extends Order {
     @ApiModelProperty("核销门店")
     private String extractStoreName;
 
+    @ApiModelProperty("用户手机号")
+    private String mobile;
+
 }

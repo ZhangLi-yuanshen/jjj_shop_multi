@@ -136,7 +136,7 @@
 					self.listData = res.data.list;
 					self.catename = self.listData[0].name;
 					self.showType = res.data.template.categoryStyle;
-					if (self.listData[0].child) {
+					if (self.listData[0].children) {
 						self.childlist = self.listData[0].children;
 					}
 					self.background = res.data.background;

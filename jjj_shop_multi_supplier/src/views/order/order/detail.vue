@@ -202,7 +202,7 @@
             <el-col :span="5">
               <div class="pb16">
                 <span class="gray9">联系手机：</span>
-                {{ detail.user.mobile }}
+                {{ detail.mobile }}
               </div>
             </el-col>
           </el-row>

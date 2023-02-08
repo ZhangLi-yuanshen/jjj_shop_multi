@@ -328,7 +328,7 @@ export default {
 		/*支付方式选择*/
 		onPayOrder(orderId) {
 			let self = this;
-			self.gotoPage('/pages/order/cashier?order_id=' + orderId);
+			self.gotoPage('/pages/order/cashier?orderId=' + orderId);
 		},
 
 		/*确认收货*/

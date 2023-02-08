@@ -43,7 +43,7 @@
 
 					<view class="d-e-c mt20 pt20 border-t">
 						<button
-							v-if="item.orderProduct.isAgent == 0 && item.plateStatus == 0 && (item.status == 0 || item.status == 10) && item.type == 30"
+							v-if="item.plateStatus == 0 && (item.status == 0 || item.status == 10) && item.type == 30"
 							style="margin-right: 15rpx;"
 							type="default"
 							class="btn-gray-border"
@@ -52,7 +52,7 @@
 							申请平台介入
 						</button>
 						<text
-							v-if="item.orderProduct.isAgent == 1 && item.plateStatus == 10 && (item.status == 0 || item.status == 10)"
+							v-if="item.plateStatus == 10 && (item.status == 0 || item.status == 10)"
 							style="margin-right: 15rpx;"
 							type="default"
 							class="text_red"

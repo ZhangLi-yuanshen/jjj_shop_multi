@@ -399,6 +399,8 @@
 						}),
 						function(res) {
 							callback(res);
+						},err=>{
+							uni.navigateBack()
 						}
 					);
 				}
@@ -411,6 +413,8 @@
 						}),
 						function(res) {
 							callback(res);
+						},err=>{
+							uni.navigateBack()
 						}
 					);
 				}
@@ -426,6 +430,8 @@
 						}),
 						function(res) {
 							callback(res);
+						},err=>{
+							uni.navigateBack()
 						}
 					);
 				}
@@ -440,6 +446,8 @@
 						}),
 						function(res) {
 							callback(res);
+						},err=>{
+							uni.navigateBack()
 						}
 					);
 				}
@@ -455,6 +463,8 @@
 						}),
 						function(res) {
 							callback(res);
+						},err=>{
+							uni.navigateBack()
 						}
 					);
 				}
@@ -471,6 +481,8 @@
 						}),
 						function(res) {
 							callback(res);
+						},err=>{
+							uni.navigateBack()
 						}
 					);
 				}

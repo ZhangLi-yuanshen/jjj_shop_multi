@@ -259,8 +259,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         Order order = this.getById(orderId);
         OrderVo vo = new OrderVo();
         BeanUtils.copyProperties(order, vo);
+        User user = userService.getById(vo.getUserId());
         //设置昵称
-        vo.setNickname(userService.getById(vo.getUserId()).getNickname());
+        vo.setNickname(user.getNickname());
+        vo.setMobile(user.getMobile());
         vo.setProductList(this.getProductList(vo.getOrderId()));
         vo.setOrderSourceText(OrderSourceEnum.getName(vo.getOrderSource()));
         vo.setOrderStatusText(OrderUtils.getOrderStatusText(order));
@@ -280,7 +282,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         } else {
             vo.setUpdatePriceSymbol("");
         }
-        if (vo.getDeliveryType() == DeliveryTypeEnum.EXPRESS.getValue()) {
+        if (vo.getDeliveryType().intValue() == DeliveryTypeEnum.EXPRESS.getValue().intValue()) {
             OrderAddressVo orderAddressVo = new OrderAddressVo();
             OrderAddress oa = orderAddressService.getOne(new LambdaQueryWrapper<OrderAddress>().eq(OrderAddress::getOrderId, orderId));
             BeanUtils.copyProperties(oa, orderAddressVo);
@@ -291,7 +293,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
             detailRegion.put("region", regionService.getById(orderAddressVo.getRegionId()).getName());
             orderAddressVo.setRegion(detailRegion);
             vo.setAddress(orderAddressVo);
-        } else if (vo.getDeliveryType() == DeliveryTypeEnum.EXTRACT.getValue()) {
+        } else if (vo.getDeliveryType().intValue() == DeliveryTypeEnum.EXTRACT.getValue().intValue()) {
             if (vo.getExtractClerkId() != null && vo.getExtractClerkId() > 0) {
                 //如果已经有了自提门店店员信息，直接设置自提门店名称和自提门店店员
                 vo.setExtractClerkName(storeClerkService.getById(vo.getExtractClerkId()).getRealName());
@@ -419,14 +421,14 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 break;
             case "payment":
                 wrapper.eq(Order::getPayStatus, 10);
-                wrapper.eq(Order::getOrderStatus, 20);
+                wrapper.eq(Order::getOrderStatus, 10);
                 break;
             case "delivery":
                 wrapper.eq(Order::getPayStatus, 20);
                 wrapper.eq(Order::getOrderStatus, 10);
                 wrapper.eq(Order::getDeliveryStatus, 10);
                 break;
-            case "receive":
+            case "received":
                 wrapper.eq(Order::getPayStatus, 20);
                 wrapper.eq(Order::getOrderStatus, 10);
                 wrapper.eq(Order::getDeliveryStatus, 20);

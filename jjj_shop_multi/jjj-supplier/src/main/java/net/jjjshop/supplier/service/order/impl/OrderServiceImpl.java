@@ -252,8 +252,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         Order order = this.getById(orderId);
         OrderVo vo = new OrderVo();
         BeanUtils.copyProperties(order, vo);
+        User user = userService.getById(vo.getUserId());
         //设置昵称
-        vo.setNickname(userService.getById(vo.getUserId()).getNickname());
+        vo.setNickname(user.getNickname());
+        vo.setMobile(user.getMobile());
         vo.setProductList(this.getProductList(vo.getOrderId()));
         vo.setOrderSourceText(OrderSourceEnum.getName(vo.getOrderSource()));
         vo.setOrderStatusText(OrderUtils.getOrderStatusText(order));

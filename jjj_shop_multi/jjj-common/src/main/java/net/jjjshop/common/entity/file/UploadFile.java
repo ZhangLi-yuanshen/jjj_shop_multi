@@ -60,7 +60,7 @@ public class UploadFile implements Serializable {
     @ApiModelProperty("是否已回收")
     private Integer isRecycle;
 
-    @ApiModelProperty("供应商id")
+    @ApiModelProperty("供应商Id")
     private Integer shopSupplierId;
 
     @ApiModelProperty("软删除")

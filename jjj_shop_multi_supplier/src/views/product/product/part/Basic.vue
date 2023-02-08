@@ -92,7 +92,7 @@
         <el-radio :label="0">手动</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="虚拟内容：" :rules="[{ required: true, message: '请填写虚拟内容' }]" prop="model.virtual_content" v-if="form.model.isVirtual==1">
+    <el-form-item label="虚拟内容：" :rules="[{ required: true, message: '请填写虚拟内容' }]" prop="model.virtualContent" v-if="form.model.isVirtual==1">
       <el-input type="text" v-model="form.model.virtualContent" class="max-w460"></el-input>
       <div class="gray9">虚拟物品内容</div>
     </el-form-item>

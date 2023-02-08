@@ -94,7 +94,9 @@ public class ShopUserServiceImpl extends BaseServiceImpl<ShopUserMapper, ShopUse
     public LoginShopUserTokenVo login(String username, String password){
         ShopUser shopUser = this.getOne(new LambdaQueryWrapper<ShopUser>()
                 .eq(ShopUser::getUserName, username).comment(CommonConstant.NOT_WITH_App_Id));
-
+        if(shopUser == null) {
+            throw new AuthenticationException("用户名或密码错误");
+        }
         String encryptPassword = PasswordUtil.encrypt(password, shopUser.getSalt());
         if (!encryptPassword.equals(shopUser.getPassword())) {
             throw new AuthenticationException("用户名或密码错误");

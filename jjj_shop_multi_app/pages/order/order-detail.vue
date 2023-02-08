@@ -224,15 +224,17 @@
 		<template v-if="detail.orderSource != 80">
 			<view v-if="detail.orderSource != 20 && detail.orderSource != 30" class="foot-btns">
 				<!-- 取消订单 -->
-				<button class="theme-borderbtn" v-if="detail.payStatus == 10" @click="cancelOrder(detail.orderId)">取消订单</button>
-
-				<block v-if="detail.orderStatus != 21">
-					<block v-if="detail.payStatus == 20 && detail.deliveryStatus == 10">
+				<button class="theme-borderbtn" v-if="detail.payStatus == 10 && detail.orderStatus != 20" @click="cancelOrder(detail.orderId)">取消订单</button>
+				<block v-if="detail.orderStatus != 21 ">
+					<block v-if="detail.orderStatus == 20">
+						已取消
+					</block>
+					<block v-else-if="detail.payStatus == 20 && detail.deliveryStatus == 10">
 						<button @click="cancelOrder(detail.orderId)" class="theme-borderbtn">申请取消</button>
 					</block>
 				</block>
 				<text v-else class="count f28 gray9">取消申请中</text>
-				<block v-if="detail.payStatus == 10">
+				<block v-if="detail.payStatus == 10 && detail.orderStatus != 20">
 					<!-- 订单付款 -->
 					<button @click="onPayOrder(detail.orderId)" v-if="detail.payStatus == 10" class="ml10 theme-btn">去支付</button>
 				</block>
@@ -463,7 +465,7 @@ export default {
 		/*支付方式选择*/
 		onPayOrder(orderId) {
 			let self = this;
-			self.gotoPage('/pages/order/cashier?order_id=' + orderId);
+			self.gotoPage('/pages/order/cashier?orderId=' + orderId);
 		}
 	}
 };

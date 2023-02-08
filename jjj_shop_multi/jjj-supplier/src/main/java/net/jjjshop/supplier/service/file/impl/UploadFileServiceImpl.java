@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.file.UploadFile;
-import net.jjjshop.common.entity.file.UploadGroup;
 import net.jjjshop.common.mapper.file.UploadFileMapper;
 import net.jjjshop.common.util.UploadFileUtils;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;

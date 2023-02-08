@@ -202,7 +202,7 @@
             <el-col :span="5">
               <div class="pb16">
                 <span class="gray9">联系手机：</span>
-                {{ detail.user.mobile }}
+                {{ detail.mobile }}
               </div>
             </el-col>
           </el-row>
@@ -255,7 +255,7 @@
         </div>
       </div>
       <!--  用户取消订单 -->
-      <div v-if="detail.payStatus == 20 && detail.orderStatus == 21" v-auth="'/order/operate/confirmCancel'">
+<!--      <div v-if="detail.payStatus == 20 && detail.orderStatus == 21" v-auth="'/order/operate/confirmCancel'">
         <div class="common-form mt16">用户取消订单</div>
         <p class="red pb16">当前买家已付款并申请取消订单，请审核是否同意，如同意则自动退回付款金额（微信支付原路退款）并关闭订单。</p>
         <el-form size="small" ref="forms" :model="forms">
@@ -266,7 +266,7 @@
             </div>
           </el-form-item>
         </el-form>
-      </div>
+      </div> -->
       <!--发货信息-->
       <div v-if="detail.payStatus == 20 && detail.deliveryType == 10 && [20, 21].indexOf(detail.orderStatus) === -1" v-auth="'/order/order/delivery'">
         <div v-if="detail.deliveryStatus == 10">
@@ -425,9 +425,9 @@
         <el-button size="small" type="primary" @click="onSubmit" v-if="detail.deliveryStatus == 10">确认发货</el-button>
       </template> -->
       <!--用户取消-->
-     <template v-if="detail.payStatus == 20 && detail.orderStatus == 21">
+<!--     <template v-if="detail.payStatus == 20 && detail.orderStatus == 21">
         <el-button size="small" type="primary" @click="confirmCancel()">确认审核</el-button>
-      </template>
+      </template> -->
     </div>
     <changeAddress v-if="addressData != null" :isChange="isChange" :addressData="addressData" @closeDialog="closeAddress"></changeAddress>
   </div>

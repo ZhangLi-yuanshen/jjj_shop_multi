@@ -21,11 +21,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.file.UploadFile;
+import net.jjjshop.common.entity.supplier.SupplierUser;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.framework.util.SupplierLoginUtil;
 import net.jjjshop.framework.util.UploadUtil;
 import net.jjjshop.supplier.service.file.UploadFileService;
+import net.jjjshop.supplier.service.supplier.SupplierUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +44,8 @@ public class UploadController {
     private UploadFileService uploadFileService;
     @Autowired
     private UploadUtil uploadUtil;
+    @Autowired
+    private SupplierUserService supplierUserService;
 
     @RequestMapping(value = "/image", method = RequestMethod.POST)
     @OperationLog(name = "上传单个图片")
@@ -54,7 +58,8 @@ public class UploadController {
         file.setFileSize(multipartFile.getSize());
         file.setFileType(fileType);
         file.setRealName(multipartFile.getOriginalFilename());
-        file.setShopSupplierId(SupplierLoginUtil.getShopSupplierId());
+        SupplierUser user = supplierUserService.getById(SupplierLoginUtil.getUserId());
+        file.setShopSupplierId(user.getShopSupplierId());
         // 上传文件
         uploadUtil.upload(multipartFile, file);
         // 文件后缀

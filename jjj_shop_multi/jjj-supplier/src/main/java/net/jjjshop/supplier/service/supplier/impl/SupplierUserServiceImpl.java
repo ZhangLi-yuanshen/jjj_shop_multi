@@ -99,7 +99,7 @@ public class SupplierUserServiceImpl extends BaseServiceImpl<SupplierUserMapper,
         SupplierUser supplierUser = this.getOne(new LambdaQueryWrapper<SupplierUser>()
                 .eq(SupplierUser::getUserName, username).comment(CommonConstant.NOT_WITH_App_Id));
         if(supplierUser == null){
-            throw new AuthenticationException("用户名不存在");
+            throw new AuthenticationException("用户名或密码错误");
         }
         String encryptPassword = PasswordUtil.encrypt(password, supplierUser.getSalt());
         if (!encryptPassword.equals(supplierUser.getPassword())) {
