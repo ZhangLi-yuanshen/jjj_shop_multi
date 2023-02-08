@@ -414,14 +414,14 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 break;
             case "payment":
                 wrapper.eq(Order::getPayStatus, 10);
-                wrapper.eq(Order::getOrderStatus, 20);
+                wrapper.eq(Order::getOrderStatus, 10);
                 break;
             case "delivery":
                 wrapper.eq(Order::getPayStatus, 20);
                 wrapper.eq(Order::getOrderStatus, 10);
                 wrapper.eq(Order::getDeliveryStatus, 10);
                 break;
-            case "receive":
+            case "received":
                 wrapper.eq(Order::getPayStatus, 20);
                 wrapper.eq(Order::getOrderStatus, 10);
                 wrapper.eq(Order::getDeliveryStatus, 20);
