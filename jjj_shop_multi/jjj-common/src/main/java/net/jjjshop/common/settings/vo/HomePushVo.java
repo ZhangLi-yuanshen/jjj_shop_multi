@@ -40,7 +40,7 @@ public class HomePushVo implements Serializable {
     }
 
     public HomePushVo() {
-        this.isOpen = true;
+        this.isOpen = false;
         this.type = "";
         this.title = "这是一个标题";
         this.filePath = "";

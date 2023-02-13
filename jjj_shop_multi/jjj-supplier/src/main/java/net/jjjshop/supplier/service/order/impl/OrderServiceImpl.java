@@ -660,4 +660,28 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         return this.list(wrapper).size();
     }
 
+    /**
+     * 虚拟商品发货
+     * @param orderVirtualParam
+     * @return
+     */
+    @Transactional
+    public boolean virtual(OrderVirtualParam orderVirtualParam) {
+        Order order = this.getById(orderVirtualParam.getOrderId());
+        if(order.getPayStatus().intValue() != 20
+                || order.getDeliveryType().intValue() != DeliveryTypeEnum.NO_EXPRESS.getValue()
+                || order.getDeliveryStatus().intValue() == 20
+                || order.getOrderStatus().intValue() == 20
+                || order.getOrderStatus().intValue() == 21){
+            throw new BusinessException("该订单不满足发货条件");
+        }
+        Date now = new Date();
+        order.setDeliveryStatus(20);
+        order.setDeliveryTime(now);
+        order.setReceiptStatus(20);
+        order.setReceiptTime(now);
+        order.setOrderStatus(30);
+        order.setVirtualContent(orderVirtualParam.getVirtualContent());
+        return this.updateById(order);
+    }
 }

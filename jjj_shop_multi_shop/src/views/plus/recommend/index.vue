@@ -230,7 +230,7 @@
           let param = {};
           param.product_id = e.params.productId;
           param.product_name = e.params.productName;
-          param.product_image = e.params.productImage;
+          param.product_image = e.params.imagePath;
           param.sort = 1;
           this.tableData.push(param);
           this.product_arr.push(e.params.productId);

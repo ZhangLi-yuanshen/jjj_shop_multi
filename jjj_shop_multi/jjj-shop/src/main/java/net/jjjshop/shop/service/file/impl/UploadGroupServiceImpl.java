@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -85,12 +86,7 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @return
      */
      public boolean deleteFiles(String fileIds){
-         String[] split = StringUtils.split(fileIds, ",");
-         List<Integer> files = new ArrayList<>();
-         for (String fileId : split) {
-             files.add(Integer.parseInt(fileId));
-         }
-         return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, files)
+         return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, this.transFileIds(fileIds))
                 .set(UploadFile::getIsDelete, 1));
      }
 
@@ -100,7 +96,16 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @return
      */
     public boolean moveFiles(Integer groupId, String fileIds){
-        return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, fileIds)
+        return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, this.transFileIds(fileIds))
                 .set(UploadFile::getGroupId, groupId));
+    }
+
+    private List<Integer> transFileIds(String fileIds) {
+        String[] split = StringUtils.split(fileIds, ",");
+        List<Integer> files = new ArrayList<>();
+        for (String fileId : split) {
+            files.add(Integer.parseInt(fileId));
+        }
+        return files;
     }
 }

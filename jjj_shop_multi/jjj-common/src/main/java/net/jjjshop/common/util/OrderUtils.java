@@ -165,8 +165,10 @@ public class OrderUtils {
         // 计算用户所得积分
         Map<Integer,Integer> pointsData = new HashMap<>();
         List<UserPointsLog> logList = new ArrayList<>();
+        HashSet<Integer> gradeUpUserIds = new HashSet<>();
         // 计算并累积实际消费金额(需减去售后退款的金额)
         for (Order order:orderList) {
+            gradeUpUserIds.add(order.getUserId());
             // 订单实际支付金额
             BigDecimal expendMoney = order.getPayPrice();
             Integer pointsBonus = order.getPointsBonus();
@@ -207,16 +209,16 @@ public class OrderUtils {
         expendMoneyData.forEach((key, value) -> {
             userService.update(new LambdaUpdateWrapper<User>().eq(User::getUserId, key)
                     .setSql("`expend_money` = `expend_money` + " + value));
-            // 用户升级
-            userUtils.userGradeUpgrade(key);
         });
         // 累积会员积分
         pointsData.forEach((key, value) -> {
             userService.update(new LambdaUpdateWrapper<User>().eq(User::getUserId, key)
                     .setSql("`points` = `points` + " + value));
-            // 用户升级
-            userUtils.userGradeUpgrade(key);
         });
+        //用户升级
+        for (Integer id : gradeUpUserIds){
+            userUtils.userGradeUpgrade(id);
+        }
         // 批量增加积分日志
         userPointsLogService.saveBatch(logList);
     }

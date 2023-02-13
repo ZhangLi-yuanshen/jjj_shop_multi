@@ -37,14 +37,15 @@ public class UserUtils {
      */
     public void setIncPoints(Integer userId, Integer points, String description, Boolean upgrade)
     {
+        User user = userService.getById(userId);
         // 新增积分变动明细
         UserPointsLog log = new UserPointsLog();
         log.setUserId(userId);
         log.setValue(points);
         log.setDescription(description);
+        log.setAppId(user.getAppId());
         userPointsLogService.save(log);
         // 更新用户可用积分
-        User user = userService.getById(userId);
         Integer userPoints = 0;
         if(user.getPoints() + points > 0){
             userPoints = user.getPoints() + points;
@@ -95,7 +96,7 @@ public class UserUtils {
                 break;
             }
         }
-        if(upgradeGrade != null){
+        if(upgradeGrade != null && upgradeGrade.getGradeId().intValue() != user.getGradeId().intValue()){
             log.info(String.format("setUserGrade userId:%s gradeId:%s", user.getUserId(), upgradeGrade.getGradeId()));
             // 修改会员的等级
             this.upgradeGrade(user, upgradeGrade);
@@ -119,7 +120,7 @@ public class UserUtils {
         if(grade.getOpenPoints() == 1 && user.getTotalPoints() >= grade.getUpgradePoints()){
             return true;
         }
-        // 按消费升级
+        // 按邀请人数升级
         if(grade.getOpenInvite() == 1 && user.getTotalInvite() >= grade.getUpgradeInvite()){
             return true;
         }

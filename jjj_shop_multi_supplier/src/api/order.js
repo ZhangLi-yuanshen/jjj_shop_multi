@@ -65,7 +65,7 @@ let OrderApi = {
   },
   /*虚拟商品发货*/
   virtual(formData, errorback) {
-    return request._upload('/supplier/order.order/virtual', formData, errorback);
+    return request._postBody('/supplier/order/order/virtual', formData, errorback);
   },
   /*分销订单*/
   agentOrder(data, errorback) {

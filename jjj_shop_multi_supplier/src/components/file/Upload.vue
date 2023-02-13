@@ -368,6 +368,7 @@
             background: 'rgba(0, 0, 0, 0.7)'
           });
           let temp_list=[];
+          console.log(1);
           if(e){
             temp_list.push(e.fileId);
           }else{
@@ -377,6 +378,15 @@
                 temp_list.push(item.fileId);
               }
             }
+
+          }
+          if(temp_list.length==0){
+              loading.close();
+              self.$message({
+                  message: '请选择文件',
+                  type: 'warning'
+              });
+              return ;
           }
           FileApi.deleteFiles({
             fileIds:temp_list.join(',')

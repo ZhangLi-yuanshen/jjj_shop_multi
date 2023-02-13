@@ -139,4 +139,11 @@ public interface OrderService extends BaseService<Order> {
      */
     //通过时间范围获取商品统计数据
     Map<String, Object> getRefundDataByDate(String startDate, String endDate, Integer shopSupplierId) throws ParseException;
+
+    /**
+     * 虚拟商品发货
+     * @param orderVirtualParam
+     * @return
+     */
+    boolean virtual(OrderVirtualParam orderVirtualParam);
 }

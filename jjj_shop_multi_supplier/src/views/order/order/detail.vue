@@ -376,33 +376,33 @@
         </div>
       </div>
       <!--虚拟物品发货-->
-      <!-- <div
+      <div
         v-if="detail.deliveryType == 30 && detail.payStatus == 20 && detail.orderStatus != 21 && detail.orderStatus != 20"
         v-auth="'/order/order/delivery'">
         <div class="common-form mt16">虚拟商品发货</div>
-        <div v-if="detail.delivery_status.value == 10">
-          <el-form size="small" ref="virtual_form" :model="virtual_form" label-width="100px">
+        <div v-if="detail.deliveryStatus == 10">
+          <el-form size="small" ref="virtualForm" :model="virtualForm" label-width="100px">
             <el-form-item label="发货信息">
-              <el-input v-model="virtual_form.virtual_content" class="max-w460"></el-input>
+              <el-input v-model="virtualForm.virtualContent" class="max-w460"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onVirtual(detail.order_id)">确认发货</el-button>
+              <el-button type="primary" @click="onVirtual(detail.orderId)">确认发货</el-button>
             </el-form-item>
           </el-form>
         </div>
         <div v-else class="table-wrap">
-          <template v-if="detail.virtual_content">
+          <template v-if="detail.virtualContent">
             <el-row>
               <el-col :span="5">
                 <div class="pb16">
                   <span class="gray9">发货信息：</span>
-                  {{ detail.virtual_content }}
+                  {{ detail.virtualContent }}
                 </div>
               </el-col>
               <el-col :span="5">
                 <div class="pb16">
                   <span class="gray9">发货状态：</span>
-                  <template v-if="detail.delivery_status.value == 20">
+                  <template v-if="detail.deliveryStatus == 20">
                     已发货
                   </template>
                 </div>
@@ -410,7 +410,7 @@
               <el-col :span="5">
                 <div class="pb16">
                   <span class="gray9">发货时间：</span>
-                  {{ detail.delivery_time }}
+                  {{ detail.deliveryTime }}
                 </div>
               </el-col>
             </el-row>
@@ -419,7 +419,7 @@
       </div>
     </div>
     <div class="common-button-wrapper">
-      <el-button size="small" type="info" @click="cancelFunc">返回上一页</el-button> -->
+      <el-button size="small" type="info" @click="cancelFunc">返回上一页</el-button>
       <!--确认发货-->
       <template v-if="detail.payStatus == 20 && detail.deliveryType == 10 && [20, 21].indexOf(detail.orderStatus) === -1">
         <el-button size="small" type="primary" @click="onSubmit" v-if="detail.deliveryStatus == 10">确认发货</el-button>
@@ -488,8 +488,8 @@ export default {
         }
       },
       /*虚拟商品发货*/
-      virtual_form: {
-        virtual_content: ''
+      virtualForm: {
+        virtualContent: ''
       },
       order: {},
       deliveryType: 0,
@@ -626,16 +626,16 @@ export default {
     /*虚拟商品发货*/
     onVirtual(e) {
       let self = this;
-      let virtual_form = self.virtual_form;
-      if (virtual_form.virtual_content == '') {
+      let virtualForm = self.virtualForm;
+      if (virtualForm.virtualContent == '') {
         this.$message.error('请填写发货信息');
         return;
       }
-      virtual_form.order_id = e;
+      virtualForm.orderId = e;
       OrderApi.virtual(
         {
-          order_id: virtual_form.order_id,
-          virtual_content: virtual_form.virtual_content
+          orderId: virtualForm.orderId,
+          virtualContent: virtualForm.virtualContent
         },
         true
       )

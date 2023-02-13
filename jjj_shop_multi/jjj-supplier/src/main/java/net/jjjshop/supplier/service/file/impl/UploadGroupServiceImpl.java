@@ -10,10 +10,12 @@ import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.util.SupplierLoginUtil;
 import net.jjjshop.supplier.service.file.UploadFileService;
 import net.jjjshop.supplier.service.file.UploadGroupService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,15 +80,15 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
         return true;
     }
 
-     /**
+    /**
      * 删除文件
      * @param fileIds
      * @return
      */
-     public boolean deleteFiles(String fileIds){
-        return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, fileIds)
+    public boolean deleteFiles(String fileIds){
+        return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, this.transFileIds(fileIds))
                 .set(UploadFile::getIsDelete, 1));
-     }
+    }
 
     /**
      * 移动文件
@@ -94,7 +96,16 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @return
      */
     public boolean moveFiles(Integer groupId, String fileIds){
-        return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, fileIds)
+        return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, this.transFileIds(fileIds))
                 .set(UploadFile::getGroupId, groupId));
+    }
+
+    private List<Integer> transFileIds(String fileIds) {
+        String[] split = StringUtils.split(fileIds, ",");
+        List<Integer> files = new ArrayList<>();
+        for (String fileId : split) {
+            files.add(Integer.parseInt(fileId));
+        }
+        return files;
     }
 }

@@ -127,7 +127,7 @@
         let self = this;
         if (e != null) {
           this.form.imageId = e[0].fileId;
-          this.form.image.filePath = e[0].filePath;
+          this.form.imageUrl = e[0].filePath;
           this.isImg = true;
         }
         this.isupload = false;

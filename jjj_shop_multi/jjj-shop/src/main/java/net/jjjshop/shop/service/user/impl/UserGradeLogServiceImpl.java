@@ -1,6 +1,7 @@
 package net.jjjshop.shop.service.user.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import net.jjjshop.common.entity.user.UserGrade;
 import net.jjjshop.common.entity.user.UserGradeLog;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
@@ -14,6 +15,7 @@ import net.jjjshop.shop.vo.user.UserGradeLogVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,10 +43,15 @@ public class UserGradeLogServiceImpl extends BaseServiceImpl<UserGradeLogMapper,
         userGradeLogPageParam.setStartIndex((userGradeLogPageParam.getPageIndex() - 1) * userGradeLogPageParam.getPageSize());
         // 查询当前页列表
         List<UserGradeLogVo> list = userGradeLogMapper.getList(userGradeLogPageParam);
-        for(UserGradeLogVo vo : list) {
-            vo.setNewGradeName(userGradeService.getById(vo.getNewGradeId()).getName());
-            vo.setOldGradeName(userGradeService.getById(vo.getOldGradeId()).getName());
-        }
+        List<UserGrade> grades = userGradeService.list();
+        HashMap<Integer, String> gradeNames = new HashMap<>();
+        grades.stream().forEach(e->{
+            gradeNames.put(e.getGradeId(),e.getName());
+        });
+        list.stream().forEach(e->{
+            e.setOldGradeName(gradeNames.get(e.getOldGradeId()));
+            e.setNewGradeName(gradeNames.get(e.getNewGradeId()));
+        });
         // 将结果封装Paging对象输出
         PageInfo<UserGradeLogVo> pageInfo = new PageInfo<>();
         pageInfo.setRecords(list);

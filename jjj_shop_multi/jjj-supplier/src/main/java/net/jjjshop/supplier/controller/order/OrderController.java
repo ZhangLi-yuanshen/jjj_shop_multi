@@ -109,4 +109,16 @@ public class OrderController {
             return ApiResult.fail("修改失败");
         }
     }
+
+    @RequestMapping(value = "/virtual", method = RequestMethod.POST)
+    @RequiresPermissions("/order/order/delivery")
+    @OperationLog(name = "virtual")
+    @ApiOperation(value = "virtual", response = String.class)
+    public ApiResult<String> virtual(@Validated @RequestBody OrderVirtualParam orderVirtualParam){
+        if (orderService.virtual(orderVirtualParam)) {
+            return ApiResult.ok(null, "发货成功");
+        } else {
+            return ApiResult.fail("发货失败");
+        }
+    }
 }

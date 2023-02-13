@@ -120,9 +120,11 @@ public class StoreClerkServiceImpl extends BaseServiceImpl<StoreClerkMapper, Sto
             StoreClerkVo vo = new StoreClerkVo();
             BeanUtils.copyProperties(e, vo);
             User user = userService.getById(vo.getUserId());
-            vo.setNickName(user.getNickname());
-            vo.setAvatarUrl(user.getAvatarurl());
-            vo.setStoreName(storeService.getById(vo.getStoreId()).getStoreName());
+            if(user != null) {
+                vo.setNickName(user.getNickname());
+                vo.setAvatarUrl(user.getAvatarurl());
+                vo.setStoreName(storeService.getById(vo.getStoreId()).getStoreName());
+            }
             return vo;
         }).collect(Collectors.toList());
         return result;

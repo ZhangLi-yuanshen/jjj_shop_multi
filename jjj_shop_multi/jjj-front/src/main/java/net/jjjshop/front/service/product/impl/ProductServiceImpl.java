@@ -47,6 +47,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -531,12 +533,12 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
      */
     public List<SupplierBuyVo> getOrderProductListByCart(User user, OrderBuyParam orderBuyParam) {
         String[] cartIds = orderBuyParam.getCartIds().split(",");
-        Map<Integer, String> productIds = new HashMap<>();
+        LinkedMultiValueMap<Integer, String> productIds = new LinkedMultiValueMap<>();
         for (String cartId : cartIds) {
             int index = cartId.indexOf("_");
             Integer productId = Integer.valueOf(cartId.substring(0, index));
             String specSkuId = cartId.substring(index + 1);
-            productIds.put(productId, specSkuId);
+            productIds.add(productId, specSkuId);
         }
         // 查找商品
         LambdaQueryWrapper<Product> wrapper = new LambdaQueryWrapper<>();
@@ -548,12 +550,15 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         // 转换成购买vo
         List<ProductBuyVo> voList = new ArrayList<>();
         productList.forEach(item -> {
-            ProductBuyVo vo = new ProductBuyVo();
-            BeanUtils.copyProperties(item, vo);
-            vo.setProductImage(uploadFileUtils.getImagePathByProductId(vo.getProductId()));
-            UserCart cart = userCartService.detail(user.getUserId(), item.getProductId(), (String) productIds.get(item.getProductId()));
-            this.transBuyVo(vo, (String) productIds.get(item.getProductId()), cart.getTotalNum());
-            voList.add(vo);
+            List<String> ids = productIds.get(item.getProductId());
+            for (String id : ids) {
+                ProductBuyVo vo = new ProductBuyVo();
+                BeanUtils.copyProperties(item, vo);
+                vo.setProductImage(uploadFileUtils.getImagePathByProductId(vo.getProductId()));
+                UserCart cart = userCartService.detail(user.getUserId(), item.getProductId(), id);
+                this.transBuyVo(vo, id, cart.getTotalNum());
+                voList.add(vo);
+            }
         });
         // 按店铺分类
         Map<Integer, List<ProductBuyVo>> subListMap = voList.stream().collect(Collectors.groupingBy(ProductBuyVo::getShopSupplierId));
