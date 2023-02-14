@@ -134,10 +134,7 @@ public class PageController {
     @ApiOperation(value = "add", response = String.class)
     public ApiResult<Map<String,Object>> toAdd() throws Exception{
         Map<String,Object> result = new HashMap<>();
-        JSONObject jsonData = new JSONObject();
-        jsonData.put("page", PageUtils.getDefaultPage());
-        jsonData.put("items", new JSONArray());
-        result.put("jsonData", jsonData);
+        result.put("jsonData", PageUtils.getDefaultPage());
         result.put("defaultData", DefaultItems.getDefaultItems(SpringBootJjjProperties.getStaticAccessUrl()));
         return ApiResult.ok(result);
     }

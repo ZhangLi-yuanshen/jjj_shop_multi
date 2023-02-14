@@ -40,16 +40,16 @@
 				<view class="product-list">
 					<view v-for="(pitem,pindex) in product_list" :key='pindex' class="product_item o-h"
 						:class="pindex%2==1?'product_item_right':''"
-						@click="gotoPage('/pages/product/detail/detail?product_id='+pitem.product_id)">
+						@click="gotoPage('/pages/product/detail/detail?productId='+pitem.productId)">
 						<view>
-							<image :src="pitem.product_image" mode="" style="width: 345rpx;height: 345rpx;"></image>
+							<image :src="pitem.productImage" mode="" style="width: 345rpx;height: 345rpx;"></image>
 						</view>
-						<view class="text-ellipsis-2 f26 pro_name  p-0-20 mt20">{{pitem.product_name}}</view>
+						<view class="text-ellipsis-2 f26 pro_name  p-0-20 mt20">{{pitem.productName}}</view>
 						<view class="mt36 mb20 p-0-20">
 							<text class="f20 fb redF6">￥</text>
-							<text class="f32 fb redF6">{{pitem.product_sku.product_price}}</text>
+							<text class="f32 fb redF6">{{pitem.productPrice}}</text>
 							<text class="text-d-line f20 gray9 ml10">￥</text>
-							<text class="text-d-line f24 gray9">{{pitem.product_sku.line_price}}</text>
+							<text class="text-d-line f24 gray9">{{pitem.linePrice}}</text>
 						</view>
 					</view>
 				</view>
@@ -305,19 +305,19 @@
 				let self = this;
 				let page = self.page;
 				self.loading = true;
-				self._get('product.product/lists', {
-					page: page || 1,
+				self._postBody('product/product/lists', {
+					pageIndex: page || 1,
 					categoryId: self.categoryId,
 					search: '',
 					sortType: 'all',
 					sortPrice: 0,
-					list_rows: 20,
+					pageSize: 20,
 				}, function(res) {
 					self.loading = false;
 					uni.stopPullDownRefresh();
-					self.product_list = self.product_list.concat(res.data.list.data);
-					self.last_page = res.data.list.last_page;
-					if (res.data.list.last_page <= 1) {
+					self.product_list = self.product_list.concat(res.data.records);
+					self.last_page = res.data.lastPage;
+					if (res.data.last_page <= 1) {
 						self.no_more = true;
 					}
 				});
