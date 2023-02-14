@@ -58,8 +58,7 @@ public class UploadController {
         file.setFileSize(multipartFile.getSize());
         file.setFileType(fileType);
         file.setRealName(multipartFile.getOriginalFilename());
-        SupplierUser user = supplierUserService.getById(SupplierLoginUtil.getUserId());
-        file.setShopSupplierId(user.getShopSupplierId());
+        file.setShopSupplierId(SupplierLoginUtil.getShopSupplierId());
         // 上传文件
         uploadUtil.upload(multipartFile, file);
         // 文件后缀

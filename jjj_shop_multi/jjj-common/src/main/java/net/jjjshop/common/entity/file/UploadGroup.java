@@ -38,8 +38,8 @@ public class UploadGroup implements Serializable {
 
     @ApiModelProperty("分类排序(数字越小越靠前)")
     private Integer sort;
-
-    @ApiModelProperty("供应商Id")
+    
+    @ApiModelProperty("供应商id")
     private Integer shopSupplierId;
 
     @ApiModelProperty("是否删除")

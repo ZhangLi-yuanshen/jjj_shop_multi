@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.file.UploadFile;
 import net.jjjshop.common.entity.file.UploadGroup;
 import net.jjjshop.common.mapper.file.UploadGroupMapper;
+import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.shop.service.file.UploadFileService;
 import net.jjjshop.shop.service.file.UploadGroupService;
@@ -60,6 +61,10 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @return
      */
     public boolean editGroup(Integer groupId, String groupName){
+        UploadGroup group = this.getById(groupId);
+        if(group == null){
+            throw new BusinessException("分组不存在");
+        }
         return this.update(new LambdaUpdateWrapper<UploadGroup>().eq(UploadGroup::getGroupId, groupId)
                 .set(UploadGroup::getGroupName, groupName));
     }
@@ -71,6 +76,10 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteGroup(Integer groupId){
+        UploadGroup group = this.getById(groupId);
+        if(group == null){
+            throw new BusinessException("分组不存在");
+        }
         // 更新该分组下的所有文件
         uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().eq(UploadFile::getGroupId, groupId)
                 .set(UploadFile::getGroupId, 0));
