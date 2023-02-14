@@ -57,4 +57,10 @@ public class ProductVo extends Product {
 
     @ApiModelProperty("供应商服务保障")
     private List<SupplierSecurityVo> server;
+
+    @ApiModelProperty("商品视频封面")
+    private String videoFilePath;
+
+    @ApiModelProperty("商品视频路径")
+    private String posterFilePath;
 }

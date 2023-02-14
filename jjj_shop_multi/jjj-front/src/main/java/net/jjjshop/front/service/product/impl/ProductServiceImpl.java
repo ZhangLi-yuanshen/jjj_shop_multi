@@ -104,6 +104,9 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         vo.setImage(productUtils.getListByProductId(vo.getProductId(), 0));
         // 实际销量
         vo.setProductSales(vo.getSalesActual() + vo.getSalesInitial());
+        //商品视频
+        vo.setVideoFilePath(vo.getVideoId()!=0 ? uploadFileUtils.getFilePath(vo.getVideoId()) : "");
+        vo.setPosterFilePath(vo.getPosterId()!=0 ? uploadFileUtils.getFilePath(vo.getPosterId()) : "");
         // 商品内容
         if (vo.getIsPicture() == 1) {
             vo.setContent("");

@@ -23,10 +23,10 @@
 				>
 					<swiper-item v-if="detail.videoId != 0">
 						<view v-if="!isVideoPlay" class="icon iconfont icon-bofang" @click="isVideoPlay = true"></view>
-						<image v-if="!isVideoPlay" :src="detail.poster ? detail.poster.filePath : detail.image[0].filePath" mode="" @click="isVideoPlay = true"></image>
+						<image v-if="!isVideoPlay" :src="detail.posterId != 0 ? detail.posterFilePath : detail.image[0].filePath" mode="" @click="isVideoPlay = true"></image>
 						<video
 							v-if="isVideoPlay"
-							:src="detail.video.filePath"
+							:src="detail.videoFilePath"
 							:autoplay="isVideoPlay"
 							@click="isVideoPlay = false"
 							class="video"
