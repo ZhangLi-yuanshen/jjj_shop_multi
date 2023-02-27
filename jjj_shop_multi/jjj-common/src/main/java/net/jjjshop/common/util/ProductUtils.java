@@ -68,11 +68,7 @@ public class ProductUtils {
             sku.put("specSkuId", item.getSpecSkuId());
             sku.put("rows", new JSONArray());
             sku.put("productStock",item.getStockNum());
-            specList.forEach(e -> {
-                if(Integer.valueOf(item.getSpecSkuId())==e.getSpecValueId()){
-                    sku.put("specName", e.getSpecName()+":"+e.getSpecValue());
-                };
-            });
+            sku.put("specName", this.getSpecName(item, specList));
             JSONObject specForm = new JSONObject();
             specForm.put("imageId", item.getImageId());
             specForm.put("imagePath", item.getImagePath());
@@ -89,7 +85,26 @@ public class ProductUtils {
         return result;
     }
 
-
+    private String getSpecName(ProductSkuVo sku, List<ProductSpecRelVo> specList){
+        HashMap<Integer, String> map = new HashMap<>();
+        specList.stream().forEach(e->{
+            map.put(e.getSpecValueId(),e.getSpecName()+":"+e.getSpecValue());
+        });
+        String specName = "";
+        List<String> valIds = Arrays.asList(sku.getSpecSkuId().split("_"));
+        if(valIds.size() < 2) {
+            specName = specName + map.get(Integer.valueOf(valIds.get(0)));
+        }else {
+            for (int i = 0; i < valIds.size(); i++) {
+                if(i != valIds.size()-1) {
+                    specName = specName + map.get(Integer.valueOf(valIds.get(i)))+" ";
+                }else {
+                    specName = specName + map.get(Integer.valueOf(valIds.get(i)));
+                }
+            }
+        }
+        return specName;
+    }
 
     /**
      * 根据商品id查询sku
