@@ -71,7 +71,7 @@ public class HomeDataServiceImpl implements HomeDataService {
         // 订单销售额
         BigDecimal totalMoney = orderDataUtils.getOrderData(today, null, "order_total_price",shopSupplierId);
         // 评价总量
-        Integer productCommentTotal = productCommentService.getProductCommentTotal();
+        Integer productCommentTotal = productCommentService.getProductCommentTotal(shopSupplierId);
 
         // 销售额(元)
         BigDecimal orderTotalPriceT = orderDataUtils.getOrderData(today, null, "order_total_price",shopSupplierId);
@@ -82,8 +82,8 @@ public class HomeDataServiceImpl implements HomeDataService {
         Integer orderTotalY = Integer.parseInt(orderDataUtils.getOrderData(yesterday, null, "order_total",shopSupplierId).toString());
 
         //下单用户数
-        Integer payOrderUserTotalT = orderService.getPayOrderUserTotal(today);
-        Integer payOrderUserTotalY = orderService.getPayOrderUserTotal(yesterday);
+        Integer payOrderUserTotalT = orderService.getPayOrderUserTotal(today,shopSupplierId);
+        Integer payOrderUserTotalY = orderService.getPayOrderUserTotal(yesterday,shopSupplierId);
 
         //店铺关注数
         Integer favUserTotalT = userFavoriteService.getUserTotal(today, shopSupplierId);
@@ -94,15 +94,15 @@ public class HomeDataServiceImpl implements HomeDataService {
         //最近七天订单交易金额
         BigDecimal orderTotalPrice7 = orderDataUtils.getOrderData(lately7days, today, "order_total_price",shopSupplierId);
         //待处理订单
-        Integer reviewOrderTotal = orderService.getReviewOrderTotal();
+        Integer reviewOrderTotal = orderService.getReviewOrderTotal(shopSupplierId);
         //获取售后订单总量
-        Integer refundTotal = orderRefundService.getRefundTotal();
+        Integer refundTotal = orderRefundService.getRefundTotal(shopSupplierId);
         //获取提现订单总量
-        Integer cardOrderTotal = orderService.getCardOrderTotal();
+        Integer cardOrderTotal = orderService.getCardOrderTotal(shopSupplierId);
         //未审核评论
-        Integer reviewCommentTotal = productCommentService.getReviewCommentTotal();
+        Integer reviewCommentTotal = productCommentService.getReviewCommentTotal(shopSupplierId);
         //库存告急商品
-        Integer productStockTotal = productService.getProductStockTotal();
+        Integer productStockTotal = productService.getProductStockTotal(shopSupplierId);
 
         JSONObject result = new JSONObject();
         result.put("productTotal", productTotal);

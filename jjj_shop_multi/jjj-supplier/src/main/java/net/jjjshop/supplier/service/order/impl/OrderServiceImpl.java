@@ -383,8 +383,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
      * @param
      * @return
      */
-    public Integer getReviewOrderTotal() {
+    public Integer getReviewOrderTotal(Integer shopSupplierId) {
         return this.count(new LambdaQueryWrapper<Order>()
+                .eq(Order::getShopSupplierId, shopSupplierId)
                 .eq(Order::getPayStatus, 20)
                 .eq(Order::getDeliveryStatus, 10)
                 .eq(Order::getOrderStatus, 10));
@@ -395,8 +396,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
      * @param
      * @return
      */
-    public Integer getCardOrderTotal() {
+    public Integer getCardOrderTotal(Integer shopSupplierId) {
         return this.count(new LambdaQueryWrapper<Order>()
+                .eq(Order::getShopSupplierId, shopSupplierId)
                 .eq(Order::getOrderStatus, 1)
                 .eq(Order::getDeliveryStatus, 0)
                 .eq(Order::getIsDelete, 0));
@@ -649,11 +651,12 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
      * @param startDate
      * @return
      */
-    public Integer getPayOrderUserTotal(String startDate) throws ParseException {
+    public Integer getPayOrderUserTotal(String startDate,Integer shopSupplierId) throws ParseException {
         LambdaQueryWrapper<Order> wrapper = new LambdaQueryWrapper<>();
         wrapper.ge(Order::getPayTime, DateUtil.parse(startDate+" 00:00:00"));
         //如果结束查询时间为空,开始查询时间不为空，就默认设置时间查询区间为开始时间+1天
         wrapper.lt(Order::getPayTime,  DateUtil.parse(startDate+" 23:59:59"));
+        wrapper.eq(Order::getShopSupplierId, shopSupplierId);
         wrapper.eq(Order::getIsDelete, 0);
         wrapper.eq(Order::getPayStatus, 20);
         wrapper.groupBy(Order::getUserId);

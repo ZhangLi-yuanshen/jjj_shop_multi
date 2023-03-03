@@ -97,7 +97,8 @@ public class SupplierUserServiceImpl extends BaseServiceImpl<SupplierUserMapper,
     @InterceptorIgnore(tenantLine = "true")
     public LoginSupplierUserTokenVo login(String username, String password){
         SupplierUser supplierUser = this.getOne(new LambdaQueryWrapper<SupplierUser>()
-                .eq(SupplierUser::getUserName, username).comment(CommonConstant.NOT_WITH_App_Id));
+                .eq(SupplierUser::getUserName, username)
+                .comment(CommonConstant.NOT_WITH_App_Id));
         if(supplierUser == null){
             throw new AuthenticationException("用户名或密码错误");
         }

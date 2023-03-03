@@ -31,6 +31,7 @@ import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.common.util.UploadFileUtils;
 import net.jjjshop.common.util.UserUtils;
 import net.jjjshop.common.vo.product.ProductSkuVo;
+import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
@@ -39,6 +40,7 @@ import net.jjjshop.supplier.param.product.ProductPageParam;
 import net.jjjshop.supplier.param.product.ProductParam;
 import net.jjjshop.supplier.service.product.ProductService;
 import net.jjjshop.supplier.vo.product.ProductVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.BeanUtils;
@@ -363,6 +365,9 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         }else if (productParam.getSpecType() == 20){
             // 多规格
             JSONArray specList = productParam.getSpecMany().getJSONArray("specList");
+            if(CollectionUtils.isEmpty(specList)){
+                throw new BusinessException("请填写规格");
+            }
             JSONObject specForm = specList.getJSONObject(0).getJSONObject("specForm");
             BigDecimal productPrice = specForm.getBigDecimal("productPrice");
             BigDecimal highPrice = specForm.getBigDecimal("productPrice");
@@ -572,7 +577,10 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
      * @param
      * @return
      */
-    public Integer getProductStockTotal() {
-        return this.count(new LambdaQueryWrapper<Product>().eq(Product::getIsDelete, 0).lt(Product::getProductStock, 20));
+    public Integer getProductStockTotal(Integer shopSupplierId) {
+        return this.count(new LambdaQueryWrapper<Product>()
+                .eq(Product::getShopSupplierId, shopSupplierId)
+                .eq(Product::getIsDelete, 0)
+                .lt(Product::getProductStock, 20));
     }
 }

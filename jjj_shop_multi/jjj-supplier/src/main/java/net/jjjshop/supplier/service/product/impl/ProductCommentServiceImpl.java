@@ -174,8 +174,10 @@ public class ProductCommentServiceImpl extends BaseServiceImpl<ProductCommentMap
      * @param
      * @return
      */
-    public Integer getProductCommentTotal() {
-        return this.count(new LambdaQueryWrapper<ProductComment>().eq(ProductComment::getIsDelete, 0));
+    public Integer getProductCommentTotal(Integer shopSupplierId) {
+        return this.count(new LambdaQueryWrapper<ProductComment>()
+                .eq(ProductComment::getShopSupplierId, shopSupplierId)
+                .eq(ProductComment::getIsDelete, 0));
     }
 
     /**
@@ -183,8 +185,9 @@ public class ProductCommentServiceImpl extends BaseServiceImpl<ProductCommentMap
      * @param
      * @return
      */
-    public Integer getReviewCommentTotal() {
+    public Integer getReviewCommentTotal(Integer shopSupplierId) {
         return this.count(new LambdaQueryWrapper<ProductComment>()
+                .eq(ProductComment::getShopSupplierId, shopSupplierId)
                 .eq(ProductComment::getIsDelete, 0)
                 .eq(ProductComment::getStatus, 0));
     }

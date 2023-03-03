@@ -80,30 +80,30 @@ public class ProductUtils {
             sku.put("specForm", specForm);
             specListData.add(sku);
         });
-        result.put("specAttr", specAttrData.values().stream().collect(Collectors.toList()));
+        result.put("specAttr", new ArrayList<>(specAttrData.values()));
         result.put("specList", specListData);
         return result;
     }
 
     private String getSpecName(ProductSkuVo sku, List<ProductSpecRelVo> specList){
-        HashMap<Integer, String> map = new HashMap<>();
-        specList.stream().forEach(e->{
+        Map<Integer, String> map = new HashMap<>();
+        specList.forEach(e->{
             map.put(e.getSpecValueId(),e.getSpecName()+":"+e.getSpecValue());
         });
-        String specName = "";
+        StringBuilder specName = new StringBuilder();
         List<String> valIds = Arrays.asList(sku.getSpecSkuId().split("_"));
         if(valIds.size() < 2) {
-            specName = specName + map.get(Integer.valueOf(valIds.get(0)));
+            specName.append(map.get(Integer.valueOf(valIds.get(0))));
         }else {
             for (int i = 0; i < valIds.size(); i++) {
                 if(i != valIds.size()-1) {
-                    specName = specName + map.get(Integer.valueOf(valIds.get(i)))+" ";
+                    specName.append(map.get(Integer.valueOf(valIds.get(i)))).append(" ");
                 }else {
-                    specName = specName + map.get(Integer.valueOf(valIds.get(i)));
+                    specName.append(map.get(Integer.valueOf(valIds.get(i))));
                 }
             }
         }
-        return specName;
+        return specName.toString();
     }
 
     /**
@@ -209,22 +209,4 @@ public class ProductUtils {
         productSku.setProductAttr(this.getProductAttr(skuList.get(0).getProductId(), productSku.getSpecSkuId(), specType));
         return productSku;
     }
-
-    /**
-     * 通过id获取sku
-     * @param productSkuId
-     * @param specType
-     * @return
-     */
-    public ProductSkuVo getProductSkuById(Integer productSkuId, Integer specType){
-        ProductSku productSku = productSkuService.getById(productSkuId);
-        // 获取指定的sku
-        ProductSkuVo vo = new ProductSkuVo();
-        BeanUtils.copyProperties(productSku, vo);
-        // 多规格文字内容
-        vo.setProductAttr(this.getProductAttr(vo.getProductId(), productSku.getSpecSkuId(), specType));
-        return vo;
-    }
-
-
 }

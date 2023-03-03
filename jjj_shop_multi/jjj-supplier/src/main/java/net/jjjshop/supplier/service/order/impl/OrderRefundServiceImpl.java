@@ -361,8 +361,8 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
      * @param
      * @return
      */
-    public Integer getRefundTotal() {
-        return this.count(new LambdaQueryWrapper<OrderRefund>().eq(OrderRefund::getIsAgree, 0));
+    public Integer getRefundTotal(Integer shopSupplierId) {
+        return this.count(new LambdaQueryWrapper<OrderRefund>().eq(OrderRefund::getShopSupplierId, shopSupplierId).eq(OrderRefund::getIsAgree, 0));
     }
 
     /**

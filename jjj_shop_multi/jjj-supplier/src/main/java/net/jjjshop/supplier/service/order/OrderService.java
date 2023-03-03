@@ -61,14 +61,14 @@ public interface OrderService extends BaseService<Order> {
      * @param
      * @return
      */
-    Integer getReviewOrderTotal();
+    Integer getReviewOrderTotal(Integer shopSupplierId);
 
     /**
      * 获取提现订单总量
      * @param
      * @return
      */
-    Integer getCardOrderTotal();
+    Integer getCardOrderTotal(Integer shopSupplierId);
 
     /**
      * 导出订单
@@ -130,7 +130,7 @@ public interface OrderService extends BaseService<Order> {
      * @param startDate
      * @return
      */
-    Integer getPayOrderUserTotal(String startDate) throws ParseException;
+    Integer getPayOrderUserTotal(String startDate,Integer shopSupplierId) throws ParseException;
 
     /**
      * 通过时间范围获取商品统计数据

@@ -80,5 +80,5 @@ public interface ProductService extends BaseService<Product> {
      * @param
      * @return
      */
-    Integer getProductStockTotal();
+    Integer getProductStockTotal(Integer shopSupplierId);
 }

@@ -48,12 +48,12 @@ public interface ProductCommentService extends BaseService<ProductComment> {
      * @param
      * @return
      */
-    Integer getProductCommentTotal();
+    Integer getProductCommentTotal(Integer shopSupplierId);
 
     /**
      * 商品浏览总数
      * @param
      * @return
      */
-    Integer getReviewCommentTotal();
+    Integer getReviewCommentTotal(Integer shopSupplierId);
 }

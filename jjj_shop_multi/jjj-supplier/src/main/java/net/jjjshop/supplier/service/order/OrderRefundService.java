@@ -51,7 +51,7 @@ public interface OrderRefundService extends BaseService<OrderRefund> {
      * @param
      * @return
      */
-    Integer getRefundTotal();
+    Integer getRefundTotal(Integer shopSupplierId);
 
     /**
      * 确认收货退款
