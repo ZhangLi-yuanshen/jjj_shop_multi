@@ -58,7 +58,9 @@ public class IndexController extends BaseController {
         //供应商用户信息
         SupplierUser supplierUser = supplierUserService.getOne(new LambdaQueryWrapper<SupplierUser>().eq(SupplierUser::getUserId, user.getUserId()).last("LIMIT 1"));
         SupplierUserVo userVo = new SupplierUserVo();
-        BeanUtils.copyProperties(supplierUser, userVo);
+        if(supplierUser != null) {
+            BeanUtils.copyProperties(supplierUser, userVo);
+        }
         result.put("supplierUser", userVo);
         result.put("userGrade", userGradeService.getById(user.getGradeId()).getName());
         result.put("menus", centerMenuService.getMenus());
