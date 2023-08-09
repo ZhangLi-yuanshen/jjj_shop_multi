@@ -132,7 +132,7 @@ public class OrderRankingServiceImpl implements OrderRankingService {
      * @return
      */
     //通过时间范围获取商品统计数据
-    public Map<String, Object> getOrderDataByDate(String startDate, String endDate) throws ParseException {
+    public Map<String, Object> getOrderDataByDate(String startDate, String endDate,String type) throws ParseException {
         Map<String, Object> map = new HashMap<>();
         Date startTime = DateUtil.parse(startDate);
         Date endTime = DateUtil.parse(endDate);
@@ -140,10 +140,23 @@ public class OrderRankingServiceImpl implements OrderRankingService {
         List<String> days = new ArrayList<>();
         for (Date t = startTime; t.before(endTime); t = DateUtil.offsetDay(t,1)) {
             String day = DateUtil.format(t, "yyyy-MM-dd");
-            Integer totalNum = Integer.parseInt(orderDataUtils.getOrderData(day, null, "order_total", null).toString());
+            Integer totalNum = 0;
+            if("refund".equals(type)){
+                //获取退款订单数
+                totalNum = Integer.parseInt(orderDataUtils.getRefundData(day, null, "order_refund_total",null).toString());
+            }else {
+                //订单数据
+                totalNum = Integer.parseInt(orderDataUtils.getOrderData(day, null, "order_total", null).toString());
+            }
             BigDecimal totalMoney = BigDecimal.ZERO;
             if (totalNum!=0) {
-                totalMoney = orderDataUtils.getOrderData(day, null, "order_total_price", null);
+                if("refund".equals(type)){
+                    //获取退款金额
+                    totalMoney = orderDataUtils.getRefundData(day, null, "order_refund_money",null);
+                }else {
+                    //订单数据
+                    totalMoney = orderDataUtils.getOrderData(day, null, "order_total_price", null);
+                }
             }
             JSONObject json = new JSONObject();
             json.put("day", day);

@@ -60,7 +60,7 @@ public class SalesController {
     @OperationLog(name = "order")
     @ApiOperation(value = "order", response = String.class)
     public ApiResult<Map<String,Object>> order(@Validated @RequestBody RankingParam rankingParam) throws Exception{
-        return ApiResult.ok(orderRankingService.getOrderDataByDate(rankingParam.getStartDate(), rankingParam.getEndDate()));
+        return ApiResult.ok(orderRankingService.getOrderDataByDate(rankingParam.getStartDate(), rankingParam.getEndDate(),rankingParam.getType()));
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)

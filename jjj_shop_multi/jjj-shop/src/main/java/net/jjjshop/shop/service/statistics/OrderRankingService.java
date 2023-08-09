@@ -33,7 +33,7 @@ public interface OrderRankingService {
      * @param
      * @return
      */
-    Map<String, Object> getOrderDataByDate(String startDate, String endDate) throws ParseException;
+    Map<String, Object> getOrderDataByDate(String startDate, String endDate,String type) throws ParseException;
 
     /**
      * 获取订单总数
