@@ -1,4 +1,9 @@
 ALTER TABLE `jjjshop_order_refund_image`
     MODIFY COLUMN `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' AFTER `app_id`;
 
-ALTER TABLE jjjshop_store_order MODIFY COLUMN `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间';
+ALTER TABLE jjjshop_store_order
+    MODIFY COLUMN `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间';
+
+ALTER TABLE jjjshop_printer
+    MODIFY COLUMN `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    MODIFY COLUMN `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间';

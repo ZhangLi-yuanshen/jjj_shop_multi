@@ -9,6 +9,7 @@ import net.jjjshop.common.mapper.settings.PrinterMapper;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
+import net.jjjshop.framework.util.SupplierLoginUtil;
 import net.jjjshop.supplier.param.setting.PrinterPageParam;
 import net.jjjshop.supplier.param.setting.PrinterParam;
 import net.jjjshop.supplier.service.settings.PrinterService;
@@ -50,7 +51,12 @@ public class PrinterServiceImpl extends BaseServiceImpl<PrinterMapper, Printer> 
      * @return
      */
     public boolean add(PrinterParam printerParam) {
-        return this.save(this.getPrinterByType(printerParam));
+        Printer bean = this.getPrinterByType(printerParam);
+        if(bean.getShopSupplierId() == null){
+            //获取当前登录用户的供应商ID
+            bean.setShopSupplierId(SupplierLoginUtil.getShopSupplierId());
+        }
+        return this.save(bean);
     }
 
     /**
@@ -90,11 +96,11 @@ public class PrinterServiceImpl extends BaseServiceImpl<PrinterMapper, Printer> 
         Printer printer = new Printer();
         BeanUtils.copyProperties(printerParam, printer);
         if (PrinterTypeEnum.FEI_E_YUN.getText().equals(printerParam.getPrinterType())) {
-            String feiE = printerParam.getFeieYun().toString();
+            String feiE = printerParam.getFeieYun().toJSONString();
             printer.setPrinterType(PrinterTypeEnum.FEI_E_YUN.getPrinterType());
             printer.setPrinterConfig(feiE);
         } else if (PrinterTypeEnum.PRINTER_CENTER.getText().equals(printerParam.getPrinterType())) {
-            String print = printerParam.getPrintCenter().toString();
+            String print = printerParam.getPrintCenter().toJSONString();
             printer.setPrinterType(PrinterTypeEnum.PRINTER_CENTER.getPrinterType());
             printer.setPrinterConfig(print);
         }

@@ -53,6 +53,9 @@ public class Printer implements Serializable {
     @ApiModelProperty("小程序id")
     private Integer appId;
 
+    @ApiModelProperty("商户id")
+    private Integer shopSupplierId;
+
     @ApiModelProperty("创建时间")
     private Date createTime;
 
