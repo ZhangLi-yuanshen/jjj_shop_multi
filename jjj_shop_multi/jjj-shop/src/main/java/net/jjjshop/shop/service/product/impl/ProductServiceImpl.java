@@ -378,6 +378,9 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
             imageList = productParam.getContentImage();
         }
         imageList.forEach(item -> {
+            if(item.getImageId() == null){
+                return;
+            }
             ProductImage image = new ProductImage();
             image.setImageId(item.getImageId());
             image.setProductId(product.getProductId());
