@@ -324,6 +324,7 @@ export default {
       this.$router.push({
         path: '/order/order/detail',
         query: {
+
           orderId: row.orderId
         }
       });
