@@ -66,7 +66,7 @@ export default {
       if(this.activeName=='sale'){
         this.listData=this.dataModel.saleRanking;
       }else if(this.activeName=='view'){
-        this.listData=this.dataModel.viewRanking;
+        this.listData=this.dataModel.viewsRanking;
       }else if(this.activeName=='refund'){
         this.listData=this.dataModel.refundRanking;
       }

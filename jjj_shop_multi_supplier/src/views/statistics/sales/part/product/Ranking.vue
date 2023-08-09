@@ -58,17 +58,17 @@ export default {
   },
   inject: ['dataModel'],
   created() {
-    this.listData = this.dataModel.saleRanking;
+    this.listData = this.dataModel.productSaleRanking;
   },
   mounted() {},
   methods: {
     handleClick() {
       if(this.activeName=='sale'){
-        this.listData=this.dataModel.saleRanking;
+        this.listData=this.dataModel.productSaleRanking;
       }else if(this.activeName=='view'){
-        this.listData=this.dataModel.viewRanking;
+        this.listData=this.dataModel.productViewsRanking;
       }else if(this.activeName=='refund'){
-        this.listData=this.dataModel.refundRanking;
+        this.listData=this.dataModel.productRefundRanking;
       }
     }
   }
