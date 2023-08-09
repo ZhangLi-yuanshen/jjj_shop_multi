@@ -11,6 +11,7 @@ import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.framework.shiro.util.JwtTokenUtil;
 import net.jjjshop.front.controller.BaseController;
 import net.jjjshop.front.param.AppWxParam;
+import net.jjjshop.front.service.user.SmsService;
 import net.jjjshop.front.service.user.UserService;
 import net.jjjshop.front.vo.user.LoginUserTokenVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class UserWxController extends BaseController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private SmsService smsService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @OperationLog(name = "login")
@@ -45,6 +48,18 @@ public class UserWxController extends BaseController {
     public ApiResult<String> getSessionKey(String code){
         String sessionKey = userService.getSessionKey(code);
         return ApiResult.ok(sessionKey, "");
+    }
+
+    //发送验证码
+    @RequestMapping(value = "/sendCode", method = RequestMethod.POST)
+    @OperationLog(name = "sendCode")
+    @ApiOperation(value = "sendCode", response = String.class)
+    public ApiResult<String> sendCode(String mobile, String type) {
+        if (smsService.send(mobile, type)) {
+            return ApiResult.ok(null, "发送成功");
+        } else {
+            return ApiResult.fail("发送失败");
+        }
     }
 
 

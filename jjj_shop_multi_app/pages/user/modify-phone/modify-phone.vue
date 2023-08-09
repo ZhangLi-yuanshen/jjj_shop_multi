@@ -76,7 +76,7 @@ export default {
 			});
 			uni.navigateBack();
 			self._post(
-				'user.userweb/bindMobile',
+				'user/userWx/bindPhone',
 				self.formData,
 				result => {
 					uni.showToast({
@@ -109,7 +109,7 @@ export default {
 			}
 
 			self._post(
-				'user.userweb/sendCode',
+				'user/userWx/sendCode',
 				{
 					mobile: self.formData.mobile
 				},
