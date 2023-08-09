@@ -69,10 +69,10 @@ public class OrderRankingServiceImpl implements OrderRankingService {
         BigDecimal orderPerPriceToday = BigDecimal.ZERO;
         BigDecimal orderPerPriceYesterday = BigDecimal.ZERO;
         if (orderUserTotalToday.compareTo(BigDecimal.ZERO) > 0) {
-            orderPerPriceToday = orderTotalPriceToday.divide(orderUserTotalToday).setScale(2, RoundingMode.DOWN);
+            orderPerPriceToday = orderTotalPriceToday.divide(orderUserTotalToday,2,BigDecimal.ROUND_DOWN);
         }
         if (orderUserTotalYesterday.compareTo(BigDecimal.ZERO) > 0) {
-            orderPerPriceYesterday = orderTotalPriceYesterday.divide(orderUserTotalYesterday).setScale(2, RoundingMode.DOWN);
+            orderPerPriceYesterday = orderTotalPriceYesterday.divide(orderUserTotalYesterday,2,BigDecimal.ROUND_DOWN);
         }
 
         JSONObject json = new JSONObject();
