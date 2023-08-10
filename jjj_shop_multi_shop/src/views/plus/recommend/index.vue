@@ -195,7 +195,8 @@
           params.type = self.type;
           params.num = self.num;
         }
-        if (!self.checkData(params)) {
+        console.log("params",params);
+        if (!this.checkData(params)) {
           return false;
         }
         self.loading = true;
@@ -248,9 +249,11 @@
       },
       /*数据验证*/
       checkData (param) {
+        console.log("1",params);
         if (!param.name) {
           return false;
         }
+        console.log("2",params);
         if (param.location.length == 0) {
           this.$message({
             message: '请选择展示位置',
@@ -258,6 +261,7 @@
           });
           return false;
         }
+        console.log("3",params);
         if (param.choice == 1 && param.product.length == 0) {
           this.$message({
             message: '请添加商品',
@@ -265,6 +269,7 @@
           });
           return false;
         }
+        console.log("4",params);
         return true;
       }
     }
