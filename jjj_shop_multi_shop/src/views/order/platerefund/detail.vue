@@ -339,7 +339,7 @@ export default {
         {
           isAgree: form.isAgree,
           addressId: form.addressId,
-          plateDesc: form.plateSesc,
+          plateDesc: form.plateDesc,
           orderRefundId: orderRefundId,
           refundMoney: form.refundMoney
         },
