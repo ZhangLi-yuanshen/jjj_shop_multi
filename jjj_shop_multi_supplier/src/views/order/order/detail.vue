@@ -480,7 +480,7 @@ export default {
         expressNo: ''
       },
       forms: {
-        is_cancel: 1
+        isCancel: 1
       },
       extract_form: {
         order: {
