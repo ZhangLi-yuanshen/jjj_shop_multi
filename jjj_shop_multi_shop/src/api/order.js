@@ -69,9 +69,6 @@ let OrderApi = {
   },
   queryLogistics(data, errorback) {
       return request._post('/shop/order/order/express', data, errorback);
-  },
-  updateAddress(data, errorback) {
-      return request._post('/shop/order/order/updateAddress', data, errorback);
   }
 }
 
