@@ -168,8 +168,7 @@
               self.$set(self.form.location, i, parseInt(self.form.location[i]));
             }
             if (self.form.choice == 1) {
-              self.product_arr = data.data.product_arr;
-              self.tableData = self.form.product;
+              self.tableData = res.data.product;
             } else {
               self.type = parseInt(self.form.type);
               self.num = parseInt(self.form.num);
