@@ -46,15 +46,15 @@
 							</view>
 						</view>
 						<view v-if="shopData[index].productList.length>0" :class="shopData[index].productList.length<3?'shop_list_body_item_product2':'shop_list_body_item_product'">
-							<view class="shop_list_body_item_product_item" v-for="(item,index2) in shopData[index].productList" :key="index2"
-							 @click="goto_product(item.productId)">
+							<view class="shop_list_body_item_product_item" v-for="(product,index2) in shopData[index].productList" :key="index2"
+							 @click="goto_product(product.productId)">
 								<view>
-									<image :src="item.productImage"></image>
+									<image :src="product.productImage"></image>
 								</view>
 								<view class="shop_list_body_item_product_item_price">
 									<view class="f22 red">¥
 										<text class="f32">
-											{{item.productPrice}}
+											{{product.productPrice}}
 										</text></view>
 								</view>
 							</view>
