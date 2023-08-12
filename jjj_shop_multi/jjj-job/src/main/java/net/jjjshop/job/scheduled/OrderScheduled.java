@@ -111,7 +111,7 @@ public class OrderScheduled {
         // 截止时间
         Date deadlineTime = DateUtil.offsetDay(new Date(), -refundDays);
         // 查询订单列表
-        List<Order> orderList = orderService.list(new LambdaQueryWrapper<Order>().eq(Order::getOrderSource, 30)
+        List<Order> orderList = orderService.list(new LambdaQueryWrapper<Order>().eq(Order::getOrderStatus, 30)
                 .eq(Order::getIsSettled, 0).eq(Order::getAppId, appId)
                 .le(Order::getReceiptTime, deadlineTime));
         // 订单id集
