@@ -125,8 +125,8 @@
               this.form.feieYun.SN = detail.printerConfig.SN;
             }
             if (detail.printerType == '365云打印') {
-              this.form.PRINT_CENTER.deviceNo = detail.printerConfig.deviceNo;
-              this.form.PRINT_CENTER.key = detail.printerConfig.key;
+              this.form.printCenter.deviceNo = detail.printerConfig.deviceNo;
+              this.form.printCenter.key = detail.printerConfig.key;
             }
 
           })

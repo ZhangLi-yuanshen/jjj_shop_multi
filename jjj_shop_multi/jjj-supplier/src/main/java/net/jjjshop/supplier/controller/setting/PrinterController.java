@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.settings.Printer;
+import net.jjjshop.common.enums.PrinterTypeEnum;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.framework.log.annotation.OperationLog;
@@ -87,6 +88,11 @@ public class PrinterController {
         BeanUtils.copyProperties(printer, vo);
         if(StringUtils.isNotEmpty(printer.getPrinterConfig())){
             vo.setPrinterConfig(JSONObject.parseObject(printer.getPrinterConfig()));
+        }
+        if (PrinterTypeEnum.FEI_E_YUN.getPrinterType().equals(vo.getPrinterType())) {
+            vo.setPrinterType(PrinterTypeEnum.FEI_E_YUN.getText());
+        } else if (PrinterTypeEnum.PRINTER_CENTER.getPrinterType().equals(vo.getPrinterType())) {
+            vo.setPrinterType(PrinterTypeEnum.PRINTER_CENTER.getText());
         }
         result.put("printer", vo);
         result.put("printerType", printerService.getPrinterTypeName());
