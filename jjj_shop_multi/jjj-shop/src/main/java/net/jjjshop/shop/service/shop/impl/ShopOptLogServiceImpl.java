@@ -42,8 +42,6 @@ public class ShopOptLogServiceImpl extends BaseServiceImpl<ShopOptLogMapper, Sho
         if(StringUtils.isNotEmpty(optLogPageParam.getUsername())){
             ShopUser shopUser = shopUserService.getOne(new LambdaQueryWrapper<ShopUser>().eq(ShopUser::getUserName, optLogPageParam.getUsername()));
             wrapper.eq(ShopOptLog::getShopUserId, shopUser.getShopUserId());
-        }else {
-            wrapper.eq(ShopOptLog::getShopUserId, -1);
         }
         wrapper.orderByDesc(ShopOptLog::getCreateTime);
         IPage<ShopOptLog> iPage = this.page(page, wrapper);
