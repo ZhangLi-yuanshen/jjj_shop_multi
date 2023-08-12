@@ -63,7 +63,6 @@ public class UserDataUtils {
         if(shopSupplierId!=null && shopSupplierId>0) {
             wrapper.eq(UserVisit::getShopSupplierId, shopSupplierId);
         }
-        wrapper.eq(UserVisit::getShopSupplierId, shopSupplierId);
         return userVisitService.count(wrapper);
     }
 

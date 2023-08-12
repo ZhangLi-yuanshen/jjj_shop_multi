@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户访问记录
@@ -49,8 +50,9 @@ public class UserVisit implements Serializable {
     private Integer appId;
 
     @ApiModelProperty("创建时间")
-    private Integer createTime;
+    private Date createTime;
 
-    private Integer updateTime;
+    @ApiModelProperty("修改时间")
+    private Date updateTime;
 
 }
