@@ -2,6 +2,7 @@ package net.jjjshop.supplier.service.settings.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.settings.Printer;
 import net.jjjshop.common.enums.PrinterTypeEnum;
@@ -33,7 +34,17 @@ public class PrinterServiceImpl extends BaseServiceImpl<PrinterMapper, Printer> 
      * @return
      */
     public Paging<Printer> getList(PrinterPageParam printerPageParam) {
-        return new Paging<>(this.page(new PageInfo<>(printerPageParam), new LambdaQueryWrapper<Printer>().orderByAsc(Printer::getSort)));
+        Paging<Printer> paging = new Paging<>(this.page(new PageInfo<>(printerPageParam), new LambdaQueryWrapper<Printer>().orderByAsc(Printer::getSort)));
+        if(paging.getTotal() > 0){
+            paging.getRecords().forEach(o -> {
+                        if (PrinterTypeEnum.FEI_E_YUN.getPrinterType().equals(o.getPrinterType())) {
+                            o.setPrinterType(PrinterTypeEnum.FEI_E_YUN.getText());
+                        } else if (PrinterTypeEnum.PRINTER_CENTER.getPrinterType().equals(o.getPrinterType())) {
+                            o.setPrinterType(PrinterTypeEnum.PRINTER_CENTER.getText());
+                        }
+                    });
+        }
+        return paging;
     }
 
     /**
