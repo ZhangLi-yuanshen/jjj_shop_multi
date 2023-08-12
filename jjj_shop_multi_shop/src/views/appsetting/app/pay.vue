@@ -32,7 +32,8 @@
             <el-button size="small" icon="el-icon-upload" type="primary">点击上传</el-button>
           </el-upload>
         </div>
-        <div class="tips">使用文本编辑器打开apiclient_key.pem文件，将文件的全部内容复制进来</div>
+<!--        <div class="tips">使用文本编辑器打开apiclient_key.pem文件，将文件的全部内容复制进来</div>-->
+        <div class="tips">请上传p12证书文件</div>
       </el-form-item>
 
       <div class="common-form">支付宝支付设置</div>
