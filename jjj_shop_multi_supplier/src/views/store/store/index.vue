@@ -22,7 +22,7 @@
           <el-table-column prop="shopHours" label="营业时间"></el-table-column>
           <el-table-column prop="linkman" label="联系人"></el-table-column>
           <el-table-column prop="phone" label="联系电话" width="100"></el-table-column>
-          <el-table-column prop="detailAddress" label="门店地址" width="240"></el-table-column>
+          <el-table-column prop="address" label="门店地址" width="240"></el-table-column>
           <el-table-column prop="isCheck" label="自提核销">
             <template slot-scope="scope">
               <span :class="{ green: scope.row.isCheck == 1, gray: scope.row.isCheck == 0 }">{{ scope.row.isCheckText }}</span>
