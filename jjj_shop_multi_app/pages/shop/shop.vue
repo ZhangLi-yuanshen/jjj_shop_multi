@@ -37,7 +37,8 @@
 			<view class="shop_head_banner" v-if="adList!= ''&&nav_type==0">
 				<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 					<swiper-item class="swiper-item" v-for="(item,index) in adList" :key="index">
-						<image :src="item.filePath" mode=""></image>
+						<image :src="item.filePath" mode="" @click="gotoProduct(item.linkUrl)">
+            </image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -274,9 +275,6 @@
 		methods: {
 			GetStatusBarHeight() {
 				// #ifdef MP-WEIXIN
-				let that = this;
-				const SystemInfo = uni.getSystemInfoSync();
-				let statusBarHeight = SystemInfo.statusBarHeight;
 				this.statusBarHeight = uni.getMenuButtonBoundingClientRect().top;
 				this.titleBarHeight = uni.getMenuButtonBoundingClientRect().height;
 				// #endif
@@ -301,6 +299,9 @@
 					}
 				});
 			},
+      gotoProduct(linkUrl) {
+        this.gotoPage(linkUrl);
+      },
 			/*可滚动视图区域到底触发*/
 			scrolltolowerFunc() {
 				let self = this;
@@ -320,7 +321,6 @@
 				self.loading = true;
 				self._postBody('product/product/lists', {
 					page: page || 1,
-					sortType: 'price',
 					sortPrice: 1,
 					sortType: e,
 					type: "sell",
