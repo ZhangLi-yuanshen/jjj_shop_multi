@@ -459,7 +459,9 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         // 所有分类
         result.put("category", productCategoryCache.getCache());
         // 配送模板
-        result.put("delivery", deliveryService.list(new LambdaQueryWrapper<Delivery>().orderByAsc(Delivery::getSort)));
+        result.put("delivery", deliveryService.list(new LambdaQueryWrapper<Delivery>()
+                .eq(Delivery::getShopSupplierId,SupplierLoginUtil.getShopSupplierId())
+                .orderByAsc(Delivery::getSort)));
         // 会员等级
         result.put("gradeList", userUtils.getUsableGradeList(null));
         // 商品sku数据

@@ -30,6 +30,7 @@ import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
+import net.jjjshop.framework.util.SupplierLoginUtil;
 import net.jjjshop.shop.param.product.ProductPageParam;
 import net.jjjshop.shop.param.product.ProductParam;
 import net.jjjshop.shop.service.product.ProductService;
@@ -426,7 +427,9 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         // 所有分类
         result.put("category", productCategoryCache.getCache());
         // 配送模板
-        result.put("delivery", deliveryService.list(new LambdaQueryWrapper<Delivery>().orderByAsc(Delivery::getSort)));
+        result.put("delivery", deliveryService.list(new LambdaQueryWrapper<Delivery>()
+                .eq(Delivery::getShopSupplierId, SupplierLoginUtil.getShopSupplierId())
+                .orderByAsc(Delivery::getSort)));
         // 会员等级
         result.put("gradeList", userUtils.getUsableGradeList(null));
         // 商品sku数据
