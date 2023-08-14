@@ -23,7 +23,7 @@
             <div :key="index" v-for="(shop, index) in curItem.data" class="item" @click="log(shop)">
               <div class="delete-box"><i class="el-icon-error" @click="$parent.onEditorDeleleData(index, selectedIndex)"></i></div>
               <img v-if="shop.logo"  :src="shop.logo.filePath" alt="">
-              <img v-else  :src="shop.logoImage" alt="">
+              <img v-else  :src="shop.logoImagePath" alt="">
             </div>
             <div class="item plus-btn" @click.stop="$parent.openStore(true)">
               <i class="el-icon-plus"></i>

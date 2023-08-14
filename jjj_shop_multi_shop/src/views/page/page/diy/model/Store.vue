@@ -17,7 +17,7 @@
         <div class="shop-item" :key="index" v-for="(shop, index) in (item.params.source == 'choice' ? item.data : item.defaultData)">
           <div class="shop-item-logo">
             <img v-if="shop.logo" :src="shop.logo.filePath" alt="门店logo">
-            <img v-else :src="shop.logoImage" alt="门店logo">
+            <img v-else :src="shop.logoImagePath" alt="门店logo">
           </div>
           <div class="shop-item-content">
             <div class="shop-item-title">
