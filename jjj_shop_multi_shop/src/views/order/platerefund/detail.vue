@@ -101,8 +101,8 @@
       <div class="apply-reason-box">
         <div class="common-form">用户申请原因</div>
         <div class="apply-reason">{{ detail.applyDesc }}</div>
-        <div class="d-s-s mt10" v-if="detail.images.length > 0">
-          <div class="pic" v-for="(item, index) in detail.image" :key="index"><img v-img-url="item.file_path" alt="" width="60" /></div>
+        <div class="d-s-s mt10" v-if="detail.orderProduct.imagePath && detail.orderProduct.imagePath.length > 0">
+          <div class="pic" v-for="(item, index) in detail.orderProduct" :key="index"><img v-img-url="item.imagePath" alt="" width="60" /></div>
         </div>
       </div>
 

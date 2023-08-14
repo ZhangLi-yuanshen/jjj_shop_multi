@@ -281,6 +281,8 @@
 		<guarantee :isguarantee="isguarantee" :server="detail.server" @close="closeGuarantee"></guarantee>
 		<!--底部弹窗-->
 		<share :isbottmpanel="isbottmpanel" :productId="productId" @close="closeBottmpanel"></share>
+    <!--app分享-->
+    <AppShare :isAppShare="isAppShare" :appParams="appParams" @close="closeAppShare"></AppShare>
 		<!--生成图片-->
 		<uniPopup :show="isCreatedImg" type="middle" @hidePopup="hidePopupFunc">
 			<view class="d-c-c d-c create-img">
@@ -371,6 +373,12 @@ export default {
 			isMpservice: false,
 			/*已经选择的规格*/
 			alreadyChioce: '',
+      isAppShare: false,
+      appParams: {
+        title: '',
+        summary: '',
+        path: ''
+      },
 			shop_info: '', //店铺信息
 			is_virtual: 1,
 			isVideoPlay: false,
@@ -573,6 +581,18 @@ export default {
 		lookEvaluate(productId) {
 			this.gotoPage('/pages/product/detail/look-evaluate/look-evaluate?productId=' + productId);
 		},
+    /*分享*/
+    onShareAppMessage() {
+      let self = this;
+      // 构建页面参数
+      let params = self.getShareUrlParams({
+        productId: self.productId
+      });
+      return {
+        title: self.detail.productName,
+        path: '/pages/product/detail/detail?' + params
+      };
+    },
 		/*跳转购物车*/
 		gotocart() {
 			uni.switchTab({
@@ -599,7 +619,28 @@ export default {
 		hidePopupFunc() {
 			this.isCreatedImg = false;
 		},
-
+    //关闭分享
+    closeAppShare(data) {
+      this.isAppShare = false;
+    },
+    //分享按钮
+    showShare() {
+      let self = this;
+      //#ifndef APP-PLUS
+      self.isbottmpanel = true;
+      //#endif
+      //#ifdef APP-PLUS
+      self.appParams.title = self.detail.product_name;
+      self.appParams.summary = self.detail.product_name;
+      // 构建页面参数
+      let params = self.getShareUrlParams({
+        productId: self.productId
+      });
+      self.appParams.path = '/pages/product/detail/detail?' + params;
+      self.appParams.image = self.detail.image[0].filePath;
+      self.isAppShare = true;
+      //#endif
+    },
 		//保存海报图片
 		savePosterImg() {
 			let self = this;
