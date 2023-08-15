@@ -36,7 +36,7 @@
 			<view class="index-body">
 				<view class="body-head">
 					<view class="f30">余额提现明细</view>
-					<view class="f26 gray9" @click="gotoPage('/pages/user/cash/list')">更多明细 <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>
+<!--					<view class="f26 gray9" @click="gotoPage('/pages/user/cash/list')">更多明细 <text class="icon iconfont icon-jiantou" style="color: #999999;font-size: 22rpx;"></text></view>-->
 				</view>
 			</view>
 			<view class="index-body">

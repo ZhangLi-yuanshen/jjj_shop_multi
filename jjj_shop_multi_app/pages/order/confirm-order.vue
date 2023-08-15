@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap" :data-theme='theme()' :class="theme() || ''" v-if="!loading">
-		<Myinfo :dis="options.order_type == 'retainage'" :Address="Address" :exist_address="exist_address"></Myinfo>
+		<Myinfo :dis="options.order_type == 'retainage'" :Address="Address" :exist_address="existAddress"></Myinfo>
 		<!--购买的产品-->
 		<view class="vender">
 			<view class="list">

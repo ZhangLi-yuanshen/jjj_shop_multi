@@ -114,7 +114,7 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
         vo.setStateText(this.getStateAttr(vo.getStatus()));
         vo.setTypeText(this.getTypeAttr(vo.getType()));
         vo.setExpressList(expressService.getAll());
-        if (StringUtils.isNotEmpty(vo.getExpressId())) {
+        if (StringUtils.isNotEmpty(vo.getExpressId()) && !vo.getExpressId().equals("0")) {
             vo.setExpressName(expressService.getById(Integer.valueOf(vo.getExpressId())).getExpressName());
         }
         if (vo.getIsPlateSend() == 1) {
@@ -142,7 +142,7 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
         if (orderRefund.getIsAgree() != 10 || orderRefund.getIsUserSend() != 0) {
             throw new BusinessException("当前售后单不合法，不允许该操作");
         }
-        if (orderRefundDeliveryParam.getExpressId() < 0) {
+        if (orderRefundDeliveryParam.getExpressId() <= 0) {
             throw new BusinessException("请选择物流公司");
         }
         if (StringUtils.isEmpty(orderRefundDeliveryParam.getExpressNo())) {

@@ -77,7 +77,7 @@
       </div>
     </el-form>
     <!--选择商品-->
-    <Product :isProduct="isProduct" @closeDialog="closeProductDialogFunc($event)">产品列表弹出层</Product>
+    <Product :isProduct="isProduct" typeName="sell" @closeDialog="closeProductDialogFunc($event)">产品列表弹出层</Product>
   </div>
 </template>
 

@@ -165,9 +165,9 @@
 		</scroll-view>
 		<!-- 底部导航 -->
 		<view class="d-a-c nav_bottom">
-			<view :class="nav_type==0?'active':''" @click="nav_type=0">
-				<view class="icon iconfont icon-Homehomepagemenu"></view>
-				<view>首页</view>
+			<view :class="nav_type==0?'active':''" >
+				<view class="icon iconfont icon-Homehomepagemenu" @click="goto_zhu()"></view>
+				<view >首页</view>
 			</view>
 			<view v-if="is_record==1&&is_open==1" :class="nav_type==1?'active':''" @click="nav_type=1">
 				<view class="icon iconfont icon-dianpu1"></view>
@@ -400,6 +400,10 @@
 			goto_product(product_id) {
 				this.gotoPage('/pages/product/detail/detail?productId=' + product_id);
 			},
+      //跳转商品页面
+      goto_zhu() {
+        this.gotoPage('pages/index/index');
+      },
 			//关注店铺/取消关注
 			guanzhu() {
 				let self = this;

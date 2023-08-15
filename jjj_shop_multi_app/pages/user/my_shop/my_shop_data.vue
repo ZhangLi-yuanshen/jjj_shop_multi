@@ -59,7 +59,7 @@
 					<view v-for="(item,index) in orderList" :key="index" class="data_list">
 						<view class="d-b-c mb20">
 							<view class="datalist_item" style="width: 400rpx;">订单号：{{item.orderNo}}</view>
-							<view class="datalist_item orange"  style="width:50rpx;" @click="todetail(item.settledId)">详情</view>
+<!--							<view class="datalist_item orange"  style="width:50rpx;" @click="todetail(item.settledId)">详情</view>-->
 						</view>
 						<view class="d-b-c">
 							<view class="datalist_item" style="width: 250rpx;">支付金额：{{item.payMoney}}</view>

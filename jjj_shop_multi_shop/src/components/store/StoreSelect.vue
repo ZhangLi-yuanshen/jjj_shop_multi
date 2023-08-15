@@ -14,7 +14,7 @@
           @selection-change="tableCurrentChange">
           <el-table-column width="70" label="门店图片">
             <template slot-scope="scope">
-              <!--<img :src="scope.row.logo.filePath" width="30" height="30" />-->
+              <img :src="scope.row.logoImagePath" width="30" height="30" />
             </template>
           </el-table-column>
           <el-table-column prop="storeName" label="门店名称"></el-table-column>

@@ -110,7 +110,7 @@
         params: null
       };
     },
-    props: ['isProduct', 'excludeIds', 'islist'],
+    props: ['isProduct', 'excludeIds', 'islist','typeName'],
     watch: {
       isProduct: function (n, o) {
         if (n != o) {
@@ -153,6 +153,9 @@
       getData () {
         let self = this;
         let params = self.formInline;
+        if(this.$props.typeName){
+          params.type = this.$props.typeName;
+        }
         params.pageIndex = self.curPage;
         params.pageSize = self.pageSize;
         PorductApi.chooseLists(params, true)
