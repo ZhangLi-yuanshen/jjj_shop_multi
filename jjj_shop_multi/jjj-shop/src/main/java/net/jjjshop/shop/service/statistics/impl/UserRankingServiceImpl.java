@@ -1,5 +1,6 @@
 package net.jjjshop.shop.service.statistics.impl;
 
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -117,6 +118,8 @@ public class UserRankingServiceImpl implements UserRankingService {
         Map<String, Object> map = new HashMap<>();
         Date startTime = DateUtil.parse(startDate);
         Date endTime = DateUtil.parse(endDate);
+        //endTime加一天
+        endTime = DateUtil.offsetDay(endTime,1);
         List<JSONObject> data = new ArrayList<>();
         List<String> days = new ArrayList<>();
         for (Date t = startTime; t.before(endTime); t = DateUtil.offsetDay(t, 1)) {
@@ -142,6 +145,8 @@ public class UserRankingServiceImpl implements UserRankingService {
         Map<String, Object> map = new HashMap<>();
         DateTime startTime = DateUtil.parse(startDate);
         DateTime endTime = DateUtil.parse(endDate);
+        //endTime加一天
+        endTime = endTime.offset(DateField.HOUR,24);
         List<JSONObject> data = new ArrayList<>();
         List<String> days = new ArrayList<>();
         for (Date t = startTime; t.before(endTime); t = DateUtil.offsetDay(t, 1)) {
