@@ -8,7 +8,7 @@
     <!--form表单-->
     <el-form size="small" ref="form" :model="form" label-width="200px">
       <!--修改物流公司-->
-      <div class="common-form">修改物流公司</div>
+      <div class="common-form">修改退货地址</div>
       <el-form-item label="收货人姓名 " prop="name" :rules="[{required: true,message: ' '}]">
         <el-input v-model="form.name" class="max-w460"></el-input>
       </el-form-item>
