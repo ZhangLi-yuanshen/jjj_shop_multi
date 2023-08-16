@@ -352,6 +352,13 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
             // 重新生成交易号
             initOrder.setTradeNo(tradeNo);
             this.updateById(initOrder);
+            // 交易表
+            orderTradeService.update(new LambdaUpdateWrapper<OrderTrade>()
+                    .in(OrderTrade::getOrderId, orderIds)
+                    .eq(OrderTrade::getPayStatus, 10)
+                    .set(OrderTrade::getBalance, 0)
+                    .set(OrderTrade::getOnlineMoney, 0)
+                    .set(OrderTrade::getOutTradeNo, tradeNo));
         }else{
             orderTradeService.update(new LambdaUpdateWrapper<OrderTrade>()
                     .in(OrderTrade::getOrderId, orderIds)
@@ -448,6 +455,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 wrapper.eq(Order::getIsComment, 0);
                 wrapper.eq(Order::getOrderStatus, 30);
                 break;
+            case "cancel":
+                wrapper.and(i->i.or().eq(Order::getOrderStatus, 20)
+                        .or().eq(Order::getOrderStatus, 21));
+                break;
         }
         if(orderPageParam.getShopSupplierId() != null && orderPageParam.getShopSupplierId() > 0) {
             wrapper.eq(Order::getShopSupplierId, orderPageParam.getShopSupplierId());
@@ -511,7 +522,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
             throw new BusinessException("订单状态不允许取消");
         }
         //订单是否已经付款
-        boolean isPay = order.getPayStatus() == OrderPayStatusEnum.SUCCESS.getValue();
+        boolean isPay = order.getPayStatus().intValue() == OrderPayStatusEnum.SUCCESS.getValue().intValue();
         if (!isPay) {
             //商品回退库存
             List<OrderProduct> productList = orderProductService.getProductList(order.getOrderId());
@@ -538,14 +549,17 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         if (order.getDeliveryStatus() != 20 || order.getReceiptStatus() != 10) {
             throw new BusinessException("该订单不合法");
         }
-        order.setReceiptStatus(20);
-        order.setReceiptTime(new Date());
-        order.setOrderStatus(30);
+        Order updateOrder = new Order();
+        updateOrder.setOrderId(order.getOrderId());
+        updateOrder.setReceiptStatus(20);
+        updateOrder.setReceiptTime(new Date());
+        updateOrder.setOrderStatus(30);
+        this.updateById(updateOrder);
         //执行订单完成后操作
         List<Order> orderList = new ArrayList<>();
         orderList.add(order);
         orderUtils.complete(orderList, order.getAppId());
-        return this.updateById(order);
+        return true;
 
     }
 

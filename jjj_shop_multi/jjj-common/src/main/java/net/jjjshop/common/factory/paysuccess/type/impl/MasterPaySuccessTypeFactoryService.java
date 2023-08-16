@@ -70,6 +70,11 @@ public class MasterPaySuccessTypeFactoryService extends PaySuccessTypeFactorySer
             Order order = this.getPayDetail(tradeNo, payStatus);
             if (order != null) {
                 this.paySuccess(order, payType, payData);
+                //更新trade为已支付
+                orderTradeService.update(new LambdaUpdateWrapper<OrderTrade>()
+                        .in(OrderTrade::getOutTradeNo, tradeNo)
+                        .set(OrderTrade::getPayStatus, 20)
+                        .set(OrderTrade::getPayTime, new Date()));
             }
         }else{
             // 多订单
@@ -78,15 +83,30 @@ public class MasterPaySuccessTypeFactoryService extends PaySuccessTypeFactorySer
                     .eq(OrderTrade::getPayStatus, 10));
             List<Integer> orderIds = tradeList.stream().map(OrderTrade::getOrderId).collect(Collectors.toList());
             List<Order> orderList = orderService.listByIds(orderIds);
+            BigDecimal leftBalance = tradeList.get(0).getBalance();
             for(Order order:orderList){
                 if (order.getPayStatus() == 10) {
+                    // 分配支付金额,大于等于支付金额
+                    if(leftBalance.compareTo(order.getPayPrice()) >= 0){
+                        order.setBalance(order.getPayPrice());
+                        leftBalance = leftBalance.subtract(order.getPayPrice());
+                    }else if(leftBalance.compareTo(BigDecimal.ZERO) == 0){
+                        // 剩余金额等于0，则为线上支付
+                        order.setOnlineMoney(order.getPayPrice());
+                    }else{
+                        // 剩余金额部分+线上支付部分
+                        order.setBalance(leftBalance);
+                        order.setOnlineMoney(order.getPayPrice().subtract(leftBalance));
+                        leftBalance = BigDecimal.ZERO;
+                    }
+                    order.setTradeNo(tradeNo);
                     this.paySuccess(order, payType, payData);
                 }
             }
             //更新trade为已支付
             orderTradeService.update(new LambdaUpdateWrapper<OrderTrade>()
                     .in(OrderTrade::getOutTradeNo, tradeNo)
-                    .set(OrderTrade::getPayStatus, 10)
+                    .set(OrderTrade::getPayStatus, 20)
                     .set(OrderTrade::getPayTime, new Date()));
         }
         return true;
@@ -112,7 +132,25 @@ public class MasterPaySuccessTypeFactoryService extends PaySuccessTypeFactorySer
         if(payStatus > 0){
             wrapper.eq(Order::getPayStatus, payStatus);
         }
-        return orderService.getOne(wrapper);
+        List<Order> orderList = orderService.list(wrapper);
+        Order order = null;
+        if(orderList.size() > 0){
+            order = orderList.get(0);
+        }
+        // 则为多商家合并下单
+        if(order == null){
+            // 多订单
+            LambdaQueryWrapper<OrderTrade> tradeWrapper = new LambdaQueryWrapper<>();
+            tradeWrapper.eq(OrderTrade::getOutTradeNo, tradeNo);
+            if(payStatus > 0){
+                tradeWrapper.eq(OrderTrade::getPayStatus, payStatus);
+            }
+            List<OrderTrade> tradeList = orderTradeService.list(tradeWrapper);
+            List<Integer> orderIds = tradeList.stream().map(OrderTrade::getOrderId).collect(Collectors.toList());
+            orderList = orderService.listByIds(orderIds);
+            order = orderList.get(0);
+        }
+        return order;
     }
 
     /**
