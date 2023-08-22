@@ -267,7 +267,9 @@ public class SupplierUserServiceImpl extends BaseServiceImpl<SupplierUserMapper,
      */
     public Paging<SupplierUserVo> getList(SupplierUserPageParam params){
         Page<SupplierUser> page = new PageInfo<>(params);
-        IPage<SupplierUser> iPage = this.page(page, new LambdaQueryWrapper<SupplierUser>().eq(SupplierUser::getIsDelete, false));
+        IPage<SupplierUser> iPage = this.page(page, new LambdaQueryWrapper<SupplierUser>()
+                .eq(SupplierUser::getShopSupplierId,SupplierLoginUtil.getShopSupplierId())
+                .eq(SupplierUser::getIsDelete, false));
         // 最终返回分页对象
         IPage<SupplierUserVo> resultPage = iPage.convert(item -> {
             SupplierUserVo vo = new SupplierUserVo();

@@ -42,7 +42,9 @@ public class SupplierRoleServiceImpl extends BaseServiceImpl<SupplierRoleMapper,
      * @return
      */
     public List<SupplierRole> getList(){
-        return this.list(new LambdaQueryWrapper<SupplierRole>().orderByAsc(SupplierRole::getSort)
+        return this.list(new LambdaQueryWrapper<SupplierRole>()
+                .eq(SupplierRole::getShopSupplierId,SupplierLoginUtil.getShopSupplierId())
+                .orderByAsc(SupplierRole::getSort)
                 .orderByAsc(SupplierRole::getCreateTime));
     }
     /**
