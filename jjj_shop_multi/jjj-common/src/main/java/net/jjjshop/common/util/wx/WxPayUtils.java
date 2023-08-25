@@ -4,7 +4,9 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import net.jjjshop.common.entity.app.App;
+import net.jjjshop.common.entity.app.AppMp;
 import net.jjjshop.common.entity.app.AppWx;
+import net.jjjshop.common.service.app.AppMpService;
 import net.jjjshop.common.service.app.AppService;
 import net.jjjshop.common.service.app.AppWxService;
 import net.jjjshop.framework.common.exception.BusinessException;
@@ -27,6 +29,9 @@ public class WxPayUtils {
     @Lazy
     @Autowired
     private AppWxService appWxService;
+    @Lazy
+    @Autowired
+    private AppMpService appMpService;
 
     @Bean
     public WxPayService wxPayService() {
@@ -65,7 +70,10 @@ public class WxPayUtils {
             payConfig.setKeyContent(app.getP12());
             // 可以指定是否使用沙箱环境
             payConfig.setUseSandboxEnv(false);
-            if ("wx".equals(paySource)) {
+            if ("mp".equals(paySource) || "h5".equals(paySource)) {
+                AppMp appMp = appMpService.getById(appId);
+                payConfig.setAppId(StringUtils.trimToNull(appMp.getMpappId()));
+            }else if ("wx".equals(paySource)) {
                 AppWx appWx = appWxService.getById(appId);
                 payConfig.setAppId(StringUtils.trimToNull(appWx.getWxappId()));
             }
