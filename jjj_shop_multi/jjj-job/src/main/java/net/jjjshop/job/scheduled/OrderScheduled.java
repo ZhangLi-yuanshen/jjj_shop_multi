@@ -133,10 +133,11 @@ public class OrderScheduled {
     {
         // 查询截止时间未支付的订单
         List<Order> items = orderService.list(new LambdaQueryWrapper<Order>().eq(Order::getPayStatus, 10)
-                .eq(Order::getOrderStatus, 10).eq(Order::getIsDelete, 0)
-                .ne(Order::getOrderSource, 80).ne(Order::getPayEndTime, null)
-                .lt(Order::getPayEndTime, new Date())
-                .select(Order::getOrderId, Order::getPointsNum, Order::getOrderNo));
+                .eq(Order::getOrderStatus, 10)
+                .eq(Order::getIsDelete, 0)
+                .ne(Order::getOrderSource, 80)
+                .isNotNull(Order::getPayEndTime)
+                .lt(Order::getPayEndTime, new Date()));
         // 订单id集
         List<Integer> orderIds = items.stream().map(Order::getOrderId).collect(Collectors.toList());
         // 取消订单事件
