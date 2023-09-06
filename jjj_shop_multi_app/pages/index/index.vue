@@ -25,7 +25,7 @@
 				<view class="wx-top-right"></view>
 				<!-- #endif -->
 			</view>
-			<view class="nuter" v-if="openCategory.open">
+			<view class="nuter" v-if="openCategory && openCategory.open">
 				<navBar style="width: 100%;" :color='openCategory.color' @currentIndex="setIndex" :currentI="thisindex"
 					:navList="categoryList">
 				</navBar>
