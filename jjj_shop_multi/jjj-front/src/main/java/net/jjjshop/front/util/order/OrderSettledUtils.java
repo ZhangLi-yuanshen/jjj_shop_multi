@@ -35,6 +35,7 @@ import net.jjjshop.front.util.order.vo.OrderSource;
 import net.jjjshop.front.util.order.vo.SettledRule;
 import net.jjjshop.front.vo.product.ProductBuyVo;
 import net.jjjshop.front.vo.supplier.SupplierBuyVo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -399,7 +400,14 @@ public class OrderSettledUtils {
         // 计算订单商品最多可抵扣的积分数量
         this.setOrderProductMaxPointsNum(supplier, pointsVo);
         // 订单最多可抵扣的积分总数量
-        int maxPointsNumCount = supplier.getProductList().stream().mapToInt(ProductBuyVo::getMaxPointsNum).sum();
+        Integer maxPointsNumCount = new Integer(0);
+        if(CollectionUtils.isNotEmpty(supplier.getProductList())){
+            for(ProductBuyVo productBuyVo : supplier.getProductList()){
+                if(productBuyVo.getMaxPointsNum() != null){
+                    maxPointsNumCount = maxPointsNumCount + productBuyVo.getMaxPointsNum();
+                }
+            }
+        }
         // 实际可抵扣的积分数量
         int actualPointsNum = maxPointsNumCount > this.user.getPoints()?this.user.getPoints():maxPointsNumCount;
         if (actualPointsNum < 1) {

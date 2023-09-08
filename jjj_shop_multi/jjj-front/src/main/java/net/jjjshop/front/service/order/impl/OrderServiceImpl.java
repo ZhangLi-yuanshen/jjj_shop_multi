@@ -160,6 +160,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         order.setShopSupplierId(params.getSupplier().getShopSupplierId());
         // 自提
         if (order.getDeliveryType().intValue() == DeliveryTypeEnum.EXTRACT.getValue().intValue()) {
+            if(params.getSupplier().getOrderData().getExtractStore() == null){
+                throw new BusinessException("配送地址不能为空");
+            }
             order.setExtractStoreId(params.getSupplier().getOrderData().getExtractStore().getStoreId());
         }
         // 积分处理
