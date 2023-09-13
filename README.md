@@ -35,7 +35,7 @@
 
 [官网链接](http://www.jjjshop.net)
 
-[安装部署文档](https://www.kancloud.cn/wxw850227/jjjshop-multi-java/3089838)
+[安装部署文档](https://doc.jjjshop.net/MultiJava)
 
 
 ### 项目演示 
