@@ -6,10 +6,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.framework.common.api.ApiResult;
+import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.shop.param.product.ProductPageParam;
 import net.jjjshop.shop.param.product.ProductParam;
 import net.jjjshop.shop.service.product.ProductService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Api(value = "index", tags = {"商品列表"})
@@ -106,6 +111,23 @@ public class ProductController {
     @ApiOperation(value = "delete", response = String.class)
     public ApiResult<String> delete(Integer productId) {
         if(productService.setDelete(productId)) {
+            return ApiResult.ok(null, "删除成功");
+        }else{
+            return ApiResult.fail("删除失败");
+        }
+    }
+
+    //批量删除
+    @RequestMapping(value = "/deleteByIds", method = RequestMethod.POST)
+    @RequiresPermissions("/product/product/delete")
+    @OperationLog(name = "deleteByIds")
+    @ApiOperation(value = "deleteByIds", response = String.class)
+    public ApiResult<String> deleteByIds(String productIds) {
+        if(StringUtils.isEmpty(productIds)){
+            throw new BusinessException("请选择商品");
+        }
+        List<Integer> list = Arrays.asList(productIds.split(",")).stream().map(Integer::valueOf).collect(Collectors.toList());
+        if(productService.deleteByIds(list)) {
             return ApiResult.ok(null, "删除成功");
         }else{
             return ApiResult.fail("删除失败");

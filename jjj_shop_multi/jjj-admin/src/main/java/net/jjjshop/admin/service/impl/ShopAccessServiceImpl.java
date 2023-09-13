@@ -84,6 +84,10 @@ public class ShopAccessServiceImpl extends BaseServiceImpl<ShopAccessMapper, Sho
      * @return
      */
     public Boolean add(ShopAccessParam shopAccessParam){
+        int num = this.count(new LambdaQueryWrapper<ShopAccess>().eq(ShopAccess::getPath,shopAccessParam.getPath()));
+        if(num > 0){
+            throw new BusinessException("该路径已存在，请更改后再试");
+        }
         ShopAccess access = new ShopAccess();
         BeanUtils.copyProperties(shopAccessParam, access);
         // 11位时间戳

@@ -214,9 +214,11 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
             wrapper.le(OrderRefund::getCreateTime, endTime);
         }
         //查询参数：售后单种类
-        if (orderRefundPageParam.getType() != null && orderRefundPageParam.getType() > 0) {
-            wrapper.eq(OrderRefund::getType, orderRefundPageParam.getType());
-        }
+//        if (orderRefundPageParam.getType() != null && orderRefundPageParam.getType() > 0) {
+//            wrapper.eq(OrderRefund::getType, orderRefundPageParam.getType());
+//        }
+        //售后类型(10退货退款 20换货 30退款)
+        wrapper.eq(OrderRefund::getType, 30);
         //查询参数：售后单状态
         if (orderRefundPageParam.getStatus() != null && orderRefundPageParam.getStatus() >= 0) {
             wrapper.eq(OrderRefund::getStatus, orderRefundPageParam.getStatus());
@@ -328,8 +330,13 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
         if (orderRefundPageParam.getType() != null && orderRefundPageParam.getType() > 0) {
             wrapper.eq(OrderRefund::getType, orderRefundPageParam.getType());
         }
+        if(orderRefundPageParam.getStatus() != null){
+            wrapper.eq(OrderRefund::getStatus, orderRefundPageParam.getStatus());
+            wrapper.gt(OrderRefund::getPlateStatus, 10);
+        }else {
+            wrapper.eq(OrderRefund::getPlateStatus, orderRefundPageParam.getPlateStatus());
+        }
         wrapper.orderByDesc(OrderRefund::getCreateTime);
-        wrapper.eq(OrderRefund::getPlateStatus, orderRefundPageParam.getPlateStatus());
         return this.count(wrapper);
     }
 

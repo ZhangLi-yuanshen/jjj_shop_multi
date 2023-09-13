@@ -103,7 +103,7 @@ public class Order implements Serializable {
     @ApiModelProperty("收货时间")
     private Date receiptTime;
 
-    @ApiModelProperty("订单状态10=>进行中，20=>已经取消，30=>已完成")
+    @ApiModelProperty("订单状态10=>进行中，20=>已经取消，21=>取消申请中，30=>已完成")
     private Integer orderStatus;
 
     @ApiModelProperty("赠送的积分数量")

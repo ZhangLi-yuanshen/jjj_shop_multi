@@ -20,7 +20,6 @@ public class PointsVo implements Serializable {
     private Boolean isShoppingGift;
     private Integer giftRatio;
     private Boolean isShoppingDiscount;
-    private Boolean isTransBalance;
     private Discount discount;
 
 
@@ -50,7 +49,6 @@ public class PointsVo implements Serializable {
         this.isShoppingGift = false;
         this.giftRatio = 10;
         this.isShoppingDiscount = false;
-        this.isTransBalance = false;
         this.discount = new Discount();
     }
 }

@@ -47,14 +47,13 @@ public class Printer implements Serializable {
     private Integer sort;
 
     @ApiModelProperty("是否删除0=显示1=隐藏")
-    @TableLogic
     private Integer isDelete;
-
-    @ApiModelProperty("小程序id")
-    private Integer appId;
 
     @ApiModelProperty("商户id")
     private Integer shopSupplierId;
+
+    @ApiModelProperty("小程序id")
+    private Integer appId;
 
     @ApiModelProperty("创建时间")
     private Date createTime;

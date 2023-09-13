@@ -19,6 +19,6 @@ public interface ShiroLoginService {
      * @param httpServletResponse
      * @throws Exception
      */
-    void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) throws Exception;
+    void refreshToken(JwtToken jwtToken,String url,  HttpServletResponse httpServletResponse) throws Exception;
 
 }

@@ -3,13 +3,9 @@ package net.jjjshop.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
-import net.jjjshop.admin.param.ShopAccessParam;
 import net.jjjshop.admin.param.SupplierAccessParam;
-import net.jjjshop.admin.service.ShopAccessService;
 import net.jjjshop.admin.service.SupplierAccessService;
-import net.jjjshop.common.entity.shop.ShopAccess;
 import net.jjjshop.common.entity.supplier.SupplierAccess;
-import net.jjjshop.common.mapper.shop.ShopAccessMapper;
 import net.jjjshop.common.mapper.supplier.SupplierAccessMapper;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
@@ -18,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 商家用户权限表 服务实现类
@@ -61,6 +56,10 @@ public class SupplierAccessServiceImpl extends BaseServiceImpl<SupplierAccessMap
      * @return
      */
     public Boolean add(SupplierAccessParam supplierAccessParam){
+        int num = this.count(new LambdaQueryWrapper<SupplierAccess>().eq(SupplierAccess::getPath,supplierAccessParam.getPath()));
+        if(num > 0){
+            throw new BusinessException("该路径已存在，请更改后再试");
+        }
         SupplierAccess access = new SupplierAccess();
         BeanUtils.copyProperties(supplierAccessParam, access);
         // 11位时间戳

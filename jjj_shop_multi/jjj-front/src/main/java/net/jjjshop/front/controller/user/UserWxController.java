@@ -38,7 +38,7 @@ public class UserWxController extends BaseController {
         log.debug("login...");
         LoginUserTokenVo user = userService.loginWx(appWxParam);
         // 设置token响应头
-        response.setHeader(JwtTokenUtil.getTokenName(), user.getToken());
+        response.setHeader(JwtTokenUtil.getTokenName(""), user.getToken());
         return ApiResult.ok(user, "登录成功");
     }
 

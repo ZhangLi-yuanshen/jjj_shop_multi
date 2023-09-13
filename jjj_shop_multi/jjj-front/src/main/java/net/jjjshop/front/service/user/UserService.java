@@ -1,14 +1,13 @@
 package net.jjjshop.front.service.user;
 
-import com.alibaba.fastjson.JSONObject;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import net.jjjshop.common.entity.user.User;
 import net.jjjshop.framework.common.service.BaseService;
 import net.jjjshop.front.param.AppWxParam;
+import net.jjjshop.front.param.user.PhoneRegisterParam;
 import net.jjjshop.front.vo.user.LoginUserTokenVo;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
 
 /**
  * 用户记录表 服务类
@@ -90,4 +89,6 @@ public interface UserService extends BaseService<User> {
      */
     Boolean setIncPoints(Integer userId, Integer points, String describe, Boolean upgrade);
 
+    //h5注册
+    boolean phoneRegister(PhoneRegisterParam phoneRegisterParam);
 }

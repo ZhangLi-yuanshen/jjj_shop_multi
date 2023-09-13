@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import net.jjjshop.common.entity.Sms;
+import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.entity.user.User;
 import net.jjjshop.common.entity.user.UserPointsLog;
 import net.jjjshop.common.enums.SettingEnum;
@@ -17,6 +18,7 @@ import net.jjjshop.common.settings.vo.PointsVo;
 import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.common.util.UserUtils;
 import net.jjjshop.common.util.wx.AppWxUtils;
+import net.jjjshop.config.constant.CommonConstant;
 import net.jjjshop.config.constant.CommonRedisKey;
 import net.jjjshop.config.properties.JwtProperties;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
@@ -30,6 +32,8 @@ import net.jjjshop.framework.shiro.util.SaltUtil;
 import net.jjjshop.framework.shiro.vo.LoginUserVo;
 import net.jjjshop.framework.util.PasswordUtil;
 import net.jjjshop.front.param.AppWxParam;
+import net.jjjshop.front.param.user.PhoneRegisterParam;
+import net.jjjshop.front.service.app.AppService;
 import net.jjjshop.front.service.user.SmsService;
 import net.jjjshop.front.service.user.UserGradeService;
 import net.jjjshop.front.service.user.UserPointsLogService;
@@ -95,6 +99,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Lazy
     @Autowired
     private SmsService smsService;
+    @Autowired
+    private AppService appService;
 
 
     /**
@@ -106,7 +112,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      */
     public LoginUserTokenVo login(String mobile, String password) {
         List<User> userList = this.list(new LambdaQueryWrapper<User>()
-                .eq(User::getMobile, mobile).ne(User::getPassword, ""));
+                .eq(User::getMobile, mobile).ne(User::getPassword, "")
+                .comment(CommonConstant.NOT_WITH_App_Id));
         if (userList.size() == 0) {
             throw new AuthenticationException("用户名不存在");
         }
@@ -114,6 +121,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         String encryptPassword = PasswordUtil.encrypt(password, user.getSalt());
         if (!encryptPassword.equals(user.getPassword())) {
             throw new AuthenticationException("用户名或密码错误");
+        }
+        App app = appService.getOne(new LambdaQueryWrapper<App>().eq(App::getAppId,user.getAppId())
+                .comment(CommonConstant.NOT_WITH_App_Id));
+        if (app == null) {
+            throw new BusinessException("登录失败, 未找到应用信息");
+        }
+        if (app.getIsDelete()) {
+            throw new BusinessException("登录失败, 当前应用已删除");
+        }
+        if(!app.getIsRecycle()){
+            throw new BusinessException("登录失败, 当前应用已禁用");
+        }
+        if (app.getExpireTime() != null && app.getExpireTime().before(new Date())) {
+            throw new BusinessException("登录失败, 当前应用已过期，请联系平台续费");
         }
         return this.getLoginUserTokenVo(user);
     }
@@ -282,6 +303,32 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return true;
     }
 
+    //h5注册
+    @Override
+    public boolean phoneRegister(PhoneRegisterParam phoneRegisterParam) {
+        // 校验验证码
+        //this.check(phoneRegisterParam.getMobile(), phoneRegisterParam.getCode());
+        int count = this.count(new LambdaQueryWrapper<User>().eq(User::getMobile, phoneRegisterParam.getMobile()));
+        if (!(count > 0)) {
+            User user = new User();
+            user.setMobile(phoneRegisterParam.getMobile());
+            user.setRegSource(phoneRegisterParam.getRegSource() != null ? phoneRegisterParam.getRegSource() : "app");
+            user.setGradeId(userGradeService.getDefaultGradeId());
+            user.setPassword(DigestUtils.md5Hex(phoneRegisterParam.getPassword()));
+            // 盐值
+            String salt = SaltUtil.generateSalt();
+            // 密码加密
+            user.setSalt(salt);
+            user.setPassword(PasswordUtil.encrypt(phoneRegisterParam.getPassword(), salt));
+            user.setNickname("用户:"+phoneRegisterParam.getMobile());
+            this.save(user);
+            this.afterReg(user.getUserId());
+            return true;
+        } else {
+            throw new BusinessException("手机号已存在");
+        }
+    }
+
     /**
      * 注册之后的操作
      */
@@ -375,7 +422,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         //注销
         subject.logout();
         // 获取token
-        String token = JwtTokenUtil.getToken(request);
+        String token = JwtTokenUtil.getToken(request,"");
         String username = JwtUtil.getUsername(token);
         // 删除Redis缓存信息
         deleteLoginInfo(token, username);

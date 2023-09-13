@@ -98,6 +98,9 @@ public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements A
      */
     @Transactional(rollbackFor = Exception.class)
     public Boolean add(AppParam appParam){
+        if(!appParam.getNoExpire() && StringUtils.isEmpty(appParam.getExpireTime())){
+            throw new BusinessException("过期时间不能为空");
+        }
         // 是否存在用户名
         if(shopUserService.count(new LambdaQueryWrapper<ShopUser>()
                 .eq(ShopUser::getUserName, appParam.getUserName())) > 0){

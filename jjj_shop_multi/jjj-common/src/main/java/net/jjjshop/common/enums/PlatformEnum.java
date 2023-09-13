@@ -16,10 +16,7 @@ import java.util.Map;
 public enum PlatformEnum {
 
     H5("H5", "h5", OrderPayTypeEnum.getValues()),
-    MP("微信公众号", "mp", OrderPayTypeEnum.getWxValues()),
-    WX("微信小程序", "wx", OrderPayTypeEnum.getWxValues()),
-    IOS("ios", "ios", OrderPayTypeEnum.getValues()),
-    ANDROID("android", "android", OrderPayTypeEnum.getValues());
+    WX("微信小程序", "wx", OrderPayTypeEnum.getWxValues());
 
     private String name;
     private String value;

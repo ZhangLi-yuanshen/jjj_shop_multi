@@ -92,10 +92,10 @@ public class UserAddressServiceImpl extends BaseServiceImpl<UserAddressMapper, U
         UserAddress userAddress = new UserAddress();
         BeanUtils.copyProperties(userAddressParam, userAddress);
         userAddress.setUserId(user.getUserId());
+        userAddress.setAppId(user.getAppId());
         boolean save = this.save(userAddress);
         if (user.getAddressId() == null || user.getAddressId() == 0) {
-            List<UserAddress> list = this.list(new LambdaQueryWrapper<UserAddress>().eq(UserAddress::getUserId, user.getUserId()));
-            Integer addressId = list.get(list.size() - 1).getAddressId();
+            Integer addressId = userAddress.getAddressId();
             this.defaultAddress(addressId, user);
         }
         return save;

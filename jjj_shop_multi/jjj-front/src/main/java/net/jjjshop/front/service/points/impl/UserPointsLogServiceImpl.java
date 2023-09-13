@@ -60,7 +60,6 @@ public class UserPointsLogServiceImpl extends BaseServiceImpl<UserPointsLogMappe
         JSONObject setting = settingUtils.getSetting(SettingEnum.POINTSMALL.getKey(), null);
         map.put("list", new Paging(voList));
         map.put("discountRatio", pointsVo.getDiscount().getDiscountRatio());
-        map.put("isTransBalance", pointsVo.getIsTransBalance());
         map.put("points", user.getPoints());
         return map;
     }

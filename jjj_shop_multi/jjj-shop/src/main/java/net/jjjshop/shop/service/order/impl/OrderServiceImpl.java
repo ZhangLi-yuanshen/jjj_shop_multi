@@ -442,6 +442,12 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 wrapper.eq(Order::getIsComment, 1);
                 wrapper.eq(Order::getOrderStatus, 30);
                 break;
+            case "cancel":
+                wrapper.eq(Order::getOrderStatus, 20);
+                break;
+            case "cancelApply":
+                wrapper.eq(Order::getOrderStatus, 21);
+                break;
         }
         return wrapper;
     }

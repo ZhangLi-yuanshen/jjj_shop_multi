@@ -30,6 +30,9 @@ public class ShopUserParam implements Serializable {
     @ApiModelProperty("登录密码")
     private String password;
 
+    @ApiModelProperty("确认密码")
+    private String confirmPassword;
+
     @ApiModelProperty("姓名")
     private String realName;
 

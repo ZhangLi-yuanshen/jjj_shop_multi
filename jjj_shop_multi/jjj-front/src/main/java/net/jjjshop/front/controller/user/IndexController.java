@@ -17,6 +17,7 @@ import net.jjjshop.common.settings.vo.BalanceVo;
 import net.jjjshop.common.settings.vo.StoreVo;
 import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.framework.common.api.ApiResult;
+import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.front.controller.BaseController;
 import net.jjjshop.front.service.order.OrderService;
@@ -51,9 +52,12 @@ public class IndexController extends BaseController {
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     @OperationLog(name = "index")
     @ApiOperation(value = "index", response = String.class)
-    public ApiResult<Map<String, Object>> index(){
+    public ApiResult<Map<String, Object>> index(Integer appId){
         Map<String, Object> result = new HashMap<>();
         User user = this.getUser(true);
+        if(appId != null && !appId.equals(user.getAppId())){
+            throw new BusinessException("当前应用不匹配");
+        }
         result.put("user", user);
         //供应商用户信息
         SupplierUser supplierUser = supplierUserService.getOne(new LambdaQueryWrapper<SupplierUser>().eq(SupplierUser::getUserId, user.getUserId()).last("LIMIT 1"));
@@ -62,7 +66,7 @@ public class IndexController extends BaseController {
             BeanUtils.copyProperties(supplierUser, userVo);
         }
         result.put("supplierUser", userVo);
-        result.put("userGrade", userGradeService.getById(user.getGradeId()).getName());
+        result.put("userGrade", userGradeService.getById(user.getGradeId())==null?"":userGradeService.getById(user.getGradeId()).getName());
         result.put("menus", centerMenuService.getMenus());
         // 订单数量
         JSONObject orderCount = new JSONObject();

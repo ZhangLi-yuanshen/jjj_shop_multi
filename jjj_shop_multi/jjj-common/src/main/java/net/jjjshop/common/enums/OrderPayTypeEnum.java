@@ -28,7 +28,10 @@ public enum OrderPayTypeEnum {
         List<Integer> values = new ArrayList<>();
         OrderPayTypeEnum[] enums = values();    //获取所有枚举集合
         for (OrderPayTypeEnum item : enums) {
-            values.add(item.getValue());
+            //h5只返回余额支付
+            if("余额支付".equals(item.getName())){
+                values.add(item.getValue());
+            }
         }
         return values;
     }

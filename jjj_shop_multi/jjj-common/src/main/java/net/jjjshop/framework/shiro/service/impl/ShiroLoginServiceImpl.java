@@ -49,7 +49,7 @@ public class ShiroLoginServiceImpl implements ShiroLoginService {
 
 
     @Override
-    public void refreshToken(JwtToken jwtToken, HttpServletResponse httpServletResponse) throws Exception {
+    public void refreshToken(JwtToken jwtToken,String url, HttpServletResponse httpServletResponse) throws Exception {
         if (jwtToken == null) {
             return;
         }
@@ -92,7 +92,8 @@ public class ShiroLoginServiceImpl implements ShiroLoginService {
         log.debug("刷新token成功，原token:{}，新token:{}", token, newToken);
         // 设置响应头
         // 刷新token
+        String model = JwtTokenUtil.getModel(url);
         httpServletResponse.setStatus(CommonConstant.JWT_REFRESH_TOKEN_CODE);
-        httpServletResponse.setHeader(JwtTokenUtil.getTokenName(), newToken);
+        httpServletResponse.setHeader(JwtTokenUtil.getTokenName(model), newToken);
     }
 }

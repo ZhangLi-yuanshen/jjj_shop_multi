@@ -234,7 +234,7 @@ public class SupplierUserServiceImpl extends BaseServiceImpl<SupplierUserMapper,
         //注销
         subject.logout();
         // 获取token
-        String token = JwtTokenUtil.getToken(request);
+        String token = JwtTokenUtil.getToken(request,"supplier");
         String username = JwtUtil.getUsername(token);
         // 删除Redis缓存信息
         deleteLoginInfo(token, username);

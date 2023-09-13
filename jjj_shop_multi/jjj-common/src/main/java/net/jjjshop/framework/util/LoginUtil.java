@@ -33,7 +33,7 @@ public class LoginUtil {
      */
     public static LoginUserRedisVo getLoginUserRedisVo() {
         // 获取当前登录用户
-        String token = JwtTokenUtil.getToken();
+        String token = JwtTokenUtil.getToken("");
         String username = JwtUtil.getUsername(token);
         if (StringUtils.isBlank(username)) {
             return null;

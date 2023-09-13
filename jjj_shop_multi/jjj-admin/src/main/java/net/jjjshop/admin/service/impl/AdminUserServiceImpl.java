@@ -63,7 +63,9 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
     public LoginAdminUserTokenVo login(String username, String password){
         AdminUser adminUser = adminUserMapper.selectOne(new LambdaQueryWrapper<AdminUser>()
                 .eq(AdminUser::getUserName, username));
-
+        if(adminUser == null){
+            throw new AuthenticationException("用户名或密码错误");
+        }
         String encryptPassword = PasswordUtil.encrypt(password, adminUser.getSalt());
         if (!encryptPassword.equals(adminUser.getPassword())) {
             throw new AuthenticationException("用户名或密码错误");
@@ -128,7 +130,7 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
         //注销
         subject.logout();
         // 获取token
-        String token = JwtTokenUtil.getToken(request);
+        String token = JwtTokenUtil.getToken(request, "admin");
         String username = JwtUtil.getUsername(token);
         // 删除Redis缓存信息
         deleteLoginInfo(token, username);

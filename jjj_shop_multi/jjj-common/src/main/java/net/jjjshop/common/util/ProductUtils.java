@@ -130,13 +130,17 @@ public class ProductUtils {
     public List<ProductSpecRelVo> getSpecByProductId(Integer productId){
         List<ProductSpecRel> specList = productSpecRelService.list(new LambdaQueryWrapper<ProductSpecRel>()
                 .eq(ProductSpecRel::getProductId, productId).orderByAsc(ProductSpecRel::getId));
-        return specList.stream().map(e -> {
+        List<ProductSpecRelVo> voList = new ArrayList<>();
+        for(ProductSpecRel e : specList){
             ProductSpecRelVo productSpecRelVo = new ProductSpecRelVo();
             BeanUtils.copyProperties(e, productSpecRelVo);
-            productSpecRelVo.setSpecName(productSpecService.getById(e.getSpecId()).getSpecName());
-            productSpecRelVo.setSpecValue(productSpecValueService.getById(e.getSpecValueId()).getSpecValue());
-            return productSpecRelVo;
-        }).collect(Collectors.toList());
+            productSpecRelVo.setSpecName(productSpecService.getById(e.getSpecId())==null?
+                    "":productSpecService.getById(e.getSpecId()).getSpecName());
+            productSpecRelVo.setSpecValue(productSpecValueService.getById(e.getSpecValueId())==null?
+                    "":productSpecValueService.getById(e.getSpecValueId()).getSpecValue());
+            voList.add(productSpecRelVo);
+        }
+        return voList;
     }
 
     /**

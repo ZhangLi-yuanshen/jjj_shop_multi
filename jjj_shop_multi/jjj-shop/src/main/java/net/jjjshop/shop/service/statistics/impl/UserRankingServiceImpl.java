@@ -1,6 +1,5 @@
 package net.jjjshop.shop.service.statistics.impl;
 
-import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -94,6 +93,8 @@ public class UserRankingServiceImpl implements UserRankingService {
      * @return
      */
     public JSONObject getPayScaleData(Integer day) throws ParseException {
+        //总会员数
+        Integer userTotal = userService.getUserData(null, null, "user_total");
         //获取今天时间
         Date today = DateUtil.offsetDay(new Date(), 0);
         if (day == 1) {
@@ -101,8 +102,11 @@ public class UserRankingServiceImpl implements UserRankingService {
         }
         String startDate = DateUtil.format(DateUtil.offsetDay(today, -day), "yyyy-MM-dd");
         String endDate = DateUtil.format(DateUtil.offsetDay(today, 0), "yyyy-MM-dd");
-        Integer pay = userService.getUserData(startDate, endDate, "user_pay");
-        Integer noPay = userService.getUserData(startDate, endDate, "user_no_pay");
+        //成交会员数
+        BigDecimal userPay = orderDataUtils.getOrderData(startDate, endDate, "order_user_total",null);
+        Integer pay = userPay.intValue();
+        //未成交会员数
+        Integer noPay = userTotal - pay;
         JSONObject json = new JSONObject();
         json.put("pay", pay);
         json.put("no_pay", noPay);
@@ -145,8 +149,6 @@ public class UserRankingServiceImpl implements UserRankingService {
         Map<String, Object> map = new HashMap<>();
         DateTime startTime = DateUtil.parse(startDate);
         DateTime endTime = DateUtil.parse(endDate);
-        //endTime加一天
-        endTime = endTime.offset(DateField.HOUR,24);
         List<JSONObject> data = new ArrayList<>();
         List<String> days = new ArrayList<>();
         for (Date t = startTime; t.before(endTime); t = DateUtil.offsetDay(t, 1)) {

@@ -7,14 +7,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.product.Product;
-import net.jjjshop.common.entity.store.Store;
 import net.jjjshop.common.entity.supplier.Supplier;
 import net.jjjshop.common.entity.supplier.SupplierUser;
 import net.jjjshop.common.entity.user.User;
 import net.jjjshop.common.mapper.supplier.SupplierMapper;
 import net.jjjshop.common.util.SupplierUserUtils;
 import net.jjjshop.common.util.UploadFileUtils;
-import net.jjjshop.common.vo.RegionVo;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
@@ -27,7 +25,6 @@ import net.jjjshop.shop.service.product.ProductService;
 import net.jjjshop.shop.service.supplier.SupplierService;
 import net.jjjshop.shop.service.supplier.SupplierUserService;
 import net.jjjshop.shop.service.user.UserService;
-import net.jjjshop.shop.vo.store.StoreVo;
 import net.jjjshop.shop.vo.supplier.SupplierVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -36,7 +33,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -80,7 +76,8 @@ public class SupplierServiceImpl extends BaseServiceImpl<SupplierMapper, Supplie
             vo.setBusinessFilePath(uploadFileUtils.getFilePath(vo.getBusinessId()));
             SupplierUser user = supplierUserService.getOne(new LambdaQueryWrapper<SupplierUser>()
                     .eq(SupplierUser::getUserId, vo.getUserId())
-                    .eq(SupplierUser::getShopSupplierId, vo.getShopSupplierId()));
+                    .eq(SupplierUser::getShopSupplierId, vo.getShopSupplierId())
+                    .last("limit 1"));
             vo.setUserName(user.getUserName());
             return vo;
         });
@@ -139,6 +136,7 @@ public class SupplierServiceImpl extends BaseServiceImpl<SupplierMapper, Supplie
         vo.setBusinessFilePath(uploadFileUtils.getFilePath(vo.getBusinessId()));
         SupplierUser user = supplierUserService.getOne(new LambdaQueryWrapper<SupplierUser>()
                 .eq(SupplierUser::getUserId, vo.getUserId())
+                .eq(SupplierUser::getIsSuper, 1)
                 .eq(SupplierUser::getShopSupplierId, vo.getShopSupplierId()));
         vo.setUserName(user.getUserName());
         if(user.getUserId() != null && user.getUserId() > 0) {
@@ -161,17 +159,18 @@ public class SupplierServiceImpl extends BaseServiceImpl<SupplierMapper, Supplie
         }
         if (superUser != null
                 && (!superUser.getUserName().equals(supplierParam.getUserName()))
-                && supplierUserUtils.checkExist(supplierParam.getUserName())) {
+                && (supplierUserUtils.checkExist(supplierParam.getUserName()))) {
             throw new BusinessException("用户名已存在");
         }
         //用户是否已绑定
         User user = null;
         Boolean userChange = false;
         if (superUser != null
-                && superUser.getUserId() > 0
+                && supplierParam.getUserId() > 0
                 && supplierParam.getUserId().intValue() != superUser.getUserId().intValue()) {
+            int count = this.count(new LambdaQueryWrapper<Supplier>().eq(Supplier::getUserId, supplierParam.getUserId()).eq(Supplier::getIsDelete,0));
             user = userService.getById(supplierParam.getUserId());
-            if (user != null && user.getUserType() != 1) {
+            if ((user != null && user.getUserType() != 1) || count > 0) {
                 throw new BusinessException("该用户已经绑定供应商，或绑定用户正在审核");
             }
             userChange = true;
@@ -181,16 +180,18 @@ public class SupplierServiceImpl extends BaseServiceImpl<SupplierMapper, Supplie
         BeanUtils.copyProperties(supplierParam, supplier);
         this.updateById(supplier);
         // 修改登录用户
-        superUser.setUserId(supplierParam.getUserId());
-        superUser.setUserName(supplierParam.getUserName());
-        if (StringUtils.isNotEmpty(supplierParam.getPassword())) {
-            // 盐值
-            String salt = SaltUtil.generateSalt();
-            superUser.setSalt(salt);
-            // 密码加密
-            superUser.setPassword(PasswordUtil.encrypt(supplierParam.getPassword(), salt));
+        if(superUser != null){
+            superUser.setUserId(supplierParam.getUserId());
+            superUser.setUserName(supplierParam.getUserName());
+            if (StringUtils.isNotEmpty(supplierParam.getPassword())) {
+                // 盐值
+                String salt = SaltUtil.generateSalt();
+                superUser.setSalt(salt);
+                // 密码加密
+                superUser.setPassword(PasswordUtil.encrypt(supplierParam.getPassword(), salt));
+            }
+            supplierUserService.updateById(superUser);
         }
-        supplierUserService.updateById(superUser);
         if (userChange) {
             user.setUserType(2);
             if (oldUserId != null && oldUserId > 0) {

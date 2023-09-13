@@ -33,7 +33,7 @@ public class AdminLoginUtil {
      */
     public static LoginAdminUserRedisVo getLoginAdminUserRedisVo() {
         // 获取当前登录用户
-        String token = JwtTokenUtil.getToken();
+        String token = JwtTokenUtil.getToken("admin");
         String username = JwtUtil.getUsername(token);
         if (StringUtils.isBlank(username)) {
             return null;

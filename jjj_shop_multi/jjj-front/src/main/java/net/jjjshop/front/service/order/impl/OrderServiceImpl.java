@@ -174,8 +174,16 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         JSONObject vo = settingUtils.getSetting(SettingEnum.TRADE.getKey(), null);
         TradeVo tradeVo = JSONObject.toJavaObject(vo, TradeVo.class);
         int closeDays = tradeVo.getCloseDays();
+        //自动关闭时间类型,1=天,2=小时,3=分钟
+        int closeType = tradeVo.getCloseType();
         if (closeDays != 0) {
-            order.setPayEndTime(DateUtil.offsetDay(new Date(), closeDays));
+            if(closeType == 1){
+                order.setPayEndTime(DateUtil.offsetDay(new Date(), closeDays));
+            }else if(closeType == 2){
+                order.setPayEndTime(DateUtil.offsetHour(new Date(), closeDays));
+            }else if(closeType == 3){
+                order.setPayEndTime(DateUtil.offsetMinute(new Date(), closeDays));
+            }
         }
         this.save(order);
         return order;
@@ -466,7 +474,6 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         if(orderPageParam.getShopSupplierId() != null && orderPageParam.getShopSupplierId() > 0) {
             wrapper.eq(Order::getShopSupplierId, orderPageParam.getShopSupplierId());
         }
-        wrapper.eq(Order::getUserId, userId);
         wrapper.eq(Order::getIsDelete, 0);
         wrapper.orderByDesc(Order::getCreateTime);
         Page page = new PageInfo(orderPageParam);

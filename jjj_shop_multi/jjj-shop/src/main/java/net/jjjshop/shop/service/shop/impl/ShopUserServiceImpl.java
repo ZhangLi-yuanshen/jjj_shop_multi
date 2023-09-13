@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.entity.shop.ShopAccess;
 import net.jjjshop.common.entity.shop.ShopUser;
 import net.jjjshop.common.entity.shop.ShopUserRole;
@@ -34,6 +35,7 @@ import net.jjjshop.framework.shiro.vo.LoginShopUserVo;
 import net.jjjshop.framework.util.PasswordUtil;
 import net.jjjshop.shop.param.shopUser.ShopUserPageParam;
 import net.jjjshop.shop.param.shopUser.ShopUserParam;
+import net.jjjshop.shop.service.app.AppService;
 import net.jjjshop.shop.service.shop.ShopAccessService;
 import net.jjjshop.shop.service.shop.ShopUserRoleService;
 import net.jjjshop.shop.service.shop.ShopUserService;
@@ -54,10 +56,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -89,6 +88,8 @@ public class ShopUserServiceImpl extends BaseServiceImpl<ShopUserMapper, ShopUse
     private ShopAccessService shopAccessService;
     @Autowired
     private ShopUserRoleService shopUserRoleService;
+    @Autowired
+    private AppService appService;
 
     @InterceptorIgnore(tenantLine = "true")
     public LoginShopUserTokenVo login(String username, String password){
@@ -100,6 +101,19 @@ public class ShopUserServiceImpl extends BaseServiceImpl<ShopUserMapper, ShopUse
         String encryptPassword = PasswordUtil.encrypt(password, shopUser.getSalt());
         if (!encryptPassword.equals(shopUser.getPassword())) {
             throw new AuthenticationException("用户名或密码错误");
+        }
+        App app = appService.getById(shopUser.getAppId());
+        if (app == null) {
+            throw new BusinessException("登录失败, 未找到应用信息");
+        }
+        if (app.getIsDelete()) {
+            throw new BusinessException("登录失败, 当前应用已删除");
+        }
+        if(!app.getIsRecycle()){
+            throw new BusinessException("登录失败, 当前应用已禁用");
+        }
+        if (app.getExpireTime() != null && app.getExpireTime().before(new Date())) {
+            throw new BusinessException("登录失败, 当前应用已过期，请联系平台续费");
         }
         // 将系统用户对象转换成登录用户对象
         LoginShopUserVo loginShopUserVo = new LoginShopUserVo();
@@ -229,7 +243,7 @@ public class ShopUserServiceImpl extends BaseServiceImpl<ShopUserMapper, ShopUse
         //注销
         subject.logout();
         // 获取token
-        String token = JwtTokenUtil.getToken(request);
+        String token = JwtTokenUtil.getToken(request,"shop");
         String username = JwtUtil.getUsername(token);
         // 删除Redis缓存信息
         deleteLoginInfo(token, username);
@@ -282,6 +296,9 @@ public class ShopUserServiceImpl extends BaseServiceImpl<ShopUserMapper, ShopUse
      */
     @Transactional(rollbackFor = Exception.class)
     public Boolean add(ShopUserParam shopUserParam){
+        if(!shopUserParam.getPassword().equals(shopUserParam.getConfirmPassword())){
+            throw new BusinessException("两次密码不一致");
+        }
         ShopUser user = new ShopUser();
         user.setUserName(shopUserParam.getUserName());
         user.setRealName(shopUserParam.getRealName());
@@ -303,6 +320,9 @@ public class ShopUserServiceImpl extends BaseServiceImpl<ShopUserMapper, ShopUse
      */
     @Transactional(rollbackFor = Exception.class)
     public Boolean edit(ShopUserParam shopUserParam){
+        if(!shopUserParam.getPassword().equals(shopUserParam.getConfirmPassword())){
+            throw new BusinessException("两次密码不一致");
+        }
         ShopUser user = new ShopUser();
         user.setShopUserId(shopUserParam.getShopUserId());
         user.setUserName(shopUserParam.getUserName());

@@ -2,8 +2,10 @@
 
 package net.jjjshop.front.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.user.User;
+import net.jjjshop.config.constant.CommonConstant;
 import net.jjjshop.framework.common.api.ApiCode;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.shiro.vo.LoginUserRedisVo;
@@ -39,7 +41,8 @@ public class BaseController {
             }
             return null;
         }
-        User user = userService.getById(vo.getUserId());
+        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUserId,vo.getUserId())
+                .comment(CommonConstant.NOT_WITH_App_Id));
         if(user == null && isForce){
             throw new BusinessException(-1, "未找到用户信息");
         }

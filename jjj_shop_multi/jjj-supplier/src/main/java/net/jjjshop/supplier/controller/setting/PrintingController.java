@@ -10,7 +10,6 @@ import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.supplier.service.settings.PrinterService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +37,7 @@ public class PrintingController {
         Map<String, Object> result = new HashMap<>();
         result.put("printerList", printerService.getAll());
         result.put("isOpen", vo.get("isOpen"));
+        result.put("printerId", vo.get("printerId"));
         result.put("orderStatus", vo.get("orderStatus"));
         return ApiResult.ok(result);
     }

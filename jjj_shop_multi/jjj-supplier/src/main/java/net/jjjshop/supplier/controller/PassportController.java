@@ -35,7 +35,7 @@ public class PassportController {
         log.debug("password..."+password);
         LoginSupplierUserTokenVo user = supplierUserService.login(username, password);
         // 设置token响应头
-        response.setHeader(JwtTokenUtil.getTokenName(), user.getToken());
+        response.setHeader(JwtTokenUtil.getTokenName("supplier"), user.getToken());
         return ApiResult.ok(user, "登录成功");
     }
 

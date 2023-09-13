@@ -29,8 +29,12 @@ public class JwtTokenUtil {
      *
      * @return
      */
-    public static String getTokenName() {
-        return tokenName;
+    public static String getTokenName(String model) {
+        if(model.equals("")){
+            return tokenName;
+        }else{
+            return tokenName + "" + model;
+        }
     }
 
     /**
@@ -38,8 +42,20 @@ public class JwtTokenUtil {
      *
      * @return
      */
-    public static String getToken() {
-        return getToken(HttpServletRequestUtil.getRequest());
+    public static String getToken(String model) {
+        return getToken(HttpServletRequestUtil.getRequest(), model);
+    }
+
+    public static String getModel(String path){
+        String model = "";
+        if(path.startsWith("/api/admin/")){
+            model = "admin";
+        }else if(path.startsWith("/api/shop/")){
+            model = "shop";
+        }else if(path.startsWith("/api/supplier/")){
+            model = "supplier";
+        }
+        return model;
     }
 
     /**
@@ -48,15 +64,21 @@ public class JwtTokenUtil {
      * @param request
      * @return
      */
-    public static String getToken(HttpServletRequest request) {
+    public static String getToken(HttpServletRequest request, String model) {
         if (request == null) {
             throw new IllegalArgumentException("request不能为空");
         }
+        String realTokenName = "";
+        if(model.equals("")){
+            realTokenName = tokenName;
+        }else{
+            realTokenName = tokenName + "" + model;
+        }
         // 从请求头中获取token
-        String token = request.getHeader(tokenName);
+        String token = request.getHeader(realTokenName);
         if (StringUtils.isBlank(token)) {
             // 从请求参数中获取token
-            token = request.getParameter(tokenName);
+            token = request.getParameter(realTokenName);
         }
         return token;
     }

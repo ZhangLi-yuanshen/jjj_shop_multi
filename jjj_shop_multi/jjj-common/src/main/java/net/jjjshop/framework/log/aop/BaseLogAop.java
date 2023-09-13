@@ -292,8 +292,10 @@ public abstract class BaseLogAop {
             requestInfo.setParam(requestParamObject);
             requestInfo.setTime(DateUtil.getDateTimeString(new Date()));
 
+            String model = JwtTokenUtil.getModel(path);
+
             // 获取请求头token
-            String token = request.getHeader(JwtTokenUtil.getTokenName());
+            String token = request.getHeader(JwtTokenUtil.getTokenName(model));
             requestInfo.setToken(token);
             if (StringUtils.isNotBlank(token)) {
                 requestInfo.setTokenMd5(DigestUtils.md5Hex(token));

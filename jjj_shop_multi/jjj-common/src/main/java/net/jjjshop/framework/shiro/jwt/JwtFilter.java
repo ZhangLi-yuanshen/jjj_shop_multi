@@ -62,8 +62,9 @@ public class JwtFilter extends AuthenticatingFilter {
      */
     @Override
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        String token = JwtTokenUtil.getToken();
         String url = ((ShiroHttpServletRequest) servletRequest).getRequestURI();
+        String model = JwtTokenUtil.getModel(url);
+        String token = JwtTokenUtil.getToken(model);
         if (StringUtils.isBlank(token)) {
             throw new AuthenticationException("token不能为空");
         }
@@ -165,7 +166,7 @@ public class JwtFilter extends AuthenticatingFilter {
         // 刷新token
         JwtToken jwtToken = (JwtToken) token;
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
-        shiroLoginService.refreshToken(jwtToken, httpServletResponse);
+        shiroLoginService.refreshToken(jwtToken, url,httpServletResponse);
         return true;
     }
 

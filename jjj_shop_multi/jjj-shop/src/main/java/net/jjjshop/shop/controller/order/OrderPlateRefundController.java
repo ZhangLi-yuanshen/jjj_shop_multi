@@ -10,7 +10,6 @@ import net.jjjshop.shop.param.order.OrderRefundPageParam;
 import net.jjjshop.shop.param.order.OrderRefundParam;
 import net.jjjshop.shop.service.order.OrderRefundService;
 import net.jjjshop.shop.vo.order.OrderRefundVo;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,13 +39,15 @@ public class OrderPlateRefundController {
         Paging<OrderRefundVo> list = orderRefundService.getPlateList(orderRefundPageParam);
         map.put("list", list);
         List<Integer> status = new ArrayList<>();
-        orderRefundPageParam.setStatus(0);
+        //平台售后状态，10申请平台介入20同意30拒绝
+        orderRefundPageParam.setPlateStatus(10);
         status.add(orderRefundService.getCountByPlateStatus(orderRefundPageParam));
-        orderRefundPageParam.setStatus(10);
+        orderRefundPageParam.setPlateStatus(30);
         status.add(orderRefundService.getCountByPlateStatus(orderRefundPageParam));
+        orderRefundPageParam.setPlateStatus(20);
+        status.add(orderRefundService.getCountByPlateStatus(orderRefundPageParam));
+        //售后单状态(0进行中 10已拒绝 20已完成 30已取消)
         orderRefundPageParam.setStatus(20);
-        status.add(orderRefundService.getCountByPlateStatus(orderRefundPageParam));
-        orderRefundPageParam.setStatus(30);
         status.add(orderRefundService.getCountByPlateStatus(orderRefundPageParam));
         map.put("status", status);
         return ApiResult.ok(map);

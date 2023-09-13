@@ -142,7 +142,7 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
         if (orderRefund.getIsAgree() != 10 || orderRefund.getIsUserSend() != 0) {
             throw new BusinessException("当前售后单不合法，不允许该操作");
         }
-        if (orderRefundDeliveryParam.getExpressId() <= 0) {
+        if (orderRefundDeliveryParam.getExpressId() < 0) {
             throw new BusinessException("请选择物流公司");
         }
         if (StringUtils.isEmpty(orderRefundDeliveryParam.getExpressNo())) {

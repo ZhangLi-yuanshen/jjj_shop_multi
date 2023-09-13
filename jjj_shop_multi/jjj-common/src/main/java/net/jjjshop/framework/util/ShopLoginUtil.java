@@ -33,7 +33,7 @@ public class ShopLoginUtil {
      */
     public static LoginShopUserRedisVo getLoginShopUserRedisVo() {
         // 获取当前登录用户
-        String token = JwtTokenUtil.getToken();
+        String token = JwtTokenUtil.getToken("shop");
         String username = JwtUtil.getUsername(token);
         if (StringUtils.isBlank(username)) {
             return null;

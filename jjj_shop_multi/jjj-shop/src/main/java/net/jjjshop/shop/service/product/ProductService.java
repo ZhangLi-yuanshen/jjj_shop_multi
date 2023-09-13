@@ -77,4 +77,7 @@ public interface ProductService extends BaseService<Product> {
      * @return
      */
     Boolean setAudit(Integer productId, Integer status);
+
+    //批量删除
+    boolean deleteByIds(List<Integer> productIds);
 }

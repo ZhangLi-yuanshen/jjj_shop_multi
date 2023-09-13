@@ -15,7 +15,7 @@ public class CentMenuUtils {
         List<CenterMenu> list = new ArrayList<>();
         list.add(getDefaultMenu("address", "收货地址", "/pages/user/address/address", "链接到 页面 地址", "image/center_menu/address.png"));
         list.add(getDefaultMenu("my_shop", "我的店铺", "/pages/user/my_shop/my_shop", "链接到 页面 我的店铺", "image/center_menu/my_shop.png"));
-        list.add(getDefaultMenu("my_attention", "我的收藏", "/pages/user/my_attention/my_attention", "链接到 页面 我的收藏", "image/center_menu/my_attention.png"));
+        list.add(getDefaultMenu("my_attention", "我的收藏", "/pages/user/favorite/favorite", "链接到 页面 我的收藏", "image/center_menu/my_attention.png"));
         list.add(getDefaultMenu("my_collect", "我的关注", "/pages/user/my_collect/my_collect", "链接到 页面 我的关注", "image/center_menu/my_collect.png"));
         list.add(getDefaultMenu("settings", "设置", "/pages/user/set/set", "链接到 页面 设置", "image/center_menu/settings.png"));
         return list;

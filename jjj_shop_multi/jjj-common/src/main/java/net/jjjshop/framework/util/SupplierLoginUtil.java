@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.config.constant.CommonRedisKey;
 import net.jjjshop.framework.shiro.util.JwtTokenUtil;
 import net.jjjshop.framework.shiro.util.JwtUtil;
-import net.jjjshop.framework.shiro.vo.LoginShopUserRedisVo;
 import net.jjjshop.framework.shiro.vo.LoginSupplierUserRedisVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -34,7 +33,7 @@ public class SupplierLoginUtil {
      */
     public static LoginSupplierUserRedisVo getLoginSupplierUserRedisVo() {
         // 获取当前登录用户
-        String token = JwtTokenUtil.getToken();
+        String token = JwtTokenUtil.getToken("supplier");
         String username = JwtUtil.getUsername(token);
         if (StringUtils.isBlank(username)) {
             return null;

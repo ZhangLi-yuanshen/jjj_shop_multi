@@ -540,4 +540,28 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
     public Boolean setAudit(Integer productId, Integer status) {
         return this.update(new LambdaUpdateWrapper<Product>().eq(Product::getProductId, productId).set(Product::getAuditStatus, status));
     }
+
+    //批量删除
+    @Override
+    public boolean deleteByIds(List<Integer> productIds) {
+        List<Product> products = this.list(new LambdaQueryWrapper<Product>().in(Product::getProductId, productIds));
+        List<Integer> updateList = new ArrayList<>();
+        List<Integer> deleteList = new ArrayList<>();
+        products.stream().forEach(e->{
+            if(e.getProductStatus() == 30){
+                deleteList.add(e.getProductId());
+            } else{
+                updateList.add(e.getProductId());
+            }
+        });
+
+        //  回收站，和未审核通过的直接删
+        if(CollectionUtils.isNotEmpty(deleteList)) {
+            this.update(new LambdaUpdateWrapper<Product>().in(Product::getProductId, deleteList).set(Product::getIsDelete, 1));
+        }
+        if(CollectionUtils.isNotEmpty(updateList)) {
+            this.update(new LambdaUpdateWrapper<Product>().in(Product::getProductId, updateList).set(Product::getProductStatus, 30));
+        }
+        return true;
+    }
 }

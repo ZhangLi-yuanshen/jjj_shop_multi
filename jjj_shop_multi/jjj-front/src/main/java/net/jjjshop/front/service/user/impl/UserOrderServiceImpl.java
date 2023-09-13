@@ -180,6 +180,10 @@ public class UserOrderServiceImpl implements UserOrderService {
         if (hour > 0) {
             str = str + df.format(hour) + "小时";
         }
+        if(min == 0){
+            //由于定时任务为每分钟执行，不足一分钟时显示为一分钟
+            min = 1.0;
+        }
         if (min > 0) {
             str = str + df.format(min) + "分钟";
         }
