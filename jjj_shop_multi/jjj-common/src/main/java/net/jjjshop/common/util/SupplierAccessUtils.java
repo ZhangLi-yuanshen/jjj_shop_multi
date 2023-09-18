@@ -10,6 +10,7 @@ import net.jjjshop.common.service.shop.ShopAccessService;
 import net.jjjshop.common.service.supplier.SupplierAccessService;
 import net.jjjshop.common.vo.shop.ShopAccessVo;
 import net.jjjshop.common.vo.shop.SupplierAccessVo;
+import net.jjjshop.config.constant.CommonConstant;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ public class SupplierAccessUtils {
 
     public List<SupplierAccessVo> getAll(){
         LambdaQueryWrapper<SupplierAccess> wrapper = Wrappers.lambdaQuery();
+        wrapper.comment(CommonConstant.NOT_WITH_App_Id);
         wrapper.orderByAsc(SupplierAccess::getSort).orderByAsc(SupplierAccess::getCreateTime);
         // 获取所有权限列表
         List<SupplierAccess> list = supplierAccessService.list(wrapper);

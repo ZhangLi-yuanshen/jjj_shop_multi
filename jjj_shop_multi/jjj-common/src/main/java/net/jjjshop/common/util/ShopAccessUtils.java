@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.shop.ShopAccess;
 import net.jjjshop.common.service.shop.ShopAccessService;
 import net.jjjshop.common.vo.shop.ShopAccessVo;
+import net.jjjshop.config.constant.CommonConstant;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class ShopAccessUtils {
 
     public List<ShopAccessVo> getAll(){
         LambdaQueryWrapper<ShopAccess> wrapper = Wrappers.lambdaQuery();
+        wrapper.comment(CommonConstant.NOT_WITH_App_Id);
         wrapper.orderByAsc(ShopAccess::getSort).orderByAsc(ShopAccess::getCreateTime);
         // 获取所有权限列表
         List<ShopAccess> list = shopAccessService.list(wrapper);
