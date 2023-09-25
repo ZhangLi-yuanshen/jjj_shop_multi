@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -75,8 +76,9 @@ public class OrderDataUtils {
             return result;
         } else if ("order_user_total".equals(type)) {
             //查询付款用户数
-            wrapper.groupBy(Order::getUserId);
-            return new BigDecimal(orderService.list(wrapper).size()).setScale(0, BigDecimal.ROUND_DOWN);
+            List<Order> orderList = orderService.list(wrapper);
+            List<Integer> idList = orderList.stream().map(Order::getUserId).collect(Collectors.toList());
+            return new BigDecimal(new HashSet<>(idList).size()).setScale(0, BigDecimal.ROUND_DOWN);
         }
         return BigDecimal.ZERO.setScale(0, BigDecimal.ROUND_DOWN);
     }

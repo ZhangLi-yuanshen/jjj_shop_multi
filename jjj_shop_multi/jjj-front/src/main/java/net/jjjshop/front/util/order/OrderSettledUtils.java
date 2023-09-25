@@ -535,7 +535,7 @@ public class OrderSettledUtils {
                     discountRatio = BigDecimal.valueOf(aloneGradeEquity.getDoubleValue("" + user.getGradeId()) * 0.01).setScale(2, RoundingMode.DOWN);
                 }else{
                     aloneGradeType = 20;
-                    discountRatio = BigDecimal.valueOf(aloneGradeEquity.getDoubleValue("" + user.getGradeId()) * 0.01).setScale(2, RoundingMode.DOWN);
+                    discountRatio = BigDecimal.valueOf(aloneGradeEquity.getDoubleValue("" + user.getGradeId())).divide(product.getTotalPrice(),2, RoundingMode.DOWN);
                 }
             }else{
                 UserGrade grade = userGradeService.getById(user.getGradeId());
@@ -559,7 +559,9 @@ public class OrderSettledUtils {
                 product.setIsUserGrade(true);
                 product.setGradeRatio(discountRatio);
                 product.setGradeProductPrice(gradeProductPrice);
+                //会员折扣的总额差
                 product.setGradeTotalMoney(product.getTotalPrice().subtract(gradeTotalPrice));
+                //商品总价
                 product.setTotalPrice(gradeTotalPrice);
             }
         }

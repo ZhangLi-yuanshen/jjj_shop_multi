@@ -145,8 +145,8 @@ public class ProductDataUtils {
         List<ProductRefundRankingVo> result = productRankingMapper.getRefundRanking(shopSupplierId);
         result.stream().forEach(e -> {
             e.setImagePath(uploadFileUtils.getImagePathByProductId(e.getProductId()));
-            OrderProduct orderProduct = orderProductService.getById(e.getOrderProductId());
-            e.setProductName(productService.getById(orderProduct.getProductId()).getProductName());
+            //名称已经有了
+            //e.setProductName(productService.getById(e.getProductId()).getProductName());
         });
         return result;
     }

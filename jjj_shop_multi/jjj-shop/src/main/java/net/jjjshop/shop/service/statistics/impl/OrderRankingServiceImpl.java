@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 订单统计数据 服务实现类
@@ -193,8 +194,9 @@ public class OrderRankingServiceImpl implements OrderRankingService {
         wrapper.lt(Order::getPayTime,  DateUtil.parse(startDate+" 23:59:59"));
         wrapper.eq(Order::getIsDelete, 0);
         wrapper.eq(Order::getPayStatus, 20);
-        wrapper.groupBy(Order::getUserId);
-        return orderService.list(wrapper).size();
+        List<Order> orderList = orderService.list(wrapper);
+        List<Integer> idList = orderList.stream().map(Order::getUserId).collect(Collectors.toList());
+        return new HashSet<>(idList).size();
     }
 
 

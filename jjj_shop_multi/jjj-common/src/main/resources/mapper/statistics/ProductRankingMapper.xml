@@ -3,7 +3,7 @@
 <mapper namespace="net.jjjshop.common.mapper.statistics.ProductRankingMapper">
 
     <select id="getSaleRanking" resultType="net.jjjshop.common.vo.statistics.ProductSaleRankingVo">
-        SELECT op.*,SUM(op.total_pay_price) AS sales_volume
+        SELECT op.product_id,op.product_name,SUM(op.total_num) AS total_num
         FROM ${prefix}order_product AS op
         LEFT JOIN ${prefix}order o
         ON o.order_id=op.order_id
@@ -13,14 +13,14 @@
                 AND o.shop_supplier_id = #{shopSupplierId}
             </if>
         </where>
-        GROUP BY op.product_id
+        GROUP BY op.product_id,op.product_name
         HAVING total_num>0
         ORDER BY total_num desc
         LIMIT 0,10
     </select>
 
     <select id="getRefundRanking" resultType="net.jjjshop.common.vo.statistics.ProductRefundRankingVo">
-        SELECT ore.*,op.product_id,count(op.product_id) AS refund_count
+        SELECT op.product_name,op.product_id,count(op.product_id) AS refund_count
         FROM ${prefix}order_refund ore
         JOIN ${prefix}order_product op
         ON op.order_product_id=ore.order_product_id
@@ -29,7 +29,7 @@
                 AND ore.shop_supplier_id = #{shopSupplierId}
             </if>
         </where>
-        GROUP BY op.product_id
+        GROUP BY op.product_id,op.product_name
         HAVING refund_count>0
         ORDER BY refund_count DESC
         LIMIT 0,10
