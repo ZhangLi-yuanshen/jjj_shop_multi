@@ -4,13 +4,13 @@
 ### 项目介绍
 
 
-三勾多商户小程序商城基于springboot+element-ui+uniapp打造的面向开发的小程序商城，方便二次开发或直接使用，可发布到多端，包括微信小程序、微信公众号、QQ小程序、支付宝小程序、字节跳动小程序、百度小程序、android端、ios端。
+三勾多商户小程序商城基于springboot+element-plus+uniapp打造的面向开发的小程序商城，方便二次开发或直接使用，可发布到多端，包括微信小程序、微信公众号、QQ小程序、支付宝小程序、字节跳动小程序、百度小程序、android端、ios端。
 
 
 ### 软件架构
 
 - 后端：  springboot2.3.12
-- 管理端页面：  element-ui 2.0
+- 管理端页面：  element-plus vue3.0
 - 移动端：  uniapp
 - 数据库：  MySQL5.7
 
