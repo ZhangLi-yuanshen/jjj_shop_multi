@@ -15,7 +15,7 @@ export const pay = (result, self, success, fail) => {
 			provider: 'wxpay',
 			timeStamp: result.data.payment.timeStamp,
 			nonceStr: result.data.payment.nonceStr,
-			package: result.data.payment.package,
+			package: result.data.payment.packageValue,
 			signType: 'MD5',
 			paySign: result.data.payment.paySign,
 			success: res => {
