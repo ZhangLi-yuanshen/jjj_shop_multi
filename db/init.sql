@@ -1719,3 +1719,18 @@ INSERT INTO `jjjshop_supplier_user` VALUES ('1','1','admin','b251dd','4250df939f
 INSERT INTO `jjjshop_user` VALUES ('1','oIxeb5f564zFB9-4yNkXT_cYiRsI','','','o8tgQv3vZhzsMfVtPMW77ZxYfdlo','','h5','c1','18888888888','b251dd','4250df939fa1ed8635a68f09f8efd3a99ba5671ad325c4e167cce275c36d2ad7','http://43.143.81.208/api/resource/uploads/20221027140907562.jpg','0','','','','8','99600.30','96869','399.70','0.00','1','2','10','0','0.00','0.00','2','0','0','10001','2022-10-14 15:45:05',NULL);
 INSERT INTO `jjjshop_user_address` VALUES ('1','123456','123456','1','2','3','','123456','1','10001','2022-10-19 09:38:25',NULL), ('2','123456','123456','1','2','3','','123456','1','10001','2022-10-19 09:38:25',NULL), ('3','123456','123456','1','2','3','','123456','1','10001','2022-10-19 09:38:25',NULL), ('8','122','111','1','2','3','','111','1','10001','2022-11-02 11:34:33',NULL);
 INSERT INTO `jjjshop_user_grade` VALUES ('1','普通会员','0','0','0','0','0','0','100','1','','100','0','0','10001','2022-06-22 15:28:23','2022-08-15 13:52:46'), ('2','超级会员','1','10','0','0','0','0','95','0','会员消费满10元可升级到此等级','100','1','0','10001','2022-10-27 14:55:24',NULL);
+
+
+ALTER TABLE `jjjshop_order_refund_image` MODIFY COLUMN `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' AFTER `app_id`;
+
+ALTER TABLE `jjjshop_printer` MODIFY COLUMN `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' AFTER `app_id`;
+
+ALTER TABLE `jjjshop_printer` MODIFY COLUMN `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间' AFTER `create_time`;
+
+ALTER TABLE `jjjshop_product_comment` MODIFY COLUMN `describe_score` tinyint(4) NULL DEFAULT 5 COMMENT '描述评分' AFTER `score`;
+
+ALTER TABLE `jjjshop_store_order` MODIFY COLUMN `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' AFTER `app_id`;
+
+ALTER TABLE `jjjshop_user_visit` MODIFY COLUMN `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' AFTER `app_id`;
+
+ALTER TABLE `jjjshop_user_visit` MODIFY COLUMN `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间' AFTER `create_time`;
