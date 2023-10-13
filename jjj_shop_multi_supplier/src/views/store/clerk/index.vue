@@ -32,7 +32,7 @@
       <div class="table-wrap">
         <el-table size="small" :data="tableData" border style="width: 100%" v-loading="loading">
           <el-table-column prop="clerkId" label="门店ID" width="60"></el-table-column>
-          <el-table-column prop="nickName" label="微信头像" width="70">
+          <el-table-column prop="avatarurl" label="微信头像" width="70">
             <template #default="scope">
               <img v-if="scope.row" v-img-url="scope.row.avatarUrl" width="30" height="30" />
             </template>

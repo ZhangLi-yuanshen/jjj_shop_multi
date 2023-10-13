@@ -19,7 +19,7 @@
             <el-option v-for="(item, index) in sex" :key="index" :label="item" :value="index"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="微信昵称"><el-input placeholder="请输入微信昵称" v-model="formInline.nickName"></el-input></el-form-item>
+        <el-form-item label="微信昵称"><el-input placeholder="请输入微信昵称" v-model="formInline.nickname"></el-input></el-form-item>
         <el-form-item>
           <el-button icon="Search" @click="search">查询</el-button>
         </el-form-item>
@@ -32,10 +32,10 @@
         <el-table :data="tableData" size="small" border style="width: 100%" v-loading="loading" @selection-change="handleSelectionChange">
           <el-table-column prop="" label="微信头像" width="70">
             <template #default="scope">
-              <img :src="scope.row.avatarUrl" class="radius" width="30" height="30" />
+              <img :src="scope.row.avatarurl" class="radius" width="30" height="30" />
             </template>
           </el-table-column>
-          <el-table-column prop="nickName" label="昵称"></el-table-column>
+          <el-table-column prop="nickname" label="昵称"></el-table-column>
           <el-table-column prop="balance" label="用户余额">
             <template #default="scope">
               <span class="orange">￥{{ scope.row.balance }}</span>

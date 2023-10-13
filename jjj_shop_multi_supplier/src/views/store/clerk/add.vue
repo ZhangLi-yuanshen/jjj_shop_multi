@@ -14,7 +14,7 @@
         <el-row>
           <el-button @click="addClick" icon="Plus">选择会员</el-button>
           <div v-if="form.userId!=''" class="img">
-            <img :src="userInfo.avatarUrl" width="100" height="100" />
+            <img :src="userInfo.avatarurl" width="100" height="100" />
           </div>
           <div>
             <el-link :underline="false" disabled>选择后不可更改</el-link>
