@@ -135,7 +135,7 @@
 
       /*关闭获取用户弹窗*/
       closeDialogFunc(e) {
-        if (e.type != 'error') {
+        if (e && e.type != 'error') {
           this.userInfo = e.params[0];
           this.form.userId = e.params[0].userId;
         }
