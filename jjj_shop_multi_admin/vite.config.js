@@ -1,6 +1,4 @@
-import {
-	defineConfig
-} from 'vite';
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
@@ -10,18 +8,20 @@ import {
 import path from 'path';
 import legacy from '@vitejs/plugin-legacy';
 import viteCompression from 'vite-plugin-compression';
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  // 获取当前环境的配置
+  const config = loadEnv(mode, './')
+  return {
 	base: process.env.NODE_ENV === 'production' ? './' : '/',
-	// base: "./",
-	server: {
-		proxy: {
-			'/api': {
-				target: 'http://127.0.0.1:8890',
-				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/api/, ''),
-			},
-		},
-	},
+    server: {
+      proxy: {
+        '/api': {
+          target: config.VITE_BASIC_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        }
+      }
+    },
 	plugins: [
 		viteCompression({
 			verbose: true,
@@ -46,7 +46,7 @@ export default defineConfig({
 		preprocessorOptions: {
 			// 全局样式引入
 			// scss: {
-			// 	additionalData: '@import "./src/theme/element.scss";@import "./src/theme/main.scss";',
+			// 	additionalData: '@import "./static/scss/element.scss";@import "./static/scss/main.scss";',
 			// 	javascriptEnabled: true,
 			// }
 		}
@@ -57,10 +57,9 @@ export default defineConfig({
 		},
 	},
 	build: {
+		assetsDir: 'static',
 		minify: 'terser',
 		productionSouceMap: false,
-		assetsRoot: path.resolve(__dirname, '../dist'),
-		assetsSubDirectory: 'static',
 		assetsPublicPath: '/admin/',
 		rollupOptions: {
 			output: {
@@ -81,5 +80,5 @@ export default defineConfig({
 			},
 		}
 	}
-
-});
+  }
+})

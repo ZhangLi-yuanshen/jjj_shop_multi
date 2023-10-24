@@ -1,5 +1,5 @@
 export default {
-	baseURL: process.env.NODE_ENV === 'development' ? '/api/api' : '/api',
+	baseURL: process.env.NODE_ENV === 'development' ? '/api/api' : `${import.meta.env.VITE_BASIC_URL}/api`,
 	tokenName: 'Tokenshop',
 	strongToken: "jjjShopToken",
 	renderMenu: "jjjShopRenderMenus",
