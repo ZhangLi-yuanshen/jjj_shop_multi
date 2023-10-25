@@ -82,8 +82,8 @@
           <el-table-column fixed="right" label="操作" width="80">
             <template  #default="scope">
               <div class="table-btn-column">
-                <el-button v-if="scope.row.productStatus==10" @click="editClick(scope.row)" type="text" size="small" v-auth="'/product/product/edit'">编辑商品</el-button>
-                <el-button v-if="scope.row.productStatus==0" @click="editClick(scope.row)" type="text" size="small" v-auth="'/product/product/edit'">审核商品</el-button>
+                <el-button v-if="scope.row.auditStatus==10" @click="editClick(scope.row)" type="text" size="small" v-auth="'/product/product/edit'">编辑商品</el-button>
+                <el-button v-if="scope.row.auditStatus==0" @click="editClick(scope.row)" type="text" size="small" v-auth="'/product/product/edit'">审核商品</el-button>
                 <div>
                   <el-button @click="delClick(scope.row)" type="text" size="small" v-auth="'/product/product/delete'">删除商品</el-button>
                 </div>
