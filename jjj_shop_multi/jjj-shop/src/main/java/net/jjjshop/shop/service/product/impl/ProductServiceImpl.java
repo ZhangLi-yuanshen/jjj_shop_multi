@@ -537,8 +537,11 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
      * @param
      * @return
      */
-    public Boolean setAudit(Integer productId, Integer status) {
-        return this.update(new LambdaUpdateWrapper<Product>().eq(Product::getProductId, productId).set(Product::getAuditStatus, status));
+    public Boolean setAudit(Integer productId, Integer status, String remark) {
+        return this.update(new LambdaUpdateWrapper<Product>()
+                .eq(Product::getProductId, productId)
+                .set(Product::getAuditStatus, status)
+                .set(Product::getAuditRemark, remark));
     }
 
     //批量删除

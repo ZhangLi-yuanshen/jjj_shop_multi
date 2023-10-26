@@ -97,8 +97,8 @@ public class ProductController {
     @RequiresPermissions("/product/product/edit")
     @OperationLog(name = "audit")
     @ApiOperation(value = "audit", response = String.class)
-    public ApiResult<String> audit(Integer productId, Integer state) {
-        if(productService.setAudit(productId, state)) {
+    public ApiResult<String> audit(Integer productId, Integer state, String remark) {
+        if(productService.setAudit(productId, state,remark)) {
             return ApiResult.ok(null, "修改成功");
         }else{
             return ApiResult.fail("修改失败");
