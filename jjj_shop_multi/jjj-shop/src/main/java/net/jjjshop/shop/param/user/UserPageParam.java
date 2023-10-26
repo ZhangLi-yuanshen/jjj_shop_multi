@@ -29,7 +29,7 @@ public class UserPageParam extends BasePageOrderParam {
     private String search;
 
     @ApiModelProperty("微信昵称")
-    private String nickName;
+    private String nickname;
 
     @ApiModelProperty("性别")
     private Integer sex;

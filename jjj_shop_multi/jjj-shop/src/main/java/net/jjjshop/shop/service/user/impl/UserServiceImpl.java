@@ -68,8 +68,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         if(StringUtils.isNotEmpty(userPageParam.getSearch())){
             wrapper.like(User::getNickname, userPageParam.getSearch());
         }
-        if(StringUtils.isNotEmpty(userPageParam.getNickName())){
-            wrapper.like(User::getNickname, userPageParam.getNickName());
+        if(StringUtils.isNotEmpty(userPageParam.getNickname())){
+            wrapper.and(i->i.or().like(User::getNickname, userPageParam.getNickname())
+                    .or().like(User::getMobile, userPageParam.getNickname()));
         }
         if(userPageParam.getGradeId() != null && userPageParam.getGradeId() != 0){
             wrapper.eq(User::getGradeId, userPageParam.getGradeId());
