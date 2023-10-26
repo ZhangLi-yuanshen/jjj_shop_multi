@@ -188,7 +188,8 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         }
         //待审核
         if (type.equalsIgnoreCase("audit")) {
-            wrapper.eq(Product::getAuditStatus, 0);
+            wrapper.ne(Product::getProductStatus, 30)
+                    .eq(Product::getAuditStatus, 0);
         }
         //未通过
         if (type.equalsIgnoreCase("noAudit")) {

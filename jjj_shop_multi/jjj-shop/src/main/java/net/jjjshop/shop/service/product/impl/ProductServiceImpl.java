@@ -165,7 +165,8 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         }
         //库存紧张
         if (type.equalsIgnoreCase("audit")) {
-            wrapper.eq(Product::getAuditStatus, 0);
+            wrapper.ne(Product::getProductStatus, 30)
+                    .eq(Product::getAuditStatus, 0);
         }
         //已售罄
         if (type.equalsIgnoreCase("noAudit")) {
