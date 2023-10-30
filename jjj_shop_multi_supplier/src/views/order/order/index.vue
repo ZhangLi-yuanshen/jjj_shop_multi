@@ -269,8 +269,10 @@
         Params.dataType = self.activeName;
         Params.pageIndex = self.curPage;
         Params.pageSize = self.pageSize;
-        Params.startDate = search.createTime[0];
-        Params.endDate = search.createTime[1];
+        if(search.createTime && search.createTime.length>1){
+          Params.startDate = search.createTime[0];
+          Params.endDate = search.createTime[1];
+        }
         Params.orderNo = search.orderNo;
         Params.deliveryType = search.style_id;
         self.loading = true;
@@ -336,8 +338,10 @@
         let search = this.searchForm;
         let Params = {};
         Params.dataType = self.activeName;
-        Params.startDate = search.createTime[0];
-        Params.endDate = search.createTime[1];
+        if(search.createTime && search.createTime.length>1){
+          Params.startDate = search.createTime[0];
+          Params.endDate = search.createTime[1];
+        }
         Params.tokensupplier = self.token;
         let baseUrl = window.location.protocol + '//' + window.location.host;
         window.location.href = baseUrl + '/api/supplier/order/operate/export?' + qs.stringify(Params);
