@@ -8,6 +8,7 @@ import net.jjjshop.common.entity.user.User;
 import net.jjjshop.common.entity.user.UserAddress;
 import net.jjjshop.common.mapper.user.UserAddressMapper;
 import net.jjjshop.common.service.settings.RegionService;
+import net.jjjshop.config.constant.CommonConstant;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.front.param.user.UserAddressParam;
@@ -117,7 +118,8 @@ public class UserAddressServiceImpl extends BaseServiceImpl<UserAddressMapper, U
      * @return
      */
     public UserAddressVo detail(Integer addressId) {
-        UserAddress userAddress = this.getById(addressId);
+        UserAddress userAddress = this.getOne(new LambdaQueryWrapper<UserAddress>()
+                .eq(UserAddress::getAddressId,addressId).comment(CommonConstant.NOT_WITH_App_Id));
         UserAddressVo vo = new UserAddressVo();
         BeanUtils.copyProperties(userAddress, vo);
         vo.setRegion(this.getDetailRegion(vo));

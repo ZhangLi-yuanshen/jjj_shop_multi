@@ -392,9 +392,13 @@
 					storeId: self.storeId,
 					couponId: self.couponId,
 					isUsePoints: self.isUsePoints,
-					roomId: self.roomId,
 					paySource: self.getPlatform(),
 				};
+        if(self.roomId && self.roomId != 'undefined'){
+          params.roomId = self.roomId;
+        }else {
+          params.roomId = 0;
+        }
 				if (JSON.stringify(self.storeData) == "{}") {
 					params = params;
 				} else {
@@ -588,11 +592,14 @@
 					});
 
 					let params = {
-						roomId: self.roomId || 0,
 						couponId: self.couponId,
 						isUsePoints: self.isUsePoints
 					};
-
+          if(self.roomId && self.roomId != 'undefined'){
+            params.roomId = self.roomId;
+          }else {
+            params.roomId = 0;
+          }
 					params = Object.assign(params, {
 						supplier: self.storeData
 					});
