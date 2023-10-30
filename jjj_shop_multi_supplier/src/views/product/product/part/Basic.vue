@@ -6,7 +6,7 @@
       <el-input v-model="form.model.productName" class="max-w460"></el-input>
     </el-form-item>
     <el-form-item label="商品编码："><el-input v-model="form.model.productNo" class="max-w460"></el-input></el-form-item>
-    <el-form-item label="所属分类：" :rules="[{ required: true, message: '你选择商品分类' }]" prop="model.categoryId">
+    <el-form-item label="所属分类：" :rules="[{ required: true, message: '请选择商品分类' }]" prop="model.categoryId">
       <el-select v-model="form.model.categoryId" filterable>
         <template v-for="cat in form.category" :key="cat.categoryId">
           <el-option :value="cat.categoryId" :label="cat.name"></el-option>
