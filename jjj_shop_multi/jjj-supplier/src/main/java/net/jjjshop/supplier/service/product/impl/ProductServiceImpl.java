@@ -113,7 +113,7 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
             List<Integer> subCategoryIds = productCategoryCache.getSubCategoryId(productPageParam.getCategoryId());
             wrapper.in(Product::getCategoryId, subCategoryIds);
         }
-
+        wrapper.orderByAsc(Product::getProductSort);
         IPage<Product> iPage = this.page(page, wrapper);
         // 最终返回分页对象
         IPage<ProductVo> resultPage = iPage.convert(item -> {
