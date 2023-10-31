@@ -506,6 +506,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     @Transactional(rollbackFor = Exception.class)
     public Boolean verificationOrder(OrderExtractParam orderExtractParam) {
         Order order = this.getById(orderExtractParam.getOrderId());
+        //核销员
+        if(orderExtractParam.getExtractClerkId() == null){
+            throw new BusinessException("核销员不能为空");
+        }
         if (order.getPayStatus() != 20
                 || order.getDeliveryType() != DeliveryTypeEnum.EXTRACT.getValue()
                 || order.getDeliveryStatus() == 20
