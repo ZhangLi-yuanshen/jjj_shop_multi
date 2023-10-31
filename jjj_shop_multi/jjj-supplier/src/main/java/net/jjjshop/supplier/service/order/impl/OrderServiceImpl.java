@@ -32,6 +32,7 @@ import net.jjjshop.supplier.service.order.ExportService;
 import net.jjjshop.supplier.service.order.OrderAddressService;
 import net.jjjshop.supplier.service.order.OrderProductService;
 import net.jjjshop.supplier.service.order.OrderService;
+import net.jjjshop.supplier.service.product.ProductService;
 import net.jjjshop.supplier.service.settings.ExpressService;
 import net.jjjshop.supplier.service.store.StoreClerkService;
 import net.jjjshop.supplier.service.store.StoreOrderService;
@@ -95,6 +96,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     private MessageUtils messageUtils;
     @Autowired
     private StoreOrderService storeOrderService;
+    @Autowired
+    private ProductService productService;
 
     /**
      * 订单列表
@@ -187,6 +190,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
             OrderProductVo vo = new OrderProductVo();
             BeanUtils.copyProperties(e, vo);
             vo.setImagePath(uploadFileUtils.getFilePath(vo.getImageId()));
+            //商品编码
+            vo.setProductNo(productService.getById(vo.getProductId()).getProductNo());
             return vo;
         }).collect(Collectors.toList());
     }
