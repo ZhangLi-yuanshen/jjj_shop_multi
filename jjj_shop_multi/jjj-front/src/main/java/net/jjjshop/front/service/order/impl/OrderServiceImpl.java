@@ -28,6 +28,7 @@ import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.front.mapper.order.OrderMapper;
+import net.jjjshop.front.param.order.OrderBuyParam;
 import net.jjjshop.front.param.order.OrderCreateParam;
 import net.jjjshop.front.param.order.OrderPageParam;
 import net.jjjshop.front.param.order.OrderPayParam;
@@ -39,6 +40,7 @@ import net.jjjshop.front.service.user.UserOrderService;
 import net.jjjshop.front.vo.order.OrderDetailVo;
 import net.jjjshop.front.vo.order.OrderListVo;
 import net.jjjshop.front.vo.product.ProductBuyVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -158,6 +160,13 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         order.setVirtualAuto(params.getSupplier().getProductList().get(0).getVirtualAuto());
         order.setExpressPrice(params.getSupplier().getOrderData().getExpressPrice());
         order.setShopSupplierId(params.getSupplier().getShopSupplierId());
+
+        //订单备注
+        OrderBuyParam.StoreData  storeData = params.getOrderBuyParam().getSupplier().get(params.getSupplier().getShopSupplierId());
+        if(storeData != null && StringUtils.isNotEmpty(storeData.getRemark())){
+            order.setBuyerRemark(storeData.getRemark());
+        }
+
         // 自提
         if (order.getDeliveryType().intValue() == DeliveryTypeEnum.EXTRACT.getValue().intValue()) {
             if(params.getSupplier().getOrderData().getExtractStore() == null){
