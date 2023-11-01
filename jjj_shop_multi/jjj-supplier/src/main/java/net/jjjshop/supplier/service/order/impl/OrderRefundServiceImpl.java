@@ -21,6 +21,7 @@ import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.supplier.param.order.OrderRefundPageParam;
 import net.jjjshop.supplier.param.order.OrderRefundParam;
 import net.jjjshop.supplier.service.order.*;
+import net.jjjshop.supplier.service.product.ProductService;
 import net.jjjshop.supplier.service.settings.ExpressService;
 import net.jjjshop.supplier.service.settings.ReturnAddressService;
 import net.jjjshop.supplier.service.user.UserService;
@@ -67,6 +68,8 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
     private OrderRefundUtils orderRefundUtils;
     @Autowired
     private MessageUtils messageUtils;
+    @Autowired
+    private ProductService productService;
 
     /**
      * 获取售后订单分页列表
@@ -321,6 +324,8 @@ public class OrderRefundServiceImpl extends BaseServiceImpl<OrderRefundMapper, O
         OrderProductVo orderProductVo = new OrderProductVo();
         BeanUtils.copyProperties(orderProduct, orderProductVo);
         orderProductVo.setImagePath(uploadFileUtils.getFilePath(orderProductVo.getProductId()));
+        //商品编码
+        orderProductVo.setProductNo(productService.getById(orderProductVo.getProductId()).getProductNo());
         vo.setOrderProduct(orderProductVo);
         vo.setUser(userService.getById(orderRefund.getUserId()));
         Order order = orderService.getById(orderRefund.getOrderId());

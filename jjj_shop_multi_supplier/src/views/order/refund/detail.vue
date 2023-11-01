@@ -19,7 +19,7 @@
           <el-col :span="5">
             <div class="pb16">
               <span class="gray9">买家：</span>
-              {{ detail.user.nickName }}
+              {{ detail.user.nickname }}
             </div>
           </el-col>
           <el-col :span="5">
@@ -44,7 +44,9 @@
       <div class="refund-detail-content">
         <el-row>
           <el-col :span="5">
-            <div class="pb16"><span class="gray9">商品编码：</span></div>
+            <div class="pb16"><span class="gray9">商品编码：</span>
+              {{ detail.orderProduct.productNo }}
+            </div>
           </el-col>
           <el-col :span="19">
             <div class="pb16">
