@@ -1,4 +1,4 @@
-import config from '../config.js'
+import config from '../env/config.js'
 /*导航菜单白名单*/
 const tabBarLinks = [
 	'/pages/index/index',
@@ -72,7 +72,9 @@ export const gotopage = (url, type) => {
 			if (shareLinks.indexOf(p) > -1) {
 				//公众号
 				// #ifdef  H5
-				window.location.href = config.app_url + config.h5_addr + url;
+				if(config.app_url.search(/h5/) < 0){
+					window.location.href = config.app_url + config.h5_addr + url;
+				}
 				return;
 				// #endif
 			}

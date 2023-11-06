@@ -97,7 +97,7 @@
 	import navBar from '@/components/navBar/navBar.vue';
 	import uniLoadMore from '@/components/uni-load-more.vue';
 	import searchProduct from '@/components/searchProduct.vue';
-	import config from '@/config.js';
+	import config from '@/env/config.js';
 	export default {
 		components: {
 			diy,

@@ -20,7 +20,7 @@ import headerBar from './components/header.vue'
 /*底部数据*/
 import tabBar from "@/components/tabbar/footTabbar.vue"
 /* 配置 */
-import config from './config.js'
+import config from "./env/config.js";
 import {
 	gotopage
 } from '@/common/gotopage.js'

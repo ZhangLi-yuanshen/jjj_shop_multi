@@ -1,16 +1,19 @@
 import { defineConfig } from 'vite';
 import uni from '@dcloudio/vite-plugin-uni'
+import dev_url from './env/development.js';
 export default defineConfig({
 	plugins: [uni()],
 	server: {
-		port: 8080,
 		proxy: {
 			'/api': {
-				target: 'http://127.0.0.1:8890',
+				target: dev_url.url,//线上
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 			},
 		},
+		host: "0.0.0.0",
+		port: 8080, // 端口号
+		https: false, // https:{type:Boolean}
 	},
 
 });
