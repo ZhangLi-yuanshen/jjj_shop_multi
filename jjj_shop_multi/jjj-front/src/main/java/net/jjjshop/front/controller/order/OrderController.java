@@ -19,6 +19,7 @@ import net.jjjshop.front.vo.product.ProductBuyVo;
 import net.jjjshop.front.vo.supplier.SupplierBuyVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,7 @@ import java.util.Map;
 
 @Slf4j
 @Api(value = "order", tags = {"订单管理"})
+@Scope("prototype")
 @RestController
 @RequestMapping("/front/order/order")
 public class OrderController extends BaseController {
