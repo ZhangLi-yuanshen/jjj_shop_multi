@@ -33,7 +33,7 @@ public class UploadUtil {
      * 上传文件
      * @param multipartFile
      */
-    public void upload(MultipartFile multipartFile, UploadFile file) throws Exception {
+    public synchronized void upload(MultipartFile multipartFile, UploadFile file) throws Exception {
         // 获取配置
         JSONObject vo = settingUtils.getSetting(SettingEnum.STORAGE.getKey(), null);
         StorageVo storageVo = JSONObject.toJavaObject(vo, StorageVo.class);
