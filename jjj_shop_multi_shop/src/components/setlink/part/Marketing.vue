@@ -6,17 +6,7 @@
     -->
   <div class="marketing-box">
     <el-tabs v-model="activeTab">
-      <el-tab-pane label="签到" name="signin"></el-tab-pane>
-      <el-tab-pane label="积分商城" name="points"></el-tab-pane>
-      <el-tab-pane label="秒杀" name="seckill"></el-tab-pane>
-      <el-tab-pane label="拼团" name="assemble"></el-tab-pane>
-      <el-tab-pane label="砍价" name="bargain"></el-tab-pane>
-      <el-tab-pane label="邀请有礼" name="invitation"></el-tab-pane>
-      <el-tab-pane label="优惠券" name="coupon"></el-tab-pane>
-      <el-tab-pane label="分销" name="agent"></el-tab-pane>
-      <el-tab-pane label="万能表单" name="table"></el-tab-pane>
-      <el-tab-pane label="幸运转盘" name="lottery"></el-tab-pane>
-      <el-tab-pane label="任务中心" name="task"></el-tab-pane>
+
     </el-tabs>
     <el-select v-model="activePage" placeholder="请选择" class="percent-w100" @change="changeFunc" value-key="id">
       <el-option v-for="(item, index) in pages" :key="index" :label="item.name" :value="item"></el-option>
@@ -30,96 +20,11 @@ export default {
   data() {
     return {
       /*tab切换选择中值*/
-      activeTab: 'coupon',
+      activeTab: '',
       /*页面数据*/
       pages: [],
       /*选中的值*/
       activePage: null,
-      /*分销数据*/
-      agentList: [
-        {
-          id: 0,
-          url: 'pages/agent/index/index',
-          name: '分销',
-          type: '营销'
-        }
-      ],
-      seckillList: [
-        {
-          id: 0,
-          url: 'pages/plus/seckill/list/list',
-          name: '秒杀',
-          type: '营销'
-        }
-      ],
-      /*签到数据*/
-      signinList: [
-        {
-          id: 0,
-          url: 'pages/plus/signin/signin',
-          name: '签到',
-          type: '营销'
-        }
-      ],
-      /*积分商城数据*/
-      pointsList: [
-        {
-          id: 0,
-          url: 'pages/plus/points/list/list',
-          name: '积分商城',
-          type: '营销'
-        }
-      ],
-      /*拼团*/
-      assembleList: [
-        {
-          id: 0,
-          url: 'pages/plus/assemble/list/list',
-          name: '拼团',
-          type: '营销'
-        }
-      ],
-      /*砍价*/
-      bargainList: [
-        {
-          id: 0,
-          url: 'pages/plus/bargain/list/list',
-          name: '砍价',
-          type: '营销'
-        }
-      ],
-      // 礼包购活动
-      packageList: [],
-      // 邀请有礼活动
-      invitationList: [],
-      /*优惠券*/
-      couponList: [
-        {
-          id: 0,
-          url: 'pages/coupon/coupon',
-          name: '优惠券',
-          type: '营销'
-        }
-      ],
-      /*幸运大转盘*/
-      lotteryList: [
-        {
-          id: 0,
-          url: 'pages/plus/lottery/lottery',
-          name: '幸运转盘',
-          type: '营销'
-        }
-      ],
-      // 万能表单
-      tableList: [],
-      taskList: [
-        {
-          id: 0,
-          url: 'pages/task/index',
-          name: '任务中心',
-          type: '营销'
-        }
-      ]
     };
   },
   watch: {
