@@ -16,7 +16,7 @@ export const pay = (result, self, success, fail) => {
 			timeStamp: result.data.payment.timeStamp,
 			nonceStr: result.data.payment.nonceStr,
 			package: result.data.payment.packageValue,
-			signType: 'MD5',
+			signType: result.data.payment.signType,
 			paySign: result.data.payment.paySign,
 			success: res => {
 				paySuccess(result, self, success);
@@ -32,12 +32,12 @@ export const pay = (result, self, success, fail) => {
 		// #ifdef  H5
 		if (self.isWeixin()) {
 			WeixinJSBridge.invoke('getBrandWCPayRequest', {
-				timeStamp: result.data.payment.timeStamp,
-				nonceStr: result.data.payment.nonceStr,
-				package: result.data.payment.packageValue,
-				signType: 'MD5',
-				paySign: result.data.payment.paySign,
-				appId: result.data.payment.appId
+					timeStamp: result.data.payment.timeStamp,
+					nonceStr: result.data.payment.nonceStr,
+					package: result.data.payment.packageValue,
+					signType: result.data.payment.signType,
+					paySign: result.data.payment.paySign,
+					appId: result.data.payment.appId
 			},
 				function(res) {
 					if (res.err_msg == "get_brand_wcpay_request:ok") {
@@ -54,7 +54,11 @@ export const pay = (result, self, success, fail) => {
 				}
 			);
 		} else {
-			window.location.href = result.data.payment.mwebUrl + '&redirect_url=' + result.data.returnUrl;
+			if(result.data.wxPayVersion == 2){
+				window.location.href = result.data.payment.mwebUrl + '&redirect_url=' + result.data.returnUrl;
+			}else{
+				window.location.href = result.data.payment + '&redirect_url=' + result.data.returnUrl;
+			}
 			return;
 		}
 		// #endif
@@ -96,12 +100,12 @@ function wxAppPay(result, self, success, fail) {
 	uni.requestPayment({
 		provider: 'wxpay',
 		orderInfo: {
-			"appid": payment.appId,
-			"noncestr": payment.nonceStr,
+			"appid": result.data.wxPayVersion == 2?payment.appId:payment.appid,
+			"noncestr": result.data.wxPayVersion == 2?payment.nonceStr:payment.noncestr,
 			"package": payment.packageValue,
 			"partnerid": payment.partnerId,
 			"prepayid": payment.prepayId,
-			"timestamp": payment.timeStamp,
+			"timestamp": result.data.wxPayVersion == 2?payment.timeStamp:payment.timestamp,
 			"sign": payment.sign
 		},
 		success(res) {

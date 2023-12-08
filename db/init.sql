@@ -1736,3 +1736,13 @@ ALTER TABLE `jjjshop_user_visit` MODIFY COLUMN `create_time` timestamp NULL DEFA
 ALTER TABLE `jjjshop_user_visit` MODIFY COLUMN `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间' AFTER `create_time`;
 
 UPDATE `jjjshop_center_menu` SET `path` = '/pages/user/favorite/favorite' WHERE `name` = '我的收藏';
+
+ALTER TABLE `jjjshop_app`
+    ADD COLUMN `cert_pem` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '证书文件cert' AFTER `p12`,
+ADD COLUMN `key_pem` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '证书文件key' AFTER `cert_pem`;
+
+ALTER TABLE `jjjshop_app`
+    ADD COLUMN `wx_pay_kind` tinyint(3) NULL DEFAULT 2 COMMENT '微信支付方式v2：2,v3：3' AFTER `pay_type`;
+
+ALTER TABLE `jjjshop_app`
+    ADD COLUMN `wechatpay_serial` varchar(255) NULL DEFAULT '' COMMENT '微信平台证书序列号' AFTER `key_pem`;

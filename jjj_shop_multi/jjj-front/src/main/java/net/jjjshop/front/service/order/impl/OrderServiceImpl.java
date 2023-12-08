@@ -32,6 +32,7 @@ import net.jjjshop.front.param.order.OrderBuyParam;
 import net.jjjshop.front.param.order.OrderCreateParam;
 import net.jjjshop.front.param.order.OrderPageParam;
 import net.jjjshop.front.param.order.OrderPayParam;
+import net.jjjshop.front.service.app.AppService;
 import net.jjjshop.front.service.order.*;
 import net.jjjshop.front.service.store.StoreOrderService;
 import net.jjjshop.front.service.supplier.SupplierService;
@@ -93,6 +94,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     private OrderTradeService orderTradeService;
     @Autowired
     private SupplierService supplierService;
+    @Autowired
+    private AppService appService;
 
     /**
      * 创建订单
@@ -325,6 +328,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 if(OrderPayTypeEnum.WECHAT.getValue().intValue() == orderPayParam.getPayType().intValue()){
                     payment = payUtils.onPaymentByWechat(user, tradeNo, onlineMoney,
                             orderPayParam.getPaySource(), result, OrderTypeEnum.MASTER.getValue(), multiple);
+                    // 微信支付版本号
+                    result.put("wxPayVersion", appService.getById(user.getAppId()).getWxPayKind());
                 }else if(OrderPayTypeEnum.ALIPAY.getValue().intValue() == orderPayParam.getPayType().intValue()){
                     // 支付宝支付
                     payment = payUtils.onPaymentByAlipay(user, tradeNo, onlineMoney,
@@ -333,7 +338,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 }
             } catch (Exception e) {
                 log.info("支付异常：", e.getMessage());
-                throw new BusinessException("支付失败，请重试");
+                throw new BusinessException("支付失败:"+e.getMessage());
             }
         }
         result.put("orderId", orderPayParam.getOrderId());

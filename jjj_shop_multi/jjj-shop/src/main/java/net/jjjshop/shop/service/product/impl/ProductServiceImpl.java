@@ -429,7 +429,7 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         result.put("category", productCategoryCache.getCache());
         // 配送模板
         result.put("delivery", deliveryService.list(new LambdaQueryWrapper<Delivery>()
-                .eq(Delivery::getShopSupplierId, SupplierLoginUtil.getShopSupplierId())
+                .eq(Delivery::getShopSupplierId, product.getShopSupplierId())
                 .orderByAsc(Delivery::getSort)));
         // 会员等级
         result.put("gradeList", userUtils.getUsableGradeList(null));

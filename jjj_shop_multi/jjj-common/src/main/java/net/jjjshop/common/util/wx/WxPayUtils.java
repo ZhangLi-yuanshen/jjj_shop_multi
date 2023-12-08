@@ -1,8 +1,10 @@
 package net.jjjshop.common.util.wx;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
+import com.github.binarywang.wxpay.v3.auth.Verifier;
 import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.entity.app.AppMp;
 import net.jjjshop.common.entity.app.AppWx;
@@ -65,9 +67,12 @@ public class WxPayUtils {
             WxPayConfig payConfig = new WxPayConfig();
             payConfig.setMchId(StringUtils.trimToNull(app.getMchid()));
             payConfig.setMchKey(StringUtils.trimToNull(app.getApikey()));
+            payConfig.setApiV3Key(StringUtils.trimToNull(app.getApikey()));
             payConfig.setSubAppId(null);
             payConfig.setSubMchId(null);
             payConfig.setKeyContent(app.getP12());
+            payConfig.setPrivateKeyContent(app.getKeyPem().getBytes());
+            payConfig.setPrivateCertContent(app.getCertPem().getBytes());
             // 可以指定是否使用沙箱环境
             payConfig.setUseSandboxEnv(false);
             if ("mp".equals(paySource) || "h5".equals(paySource)) {
@@ -76,6 +81,20 @@ public class WxPayUtils {
             }else if ("wx".equals(paySource)) {
                 AppWx appWx = appWxService.getById(appId);
                 payConfig.setAppId(StringUtils.trimToNull(appWx.getWxappId()));
+            }
+            if(app.getWxPayKind() == 3){
+                Verifier verifier = null;
+                try {
+                    verifier = payConfig.getVerifier();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    throw new BusinessException("v3证书错误，请检查或重试");
+                }
+                String serialNo = verifier.getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+                if(StringUtils.isEmpty(serialNo)){
+                    throw new BusinessException("v3证书错误，请检查或重试");
+                }
+                appService.update(new LambdaUpdateWrapper<App>().eq(App::getAppId,app.getAppId()).set(App::getWechatpaySerial, serialNo));
             }
             wxPayService.addConfig(mchIdKey, payConfig);
         }

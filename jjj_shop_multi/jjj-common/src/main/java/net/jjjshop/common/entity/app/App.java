@@ -53,6 +53,9 @@ public class App implements Serializable {
     @ApiModelProperty("支付类型，json格式")
     private String payType;
 
+    @ApiModelProperty("微信支付方式v2：2,v3：3")
+    private Integer wxPayKind;
+
     @ApiModelProperty("微信商户号id")
     private String mchid;
 
@@ -61,6 +64,15 @@ public class App implements Serializable {
 
     @ApiModelProperty("p12证书")
     private byte[] p12;
+
+    @ApiModelProperty("证书文件cert")
+    private String certPem;
+
+    @ApiModelProperty("证书文件key")
+    private String keyPem;
+
+    @ApiModelProperty("微信平台证书序列号")
+    private String wechatpaySerial;
 
     @ApiModelProperty("支付宝商户号")
     private String alipayAppid;

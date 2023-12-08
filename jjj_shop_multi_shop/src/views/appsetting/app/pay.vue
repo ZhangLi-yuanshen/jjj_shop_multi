@@ -18,6 +18,13 @@
       </el-form-item>
       <div class="common-form">微信支付设置</div>
 
+      <el-form-item label="证书类型">
+        <div>
+          <el-radio v-model="form.wxPayKind" :label="2">V2</el-radio>
+          <el-radio v-model="form.wxPayKind" :label="3">V3</el-radio>
+        </div>
+      </el-form-item>
+
       <el-form-item label="微信支付商户号 MCHID">
         <el-input v-model="form.mchid" class="max-w460"></el-input>
       </el-form-item>
@@ -25,7 +32,7 @@
         <el-input v-model="form.apikey" class="max-w460"></el-input>
       </el-form-item>
 
-      <el-form-item label="p12证书">
+      <el-form-item label="p12证书" v-if="form.wxPayKind == 2">
         <div class="leval-item upload-btn">
           <el-upload class="avatar-uploader" ref="upload" action="string" accept=".p12"
             :before-upload="onBeforeUploadP12" :http-request="UploadP12" :show-file-list="false" :on-change="fileChange">
@@ -35,6 +42,16 @@
         <el-col class="gray" v-if="form.p12 != null">已上传p12证书</el-col>
         <el-col class="red" v-if="form.p12 == null">未上传p12证书</el-col>
       </el-form-item>
+
+      <el-form-item label="apiclient_cert.pem" v-if="form.wxPayKind == 3">
+        <el-input type="textarea" :rows="4" placeholder="使用文本编辑器打开apiclient_cert.pem文件，将文件的全部内容复制进来" v-model="form.certPem" class="max-w460"></el-input>
+        <div class="tips">使用文本编辑器打开apiclient_cert.pem文件，将文件的全部内容复制进来</div>
+      </el-form-item>
+      <el-form-item label="apiclient_key.pem" v-if="form.wxPayKind == 3">
+        <el-input type="textarea" :rows="4" placeholder="使用文本编辑器打开apiclient_key.pem文件，将文件的全部内容复制进来" v-model="form.keyPem" class="max-w460"></el-input>
+        <div class="tips">使用文本编辑器打开apiclient_key.pem文件，将文件的全部内容复制进来</div>
+      </el-form-item>
+
       <!--提交-->
       <div class="common-button-wrapper"><el-button type="primary" @click="onSubmit">提交</el-button></div>
     </el-form>
@@ -50,7 +67,10 @@ export default {
       form: {
         payType: [],
         mchid: '',
-        p12: null
+        p12: null,
+        wxPayKind: 2,
+        certPem: '',
+        keyPem: ''
       },
       app: {},
       payType: [],

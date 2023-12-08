@@ -6,10 +6,13 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.alipay.api.response.AlipayTradeWapPayResponse;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
+import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderV3Request;
+import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.service.WxPayService;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.entity.user.User;
+import net.jjjshop.common.enums.OrderTypeEnum;
 import net.jjjshop.common.service.app.AppService;
 import net.jjjshop.common.util.wx.WxPayUtils;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
@@ -42,6 +45,20 @@ public class PayUtils {
     public Object onPaymentByWechat(User user, String tradeNo, BigDecimal onlineMoney,
                                      String paySource, Map<String, Object> result, Integer orderType,
                                         Integer multiple) throws Exception{
+        App app = appService.getById(user.getAppId());
+        if(app.getWxPayKind() == 2){
+            return this.onPaymentByWechatV2(user,tradeNo, onlineMoney,
+                    paySource,result,orderType,multiple);
+        }else {
+            return this.onPaymentByWechatV3(user, tradeNo, onlineMoney,
+                    paySource);
+        }
+
+    }
+
+    public Object onPaymentByWechatV2(User user, String tradeNo, BigDecimal onlineMoney,
+                                      String paySource, Map<String, Object> result, Integer orderType,
+                                      Integer multiple) throws Exception{
         WxPayUnifiedOrderRequest request = new WxPayUnifiedOrderRequest();
         request.setBody(tradeNo);
         request.setOutTradeNo(tradeNo);
@@ -74,6 +91,37 @@ public class PayUtils {
         // 先设置，再调用
         this.wxPayService.switchover(wxPayUtils.getConfig(wxPayService, paySource, null));
         return this.wxPayService.createOrder(request);
+    }
+
+
+    public Object onPaymentByWechatV3(User user, String tradeNo, BigDecimal onlineMoney,
+                                      String paySource) throws Exception{
+        WxPayUnifiedOrderV3Request request = new WxPayUnifiedOrderV3Request();
+        request.setOutTradeNo(tradeNo);
+        WxPayUnifiedOrderV3Request.Amount am = new WxPayUnifiedOrderV3Request.Amount();
+        am.setTotal(onlineMoney.multiply(new BigDecimal(100)).intValue());
+        am.setCurrency("CNY");
+        request.setAmount(am);
+        RequestDetail requestDetail = RequestDetailThreadLocal.getRequestDetail();
+        request.setNotifyUrl(springBootJjjProperties.getServerIp() + "/api/job/notify/wxPay");
+        request.setDescription(tradeNo);
+
+        WxPayUnifiedOrderV3Request.SceneInfo scen = new WxPayUnifiedOrderV3Request.SceneInfo();
+        scen.setPayerClientIp(requestDetail.getIp());
+
+        TradeTypeEnum tradeTypeEnum = null;
+        WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
+        payer.setOpenid(user.getOpenId());
+        tradeTypeEnum = TradeTypeEnum.JSAPI;
+        request.setSceneInfo(scen);
+        request.setPayer(payer);
+        JSONObject attach = new JSONObject();
+        attach.put("orderType", OrderTypeEnum.MASTER.getValue());
+        attach.put("paySource", paySource);
+        request.setAttach(attach.toJSONString());
+        // 先设置，再调用
+        this.wxPayService.switchover(wxPayUtils.getConfig(wxPayService, paySource, null));
+        return this.wxPayService.createOrderV3(tradeTypeEnum, request);
     }
 
     /**

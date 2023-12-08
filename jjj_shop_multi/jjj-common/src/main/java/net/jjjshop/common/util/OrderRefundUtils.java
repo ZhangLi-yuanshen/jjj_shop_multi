@@ -7,7 +7,9 @@ import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
+import com.github.binarywang.wxpay.bean.request.WxPayRefundV3Request;
 import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
+import com.github.binarywang.wxpay.bean.result.WxPayRefundV3Result;
 import com.github.binarywang.wxpay.service.WxPayService;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.app.App;
@@ -80,6 +82,16 @@ public class OrderRefundUtils {
      */
     private Boolean wxpay(Order order, BigDecimal money)
     {
+        App app = appService.getById(order.getAppId());
+        if(app.getWxPayKind() == 2){
+            return this.refundV2(order, money);
+        }else{
+            return this.refundV3(order, money);
+        }
+
+    }
+
+    private boolean refundV2(Order order, BigDecimal money){
         try{
             this.wxPayService.switchoverTo(wxPayUtils.getConfig(wxPayService, order.getPaySource(), Long.valueOf(order.getAppId())));
             WxPayRefundRequest request = new WxPayRefundRequest();
@@ -96,6 +108,33 @@ public class OrderRefundUtils {
             }
             if("FAIL".equals(result.getResultCode())){
                 log.info("退款失败result:{}",result.getResultCode());
+                return false;
+            }
+            return true;
+        }catch (Exception e){
+            log.info("微信退款失败,{}", e.getMessage());
+            return false;
+        }
+    }
+
+    private boolean refundV3(Order order, BigDecimal money){
+        try{
+            this.wxPayService.switchoverTo(wxPayUtils.getConfig(wxPayService, order.getPaySource(), Long.valueOf(order.getAppId())));
+            WxPayRefundV3Request request = new WxPayRefundV3Request();
+            request.setTransactionId(order.getTransactionId());
+            request.setOutRefundNo(OrderUtils.geneOrderNo(order.getUserId()));
+            // 订单总金额
+            BigDecimal payPrice = order.getOnlineMoney();
+            WxPayRefundV3Request.Amount am = new WxPayRefundV3Request.Amount();
+            am.setTotal(payPrice.multiply(new BigDecimal(100)).intValue());
+            am.setRefund(money.multiply(new BigDecimal(100)).intValue());
+            am.setCurrency("CNY");
+            request.setAmount(am);
+            request.setReason("用户申请取消");
+            WxPayRefundV3Result result = this.wxPayService.refundV3(request);
+            log.info("退款结果:{}", result.getStatus());
+            if("CLOSED".equals(result.getStatus()) || "ABNORMAL".equals(result.getStatus())){
+                log.info("退款失败:{}", order.getOrderNo());
                 return false;
             }
             return true;

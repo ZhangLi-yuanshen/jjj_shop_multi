@@ -7,7 +7,9 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.mapper.app.AppMapper;
+import net.jjjshop.common.util.wx.WxPayUtils;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
+import net.jjjshop.framework.util.ShopLoginUtil;
 import net.jjjshop.shop.param.app.PayParam;
 import net.jjjshop.shop.service.app.AppService;
 import net.jjjshop.shop.vo.app.AppVo;
@@ -28,6 +30,8 @@ import java.io.InputStream;
 public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements AppService {
     @Autowired
     private WxPayService wxPayService;
+    @Autowired
+    private WxPayUtils wxPayUtils;
     /**
      * 修改app
      * @param passportType
@@ -50,7 +54,8 @@ public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements A
      * @return
      */
     public AppVo detail(){
-        App app = this.getOne(new LambdaQueryWrapper<>());
+        App app = this.getOne(new LambdaQueryWrapper<App>()
+                .eq(App::getAppId, ShopLoginUtil.getLoginShopUserRedisVo().getAppId()));
         AppVo vo = new AppVo();
         BeanUtils.copyProperties(app, vo);
         vo.setPayTypeJson(JSON.parseObject(app.getPayType()));
@@ -70,6 +75,7 @@ public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements A
         updateBean.setPayType(payParam.getPayType().toJSONString());
         updateBean.setExpireTime(app.getExpireTime());
         updateBean.setAppId(app.getAppId());
+        this.updateById(updateBean);
         // 删除缓存
         try{
             wxPayService.removeConfig(payParam.getMchid()+"_mp");
@@ -81,10 +87,14 @@ public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements A
                 wxPayService.removeConfig(app.getMchid()+"_wx");
                 wxPayService.removeConfig(app.getMchid()+"_open");
             }
+            // v3支付获取平台序列号
+            if(payParam.getWxPayKind() == 3){
+                wxPayUtils.getConfig(wxPayService, "wx", null);
+            }
         }catch (Exception e){
             log.info("保存设置删除缓存错误");
         }
-        return this.updateById(updateBean);
+        return true;
     }
     /**
      * 保存p12证书
