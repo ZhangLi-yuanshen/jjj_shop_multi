@@ -1734,3 +1734,5 @@ ALTER TABLE `jjjshop_store_order` MODIFY COLUMN `create_time` timestamp NULL DEF
 ALTER TABLE `jjjshop_user_visit` MODIFY COLUMN `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' AFTER `app_id`;
 
 ALTER TABLE `jjjshop_user_visit` MODIFY COLUMN `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间' AFTER `create_time`;
+
+UPDATE `jjjshop_center_menu` SET `path` = '/pages/user/favorite/favorite' WHERE `name` = '我的收藏';
