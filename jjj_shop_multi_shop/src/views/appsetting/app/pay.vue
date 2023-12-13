@@ -70,6 +70,7 @@ export default {
         p12: null,
         wxPayKind: 2,
         certPem: '',
+        apikey:'',
         keyPem: ''
       },
       app: {},
