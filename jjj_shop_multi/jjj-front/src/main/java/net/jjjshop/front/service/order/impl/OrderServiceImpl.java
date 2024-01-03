@@ -489,6 +489,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
             wrapper.eq(Order::getShopSupplierId, orderPageParam.getShopSupplierId());
         }
         wrapper.eq(Order::getIsDelete, 0);
+        wrapper.eq(Order::getUserId, userId);
         wrapper.orderByDesc(Order::getCreateTime);
         Page page = new PageInfo(orderPageParam);
         IPage<Order> ipage = this.page(page, wrapper);
