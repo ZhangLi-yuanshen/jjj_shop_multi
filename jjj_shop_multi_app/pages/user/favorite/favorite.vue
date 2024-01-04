@@ -222,7 +222,6 @@
 	.shop_body_l_item_info_price {
 		display: flex;
 		align-items: flex-end;
-		color: ;
 	}
 
 	.shop_body_l_item_info_price view {

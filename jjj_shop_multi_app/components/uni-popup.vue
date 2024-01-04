@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="uni-mask" v-if="show" :style="{top:offsetTop + 'px'}" @click="hide"></view>
-		<view :class="['uni-popup','uni-popup-'+type]" v-if="show" :style="'width:'+width+'rpx; heigth:'+heigth+'rpx;padding:'+padding+'rpx;background-color:'+backgroundColor+';box-shadow:'+boxShadow+';'">
+		<view :class="['uni-popup','uni-popup-'+type]" v-if="show" :style="'width:'+width+'rpx; height:'+height+'rpx;padding:'+padding+'rpx;background-color:'+backgroundColor+';box-shadow:'+boxShadow+';'">
 			<view class="popup-head" v-if="msg!=''">
 		 	{{msg}}
 			</view>	
@@ -26,7 +26,7 @@
 				type: Number,
 				default: 600
 			},
-			heigth: {
+			height: {
 				type: Number,
 				default: 800
 			},

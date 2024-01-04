@@ -71,7 +71,7 @@
 	}
 
 	.recommend-product .title {
-		heigth: 100rpx;
+		height: 100rpx;
 		font-size: 30rpx;
 	}
 
