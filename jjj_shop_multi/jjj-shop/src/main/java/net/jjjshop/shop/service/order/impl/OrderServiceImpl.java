@@ -527,7 +527,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         order.setOrderStatus(30);
         boolean update = this.updateById(order);
         //新增核销记录
-        storeOrderService.add(order.getOrderId(), order.getExtractStoreId(), order.getExtractClerkId(), OrderTypeEnum.MASTER.getValue());
+        storeOrderService.add(order.getOrderId(), order.getExtractStoreId(), order.getExtractClerkId(), OrderTypeEnum.MASTER.getValue(), order.getShopSupplierId());
         //完成订单完成后流程
         List<Order> orderList = new ArrayList<>();
         orderList.add(order);

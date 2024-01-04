@@ -18,5 +18,5 @@ public interface StoreOrderService extends BaseService<StoreOrder> {
      * @param orderType
      * @return
      */
-    Boolean add(Integer orderId, Integer storeId, Integer clerkId,Integer orderType);
+    Boolean add(Integer orderId, Integer storeId, Integer clerkId,Integer orderType,Integer shopSupplierId);
 }

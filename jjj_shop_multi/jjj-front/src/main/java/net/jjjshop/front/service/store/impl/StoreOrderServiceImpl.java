@@ -24,12 +24,13 @@ public class StoreOrderServiceImpl extends BaseServiceImpl<StoreOrderMapper, Sto
      * @param orderType
      * @return
      */
-    public Boolean add(Integer orderId, Integer storeId, Integer clerkId, Integer orderType) {
+    public Boolean add(Integer orderId, Integer storeId, Integer clerkId, Integer orderType,Integer shopSupplierId) {
         StoreOrder storeOrder = new StoreOrder();
         storeOrder.setOrderId(orderId);
         storeOrder.setStoreId(storeId);
         storeOrder.setClerkId(clerkId);
         storeOrder.setOrderType(orderType);
+        storeOrder.setShopSupplierId(shopSupplierId);
         return this.save(storeOrder);
     }
 
