@@ -92,6 +92,9 @@ public class StoreServiceImpl extends BaseServiceImpl<StoreMapper, Store> implem
         List<StoreVo> voList = this.transToVoList(list);
         if (StringUtils.isNoneBlank(longitude) && StringUtils.isNotBlank(latitude)) {
             for (StoreVo vo : voList) {
+                if(StringUtils.isEmpty(vo.getLatitude()) || StringUtils.isEmpty(vo.getLongitude())){
+                    continue;
+                }
                 double distinct = CoordinateUtils.distance(Double.parseDouble(latitude),
                         Double.parseDouble(longitude), Double.parseDouble(vo.getLatitude()), Double.parseDouble(vo.getLongitude()));
                 vo.setDistinct(distinct);
@@ -103,6 +106,7 @@ public class StoreServiceImpl extends BaseServiceImpl<StoreMapper, Store> implem
                     vo.setShowDistinct(distinct + "m");
                 }
             }
+            voList = voList.stream().filter(o -> o.getDistinct() != null).collect(Collectors.toList());
             voList.sort((o1, o2) -> {
                 if (o1.getDistinct() > o2.getDistinct()) {
                     return -1;
