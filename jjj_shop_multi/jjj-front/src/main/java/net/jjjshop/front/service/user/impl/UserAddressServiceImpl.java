@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -144,7 +145,10 @@ public class UserAddressServiceImpl extends BaseServiceImpl<UserAddressMapper, U
      * @return
      */
     public Boolean delById(Integer addressId, User user) {
-        userService.update(new LambdaUpdateWrapper<User>().eq(User::getUserId, user.getUserId()).set(User::getAddressId, 0));
+        //如果删除的是默认地址,则重置
+        if(Objects.equals(user.getAddressId(), addressId)){
+            userService.update(new LambdaUpdateWrapper<User>().eq(User::getUserId, user.getUserId()).set(User::getAddressId, 0));
+        }
         return this.removeById(this.getById(addressId));
     }
 
