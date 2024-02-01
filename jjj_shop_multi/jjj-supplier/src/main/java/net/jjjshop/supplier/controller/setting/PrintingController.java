@@ -9,6 +9,7 @@ import net.jjjshop.common.enums.SettingEnum;
 import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
+import net.jjjshop.framework.util.SupplierLoginUtil;
 import net.jjjshop.supplier.service.settings.PrinterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,7 @@ public class PrintingController {
     @OperationLog(name = "index")
     @ApiOperation(value = "index", response = String.class)
     public ApiResult<Map<String, Object>> index() throws Exception {
-        JSONObject vo = settingUtils.getSetting(SettingEnum.PRINTING.getKey(), null);
+        JSONObject vo = settingUtils.getSupplierSetting(SettingEnum.PRINTING.getKey(), null, SupplierLoginUtil.getShopSupplierId());
         Map<String, Object> result = new HashMap<>();
         result.put("printerList", printerService.getAll());
         result.put("isOpen", vo.get("isOpen"));
@@ -46,7 +47,7 @@ public class PrintingController {
     @OperationLog(name = "index")
     @ApiOperation(value = "index", response = String.class)
     public ApiResult<String> index(@RequestBody JSONObject jsonData) throws Exception {
-        settingUtils.saveSetting(SettingEnum.PRINTING.getKey(), jsonData);
+        settingUtils.saveSupplierSetting(SettingEnum.PRINTING.getKey(), jsonData,SupplierLoginUtil.getShopSupplierId());
         return ApiResult.ok("保存成功");
     }
 }

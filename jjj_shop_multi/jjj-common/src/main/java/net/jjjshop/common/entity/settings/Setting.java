@@ -39,6 +39,9 @@ public class Setting implements Serializable {
     @ApiModelProperty("设置内容（json格式）")
     private String setValue;
 
+    @ApiModelProperty("商户id")
+    private Integer shopSupplierId;
+
     @ApiModelProperty("小程序id")
     private Integer appId;
 

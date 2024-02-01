@@ -33,7 +33,12 @@ public class PrinterServiceImpl extends BaseServiceImpl<PrinterMapper, Printer> 
      * @return
      */
     public Paging<Printer> getList(PrinterPageParam printerPageParam) {
-        Paging<Printer> paging = new Paging<>(this.page(new PageInfo<>(printerPageParam), new LambdaQueryWrapper<Printer>().orderByAsc(Printer::getSort)));
+        Paging<Printer> paging = new Paging<>(this.page(new PageInfo<>(printerPageParam), new LambdaQueryWrapper<Printer>()
+                .eq(Printer::getShopSupplierId,SupplierLoginUtil.getShopSupplierId())
+                //是否删除0=显示1=隐藏
+                .eq(Printer::getIsDelete,0)
+                .orderByAsc(Printer::getSort)
+        ));
         if(paging.getTotal() > 0){
             paging.getRecords().forEach(o -> {
                 if (PrinterTypeEnum.FEI_E_YUN.getPrinterType().equals(o.getPrinterType())) {
@@ -52,7 +57,12 @@ public class PrinterServiceImpl extends BaseServiceImpl<PrinterMapper, Printer> 
      * @return
      */
     public List<Printer> getAll() {
-        return this.list();
+        return this.list(new LambdaQueryWrapper<Printer>()
+                .eq(Printer::getShopSupplierId,SupplierLoginUtil.getShopSupplierId())
+                //是否删除0=显示1=隐藏
+                .eq(Printer::getIsDelete,0)
+                .orderByAsc(Printer::getSort)
+        );
     }
 
     /**

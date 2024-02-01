@@ -103,7 +103,9 @@ public class SettingUtils {
         }
         // 先从数据库查询，如果没有，则取默认数据
         Setting setting = settingMapper.selectOne(new LambdaQueryWrapper<Setting>()
-                .eq(Setting::getSetKey, key).eq(Setting::getAppId, appId));
+                .eq(Setting::getShopSupplierId, shopSupplierId)
+                .eq(Setting::getSetKey, key)
+                .eq(Setting::getAppId, appId));
         JSONObject result = null;
         try{
             if(setting != null){
@@ -129,6 +131,7 @@ public class SettingUtils {
      */
     public Boolean saveSupplierSetting(String key, JSONObject jsonData, Integer shopSupplierId){
         Setting setting = settingMapper.selectOne(new LambdaQueryWrapper<Setting>()
+                .eq(Setting::getShopSupplierId, shopSupplierId)
                 .eq(Setting::getSetKey, key));
         Setting bean = new Setting();
         String cacheKey = String.format(CommonRedisKey.SUPPLIER_SETTING_DATA, key, RequestDetailThreadLocal.getRequestDetail().getAppId(),shopSupplierId);
@@ -139,6 +142,7 @@ public class SettingUtils {
             bean.setSetKey(key);
             bean.setDescription(SettingEnum.getDescriptionByKey(key));
             bean.setSetValue(jsonData.toJSONString());
+            bean.setShopSupplierId(shopSupplierId);
             return SqlHelper.retBool(settingMapper.insert(bean));
         }else{
             // 修改

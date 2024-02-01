@@ -66,7 +66,7 @@ public class PrinterFactory {
      * @param order
      */
     public void print(Order order){
-        JSONObject vo = settingUtils.getSetting(SettingEnum.PRINTING.getKey(), Long.valueOf(order.getAppId()));
+        JSONObject vo = settingUtils.getSupplierSetting(SettingEnum.PRINTING.getKey(), Long.valueOf(order.getAppId()),order.getShopSupplierId());
         PrinterVo printerVo = JSONObject.toJavaObject(vo, PrinterVo.class);
         if(printerVo.getIsOpen() == 0 || printerVo.getPrinterId() == 0 || printerVo.getOrderStatus() != 20){
             return;
