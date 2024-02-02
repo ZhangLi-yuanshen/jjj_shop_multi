@@ -276,6 +276,7 @@ public class OrderUtils {
             orderSettled.setRefundMoney(refundSupplierMoney.add(refundSysMoney));
             orderSettled.setRefundSupplierMoney(refundSupplierMoney);
             orderSettled.setRealSysMoney(refundSysMoney);
+            orderSettled.setAppId(order.getAppId());
             orderSettledData.add(orderSettled);
 
             // 商家结算记录
@@ -283,6 +284,7 @@ public class OrderUtils {
             supplierCapital.setShopSupplierId(order.getShopSupplierId());
             supplierCapital.setMoney(supplierMoney);
             supplierCapital.setDescription("订单结算，订单号：" + order.getOrderNo());
+            supplierCapital.setAppId(order.getAppId());
             supplierCapitalData.add(supplierCapital);
         }
         // 累积到供应商表记录

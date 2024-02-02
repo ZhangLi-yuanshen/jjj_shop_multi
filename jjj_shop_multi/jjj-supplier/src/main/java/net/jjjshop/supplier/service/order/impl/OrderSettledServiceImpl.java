@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.order.Order;
 import net.jjjshop.common.entity.order.OrderSettled;
 import net.jjjshop.common.mapper.order.OrderSettledMapper;
+import net.jjjshop.config.constant.CommonConstant;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
@@ -57,6 +58,7 @@ public class OrderSettledServiceImpl extends BaseServiceImpl<OrderSettledMapper,
             wrapper.lt(OrderSettled::getCreateTime, param.getEndDay()+" 23:59:59");
         }
         wrapper.eq(OrderSettled::getShopSupplierId, shopSupplierId);
+        wrapper.comment(CommonConstant.NOT_WITH_App_Id);
         wrapper.orderByDesc(OrderSettled::getCreateTime);
         IPage<OrderSettled> iPage = this.page(page, wrapper);
         IPage<OrderSettledVo> result = iPage.convert(item -> {

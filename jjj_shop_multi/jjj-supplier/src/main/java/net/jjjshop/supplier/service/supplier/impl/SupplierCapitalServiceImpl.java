@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.order.OrderSettled;
 import net.jjjshop.common.entity.supplier.SupplierCapital;
 import net.jjjshop.common.mapper.supplier.SupplierCapitalMapper;
+import net.jjjshop.config.constant.CommonConstant;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
@@ -47,6 +48,7 @@ public class SupplierCapitalServiceImpl extends BaseServiceImpl<SupplierCapitalM
             wrapper.eq(SupplierCapital::getFlowType, param.getFlowType());
         }
         wrapper.eq(SupplierCapital::getShopSupplierId, shopSupplierId);
+        wrapper.comment(CommonConstant.NOT_WITH_App_Id);
         wrapper.orderByDesc(SupplierCapital::getCreateTime);
         IPage<SupplierCapital> iPage = this.page(page, wrapper);
         IPage<SupplierCapitalVo> result = iPage.convert(item -> {
