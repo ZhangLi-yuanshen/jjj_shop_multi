@@ -93,8 +93,7 @@ export default {
 
     /*跳转物流编码*/
     gotoCompany() {
-      let baseUrl = window.location.protocol + '//' + window.location.host;
-      window.location.href = baseUrl + '/express.xlsx';
+      window.location.href = 'https://qn-cdn.jjjshop.net/20230918111820133.xlsx';
     }
   }
 };
