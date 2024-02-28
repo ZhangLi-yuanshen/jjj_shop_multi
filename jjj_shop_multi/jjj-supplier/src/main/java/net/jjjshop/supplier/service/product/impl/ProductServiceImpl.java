@@ -327,7 +327,7 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
             ProductSku sku = JSONObject.toJavaObject(specList.getJSONObject(i).getJSONObject("specForm"), ProductSku.class);
             sku.setSpecSkuId(specList.getJSONObject(i).getString("specSkuId"));
             sku.setProductId(productParam.getProductId());
-            if(specList.getJSONObject(i).getInteger("productSkuId") > 0){
+            if(specList.getJSONObject(i).getInteger("productSkuId") > 0 && !("copy".equals(productParam.getScene()))){
                 for(int j=0;j<skuList.size();j++){
                     if(skuList.get(j).getProductSkuId().intValue() == specList.getJSONObject(i).getInteger("productSkuId").intValue()){
                         skuList.remove(j);
