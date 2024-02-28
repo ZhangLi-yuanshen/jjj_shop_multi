@@ -454,6 +454,7 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         }
         Product product = new Product();
         BeanUtils.copyProperties(productParam, product);
+        product.setAloneGradeEquity(StringEscapeUtils.unescapeHtml4(product.getAloneGradeEquity()));
         this.setProductParams(productParam, product);
         // 保存商品
         this.updateById(product);
