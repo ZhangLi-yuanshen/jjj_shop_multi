@@ -290,6 +290,14 @@ public class SupplierUserServiceImpl extends BaseServiceImpl<SupplierUserMapper,
      */
     @Transactional(rollbackFor = Exception.class)
     public Boolean add(SupplierUserParam supplierUserParam){
+        //验证账号唯一性
+        int count = this.count(new LambdaQueryWrapper<SupplierUser>()
+                .eq(SupplierUser::getIsDelete,0)
+                .comment(CommonConstant.NOT_WITH_App_Id)
+                .eq(SupplierUser::getUserName,supplierUserParam.getUserName()));
+        if(count > 0){
+            throw new BusinessException("该用户名已存在，请更改后再试");
+        }
         SupplierUser user = new SupplierUser();
         user.setUserName(supplierUserParam.getUserName());
         user.setRealName(supplierUserParam.getRealName());
@@ -312,6 +320,18 @@ public class SupplierUserServiceImpl extends BaseServiceImpl<SupplierUserMapper,
      */
     @Transactional(rollbackFor = Exception.class)
     public Boolean edit(SupplierUserParam supplierUserParam){
+        SupplierUser oldUser = this.getById(supplierUserParam.getSupplierUserId());
+        //如果修改了账号，则验证账号唯一性
+        if(!oldUser.getUserName().equals(supplierUserParam.getUserName())){
+            int count = this.count(new LambdaQueryWrapper<SupplierUser>()
+                    .eq(SupplierUser::getIsDelete,0)
+                    .comment(CommonConstant.NOT_WITH_App_Id)
+                    .eq(SupplierUser::getUserName,supplierUserParam.getUserName()));
+            if(count > 0){
+                throw new BusinessException("该用户名已存在，请更改后再试");
+            }
+        }
+
         SupplierUser user = new SupplierUser();
         user.setSupplierUserId(supplierUserParam.getSupplierUserId());
         user.setUserName(supplierUserParam.getUserName());
