@@ -157,10 +157,11 @@ public class SupplierServiceImpl extends BaseServiceImpl<SupplierMapper, Supplie
         if (superUser != null) {
             oldUserId = superUser.getUserId();
         }
-        if (superUser != null
-                && (!superUser.getUserName().equals(supplierParam.getUserName()))
-                && (supplierUserUtils.checkExist(supplierParam.getUserName()))) {
-            throw new BusinessException("用户名已存在");
+        //修改了用户名,验证唯一性
+        if (superUser != null && !superUser.getUserName().equals(supplierParam.getUserName()) ){
+            if(!supplierUserUtils.checkExist(supplierParam.getUserName()) ){
+                throw new BusinessException("用户名已存在");
+            }
         }
         //用户是否已绑定
         User user = null;
