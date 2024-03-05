@@ -148,7 +148,7 @@ export default {
     /*关闭添加*/
     closeEdit(e){
       this.open_edit=false;
-      if(e.type=='success'){
+      if(e&& e.type&&e.type=='success'){
         this.getTableList();
       }
     },

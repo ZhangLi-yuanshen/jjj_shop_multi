@@ -164,7 +164,7 @@ export default {
     },
     /*关闭获取用户弹窗*/
     closeDialogFunc(e) {
-      if (e.type != 'error') {
+      if (e &&e.type&& e.type != 'error') {
         this.form.userId = e.params[0].userId;
         this.userInfo = e.params[0].user;
       }
