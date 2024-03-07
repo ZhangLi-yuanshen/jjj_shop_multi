@@ -87,12 +87,12 @@ public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements A
                 wxPayService.removeConfig(app.getMchid()+"_wx");
                 wxPayService.removeConfig(app.getMchid()+"_open");
             }
-            // v3支付获取平台序列号
-            if(payParam.getWxPayKind() == 3){
-                wxPayUtils.getConfig(wxPayService, "wx", null);
-            }
         }catch (Exception e){
             log.info("保存设置删除缓存错误");
+        }
+        // v3支付获取平台序列号
+        if(payParam.getWxPayKind() == 3){
+            wxPayUtils.getConfig(wxPayService, "wx", null);
         }
         return true;
     }
