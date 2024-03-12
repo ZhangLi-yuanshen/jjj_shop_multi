@@ -9,9 +9,8 @@ if (process.env.NODE_ENV === 'development') {
 // 如果是生产环境，h5环境下直接读取url
 if (process.env.NODE_ENV === 'production') {
 	//#ifdef H5
-	if(pro_url.url){
-		app_url = pro_url.url + '//' + window.location.host;
-	}else{
+	app_url = pro_url.h5_url;
+	if(app_url == ''){
 		app_url = window.location.protocol + '//' + window.location.host;
 	}
 	//#endif
