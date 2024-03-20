@@ -1742,3 +1742,5 @@ ALTER TABLE `jjjshop_app`
 
 ALTER TABLE `jjjshop_app`
     ADD COLUMN `wechatpay_serial` varchar(255) NULL DEFAULT '' COMMENT '微信平台证书序列号' AFTER `key_pem`;
+
+UPDATE `jjjshop_app` SET `is_recycle` = 1 WHERE `app_id` = 10001;
