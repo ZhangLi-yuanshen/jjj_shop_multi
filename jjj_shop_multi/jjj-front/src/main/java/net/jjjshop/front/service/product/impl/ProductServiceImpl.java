@@ -499,7 +499,10 @@ public class ProductServiceImpl extends BaseServiceImpl<ProductMapper, Product> 
         if (productIds != null && productIds.size() > 0) {
             wrapper.in(Product::getProductId, productIds);
         }
-        wrapper.eq(Product::getProductStatus, 10).eq(Product::getIsDelete, 0);
+        wrapper.eq(Product::getProductStatus, 10)
+                //审核状态0待审核10审核通过20审核未通过30强制下架40草稿
+                .eq(Product::getAuditStatus, 10)
+                .eq(Product::getIsDelete, 0);
         List<Product> productList = this.list(wrapper);
         return productList.stream().map(e -> {
             return this.transProductListData(e, user);
