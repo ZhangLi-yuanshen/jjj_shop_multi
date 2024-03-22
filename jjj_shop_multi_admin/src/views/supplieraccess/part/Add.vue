@@ -33,7 +33,7 @@
         <p>提示：请选择系统提供的图标</p>
       </el-form-item>
       <!--是否是菜单-->
-      <el-form-item label="是否是菜单" :label-width="formLabelWidth" v-if="formData.is_route==1">
+      <el-form-item label="是否是菜单" :label-width="formLabelWidth" v-if="formData.isRoute==1">
         <el-radio-group v-model="formData.isMenu">
           <el-radio :label="1">是</el-radio>
           <el-radio :label="0">否</el-radio>
@@ -47,7 +47,7 @@
         </el-radio-group>
       </el-form-item>
       <!--重定向-->
-      <el-form-item label="重定向" :label-width="formLabelWidth" v-if="formData.is_route == 1">
+      <el-form-item label="重定向" :label-width="formLabelWidth" v-if="formData.isRoute == 1">
         <el-input v-model="formData.redirectName" autocomplete="off" placeholder="请输入重定向地址"></el-input>
       </el-form-item>
       <!--备注-->
