@@ -1,9 +1,4 @@
 <template>
-  <!--
-    	作者：wangxw
-    	时间：2019-11-05
-    	描述：diy组件 头条快报
-    -->
   <div>
     <div class="common-form">
       <span>{{ curItem.name }}</span>
@@ -13,17 +8,23 @@
       <el-form-item label="文章分类：">
         <el-select v-model="curItem.params.auto.category">
           <el-option label="全部分类" :value="0"></el-option>
-            <el-option
-              v-for="item in category"
-              :key="item.categoryId"
-              :label="item.name"
-              :value="item.categoryId">
-            </el-option>
+          <el-option
+            v-for="item in category"
+            :key="item.categoryId"
+            :label="item.name"
+            :value="item.categoryId"
+          >
+          </el-option>
         </el-select>
       </el-form-item>
       <!-- 显示数量 -->
       <el-form-item label="显示数量：">
-        <el-input type="number" min="1" v-model="curItem.params.auto.showNum" style="width: auto;"></el-input>
+        <el-input
+          type="number"
+          min="1"
+          v-model="curItem.params.auto.showNum"
+          style="width: auto"
+        ></el-input>
         <div>
           文章数据请到
           <a href="#/plus/article/index" target="_blank">内容管理 - 文章列表</a>
@@ -33,7 +34,11 @@
       <!--图片-->
       <el-form-item label="图片：">
         <div class="diy-special-cover">
-          <img v-img-url="curItem.style.image" alt="" @click="$parent.onEditorSelectImage(curItem.style, 'image')">
+          <img
+            v-img-url="curItem.style.image"
+            alt=""
+            @click="$parent.onEditorSelectImage(curItem.style, 'image')"
+          />
           <div>建议尺寸140×38</div>
         </div>
       </el-form-item>
@@ -49,37 +54,37 @@
 </template>
 
 <script>
-  import ArticleApi from '@/api/article.js';
-  export default {
-    data() {
-      return {
-        category: [],
-      };
+import ArticleApi from "@/api/article.js";
+export default {
+  data() {
+    return {
+      category: [],
+    };
+  },
+  props: ["curItem", "selectedIndex", "opts"],
+  created() {
+    /*获取文章栏目*/
+    this.getData();
+  },
+  methods: {
+    /*获取文章栏目*/
+    getData() {
+      let self = this;
+      ArticleApi.getCategory({}, true)
+        .then((res) => {
+          self.category = res.data;
+        })
+        .catch((error) => {
+          self.loading = false;
+        });
     },
-    props: ['curItem', 'selectedIndex', 'opts'],
-    created() {
-      /*获取文章栏目*/
-      this.getData();
-    },
-    methods: {
-
-      /*获取文章栏目*/
-      getData() {
-        let self = this;
-        ArticleApi.getCategory({}, true).then(res => {
-            self.category = res.data;
-          })
-          .catch(error => {
-            self.loading = false;
-          });
-      },
-    }
-  };
+  },
+};
 </script>
 
 <style scoped>
-  .diy-special-cover img {
-    width: 140px;
-    height: 38px;
-  }
+.diy-special-cover img {
+  width: 140px;
+  height: 38px;
+}
 </style>

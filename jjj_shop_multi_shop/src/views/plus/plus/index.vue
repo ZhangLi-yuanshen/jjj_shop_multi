@@ -1,9 +1,4 @@
 <template>
-  <!--
-      	作者：luoyiming
-      	时间：2019-12-25
-      	描述：插件中心-首页
-      -->
   <div class="plus-container" v-loading="loading">
     <div v-for="(item, index) in listData" :key="index">
       <div class="common-form">{{ item.name }}</div>
@@ -30,7 +25,7 @@
 </template>
 
 <script>
-import PlusApi from '@/api/plus.js'; 
+import PlusApi from "@/api/plus.js";
 
 export default {
   data() {
@@ -140,13 +135,13 @@ export default {
         return "icon-chajian1";
       }
     },
-    gotoPath(v){
+    gotoPath(v) {
       let path = v.path;
-      if(v.redirectName){
+      if (v.redirectName) {
         path = v.redirectName;
       }
-      this.$router.push(path)
-    }
+      this.$router.push(path);
+    },
   },
 };
 </script>
@@ -154,16 +149,16 @@ export default {
 <style lang="scss">
 .plus-container {
   min-height: 400px;
-  .item{
+  .item {
     cursor: pointer;
-    
-    &:hover{
-      h3{
+
+    &:hover {
+      h3 {
         color: #3a8ee6;
       }
     }
   }
-  .card{
+  .card {
     display: flex;
     .iconfont {
       display: flex;
@@ -178,14 +173,14 @@ export default {
       font-size: 22px;
     }
   }
-  .r{
+  .r {
     flex: 1;
     h3 {
       font-weight: normal;
       color: #333333;
       font-size: 14px;
     }
-    p{
+    p {
       font-size: 12px;
       color: #999999;
     }

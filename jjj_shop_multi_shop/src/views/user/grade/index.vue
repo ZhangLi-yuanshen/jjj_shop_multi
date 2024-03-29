@@ -1,9 +1,4 @@
 <template>
-  <!--
-      作者 luoyiming
-      时间：2020-06-09
-      描述：会员-积分管理
-  -->
   <div class="common-seach-wrap">
     <el-tabs v-model="activeName">
       <el-tab-pane label="等级列表" name="list"></el-tab-pane>
@@ -14,26 +9,23 @@
     <List v-if="activeName == 'list'"></List>
     <!--积分明细-->
     <Log v-if="activeName == 'log'"></Log>
-
   </div>
 </template>
 <script>
-import List from './part/list.vue';
-import Log from './part/log.vue';
+import List from "./part/list.vue";
+import Log from "./part/log.vue";
 export default {
   components: {
     List,
-    Log
+    Log,
   },
   data() {
     return {
-      activeName: 'list'
+      activeName: "list",
     };
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -1,55 +1,79 @@
 <template>
-  <!--
-          作者：luoyiming
-          时间：2019-10-24
-          描述：登录页面
-      -->
   <div class="login-bg" :style="'background-image:url(' + bgimg_url + ');'">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-      <h3 class="title" style="margin-bottom: 20px;">{{supplier_name}}</h3>
+    <el-form
+      :model="ruleForm"
+      :rules="rules"
+      ref="ruleForm"
+      label-position="left"
+      label-width="0px"
+      class="demo-ruleForm login-container"
+    >
+      <h3 class="title" style="margin-bottom: 20px">{{ supplier_name }}</h3>
       <!--用户名-->
-      <el-form-item prop="account"><el-input type="text" v-model="ruleForm.account" auto-complete="off" placeholder="账号"></el-input></el-form-item>
+      <el-form-item prop="account"
+        ><el-input
+          type="text"
+          v-model="ruleForm.account"
+          auto-complete="off"
+          placeholder="账号"
+        ></el-input
+      ></el-form-item>
       <!--密码-->
-      <el-form-item prop="checkPass"><el-input type="password" v-model="ruleForm.checkPass" auto-complete="off" placeholder="密码"></el-input></el-form-item>
+      <el-form-item prop="checkPass"
+        ><el-input
+          type="password"
+          v-model="ruleForm.checkPass"
+          auto-complete="off"
+          placeholder="密码"
+        ></el-input
+      ></el-form-item>
       <!--登录-->
-      <el-form-item><el-button type="primary" style="width:100%;" @click.native.prevent="SubmitFunc" :loading="logining">登录</el-button></el-form-item>
+      <el-form-item
+        ><el-button
+          type="primary"
+          style="width: 100%"
+          @click.native.prevent="SubmitFunc"
+          :loading="logining"
+          >登录</el-button
+        ></el-form-item
+      >
     </el-form>
   </div>
 </template>
 
 <script>
-import IndexApi from '@/api/index.js';
-import bgimg from '@/assets/img/login_bg.png';
-import UserApi from '@/api/user.js';
-import { useUserStore } from '@/store';
+import IndexApi from "@/api/index.js";
+import bgimg from "@/assets/img/login_bg.png";
+import UserApi from "@/api/user.js";
+import { useUserStore } from "@/store";
 const { afterLogin } = useUserStore();
 export default {
   data() {
     return {
       /*是否正在加载*/
-      loading:true,
+      loading: true,
       /*系统名称*/
-      supplier_name: '',
+      supplier_name: "",
       /*背景图片*/
-      bgimg_url: '',
+      bgimg_url: "",
       /*是否正在提交*/
       logining: false,
       /*表单对象*/
       ruleForm: {
         /*用户名*/
-        account: '',
+        account: "",
         /*密码*/
-        checkPass: ''
+        checkPass: "",
       },
       /*验证规则*/
       rules: {
         /*用户名*/
-        account: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         /*密码*/
-        checkPass: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        checkPass: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
       /*基础配置*/
-      baseData: {}
+      baseData: {},
     };
   },
   created() {
@@ -60,17 +84,19 @@ export default {
     getData() {
       let self = this;
       IndexApi.base(true)
-        .then(res => {
+        .then((res) => {
           self.loading = false;
-          const { data: { supplierBgImg, supplierName }} = res;
+          const {
+            data: { supplierBgImg, supplierName },
+          } = res;
           self.supplier_name = supplierName;
-          if(supplierBgImg){
+          if (supplierBgImg) {
             self.bgimg_url = supplierBgImg;
-          }else{
+          } else {
             self.bgimg_url = bgimg;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -78,38 +104,38 @@ export default {
     /*登录方法*/
     SubmitFunc(ev) {
       var _this = this;
-      this.$refs.ruleForm.validate(valid => {
+      this.$refs.ruleForm.validate((valid) => {
         if (valid) {
           this.logining = true;
           var Params = {
             username: this.ruleForm.account,
-            password: this.ruleForm.checkPass
+            password: this.ruleForm.checkPass,
           };
           /*调用登录接口*/
           UserApi.login(Params, true)
-            .then(async res => {
+            .then(async (res) => {
               this.logining = false;
               if (res.code == 1) {
                 await afterLogin(res);
-                this.logining = false; 
+                this.logining = false;
                 this.$router.push({
-                  path: '/home'
-                })
+                  path: "/home",
+                });
               } else {
                 ElMessage({
-                  message: '登录失败',
-                  type: 'error'
+                  message: "登录失败",
+                  type: "error",
                 });
               }
             })
-            .catch(error => {
+            .catch((error) => {
               //接口调用方法统一处理
               this.logining = false;
             });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -127,7 +153,7 @@ export default {
 
 .login-container {
   // box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.1), 0 1px 0px 0 rgba(0, 0, 0, 0.04);
-  box-shadow: 0px 0px 2px 2px  #66666640;
+  box-shadow: 0px 0px 2px 2px #66666640;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   -moz-border-radius: 5px;

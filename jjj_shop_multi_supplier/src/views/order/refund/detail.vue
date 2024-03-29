@@ -1,9 +1,4 @@
 <template>
-  <!--
-      作者：luoyiming
-      时间：2019-10-25
-      描述：售后管理-售后详情
-  -->
   <div class="user pb50" v-loading="loading">
     <div class="product-content">
       <!--售后单信息-->
@@ -35,7 +30,15 @@
             </div>
           </el-col>
           <el-col :span="4">
-            <div class="pb16"><el-button size="small" href="/" target="_blank" @click="gotoPage(detail)">订单详情</el-button></div>
+            <div class="pb16">
+              <el-button
+                size="small"
+                href="/"
+                target="_blank"
+                @click="gotoPage(detail)"
+                >订单详情</el-button
+              >
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -44,7 +47,8 @@
       <div class="refund-detail-content">
         <el-row>
           <el-col :span="5">
-            <div class="pb16"><span class="gray9">商品编码：</span>
+            <div class="pb16">
+              <span class="gray9">商品编码：</span>
               {{ detail.orderProduct.productNo }}
             </div>
           </el-col>
@@ -97,8 +101,13 @@
       <div class="apply-reason-box">
         <div class="common-form">用户申请原因</div>
         <div class="apply-reason">{{ detail.applyDesc }}</div>
-        <div class="d-s-s mt10" v-if="detail.images && detail.images.length > 0">
-          <div class="pic" v-for="(item, index) in detail.images" :key="index"><img v-img-url="item.filePath" alt="" :width="60" /></div>
+        <div
+          class="d-s-s mt10"
+          v-if="detail.images && detail.images.length > 0"
+        >
+          <div class="pic" v-for="(item, index) in detail.images" :key="index">
+            <img v-img-url="item.filePath" alt="" :width="60" />
+          </div>
         </div>
       </div>
 
@@ -115,21 +124,44 @@
               <el-radio :label="20">拒绝</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="退货地址" v-if="form.isAgree == 10 && detail.type != 30">
+          <el-form-item
+            label="退货地址"
+            v-if="form.isAgree == 10 && detail.type != 30"
+          >
             <el-select v-model="form.addressId" placeholder="请选择地址">
-              <el-option v-for="(item, index) in addressList" :key="index" :label="item.detail" :value="item.addressId"></el-option>
+              <el-option
+                v-for="(item, index) in addressList"
+                :key="index"
+                :label="item.detail"
+                :value="item.addressId"
+              ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="退款金额" v-if="form.isAgree == 10 && detail.type == 30">
+          <el-form-item
+            label="退款金额"
+            v-if="form.isAgree == 10 && detail.type == 30"
+          >
             <el-input v-model="form.refundMoney"></el-input>
-            <p>请输入退款金额，最多{{ detail.orderProduct.totalPayPrice }} 元。注：该操作将执行订单原路退款 并关闭当前售后单，请确认并填写退款的金额（不能大于订单实付款）</p>
+            <p>
+              请输入退款金额，最多{{
+                detail.orderProduct.totalPayPrice
+              }}
+              元。注：该操作将执行订单原路退款
+              并关闭当前售后单，请确认并填写退款的金额（不能大于订单实付款）
+            </p>
           </el-form-item>
-          <el-form-item label="拒绝原因" v-if="form.isAgree == 20"><el-input type="textarea" v-model="form.refuseDesc" class="max-w460"></el-input></el-form-item>
+          <el-form-item label="拒绝原因" v-if="form.isAgree == 20"
+            ><el-input
+              type="textarea"
+              v-model="form.refuseDesc"
+              class="max-w460"
+            ></el-input
+          ></el-form-item>
         </el-form>
       </div>
 
       <!-- 退货地址 -->
-          <div v-if="detail.isAgree == 10&&detail.type != 30">
+      <div v-if="detail.isAgree == 10 && detail.type != 30">
         <div class="common-form mt16">退货地址</div>
         <el-row>
           <el-col :span="5">
@@ -160,7 +192,11 @@
       </div>
 
       <!-- 用户发货信息 -->
-      <div v-if="detail.type!= 30 && detail.isAgree == 10 && detail.isUserSend == 1">
+      <div
+        v-if="
+          detail.type != 30 && detail.isAgree == 10 && detail.isUserSend == 1
+        "
+      >
         <div class="common-form mt16">用户发货信息</div>
         <el-row>
           <el-col :span="5">
@@ -190,43 +226,73 @@
           <el-col :span="4">
             <div class="pb16">
               <span class="gray9">商家收货状态：</span>
-              <template v-if="detail.isReceipt == 1">
-                已收货
-              </template>
-              <template v-else="">
-                待收货
-              </template>
+              <template v-if="detail.isReceipt == 1"> 已收货 </template>
+              <template v-else=""> 待收货 </template>
             </div>
           </el-col>
         </el-row>
       </div>
 
       <!-- 确认收货并退款 -->
-      <div v-if="detail.type == 10 && detail.isAgree == 10 && detail.isUserSend == 1 && detail.isReceipt == 0">
+      <div
+        v-if="
+          detail.type == 10 &&
+          detail.isAgree == 10 &&
+          detail.isUserSend == 1 &&
+          detail.isReceipt == 0
+        "
+      >
         <div class="common-form mt16">确认收货并退款</div>
         <el-form size="small" ref="money" :model="money" label-width="80px">
-          <p>注：该操作将执行订单原路退款 并关闭当前售后单，请确认并填写退款的金额（不能大于订单实付款）</p>
+          <p>
+            注：该操作将执行订单原路退款
+            并关闭当前售后单，请确认并填写退款的金额（不能大于订单实付款）
+          </p>
           <el-form-item label="售后类型">
             <span class="orange">{{ detail.typeText }}</span>
           </el-form-item>
           <el-form-item label="退款金额">
             <el-input v-model="money.refundMoney"></el-input>
-            <p>请输入退款金额，最多{{ detail.orderProduct.totalPayPrice }} 元</p>
+            <p>
+              请输入退款金额，最多{{ detail.orderProduct.totalPayPrice }} 元
+            </p>
           </el-form-item>
         </el-form>
       </div>
 
-      <div v-if="detail.type == 20 && detail.isAgree == 10 && detail.isUserSend == 1">
+      <div
+        v-if="
+          detail.type == 20 && detail.isAgree == 10 && detail.isUserSend == 1
+        "
+      >
         <!-- 去发货 -->
         <div v-if="detail.isPlateSend == 0">
           <div class="common-form mt16">发货</div>
-          <el-form size="small" ref="deliver" :model="deliver" label-width="100px">
+          <el-form
+            size="small"
+            ref="deliver"
+            :model="deliver"
+            label-width="100px"
+          >
             <el-form-item label="物流公司">
-              <el-select v-model="deliver.sendExpressId" placeholder="请选择快递公司">
-                <el-option :label="item.expressName" v-for="(item, index) in expressList" :key="index" :value="item.expressId"></el-option>
+              <el-select
+                v-model="deliver.sendExpressId"
+                placeholder="请选择快递公司"
+              >
+                <el-option
+                  :label="item.expressName"
+                  v-for="(item, index) in expressList"
+                  :key="index"
+                  :value="item.expressId"
+                ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="物流单号"><el-input v-model="deliver.sendExpressNo" class="max-w460"></el-input></el-form-item>
+            <el-form-item label="物流单号"
+              ><el-input
+                v-model="deliver.sendExpressNo"
+                class="max-w460"
+              ></el-input
+            ></el-form-item>
           </el-form>
         </div>
         <div v-if="detail.isPlateSend == 1">
@@ -256,19 +322,38 @@
     </div>
 
     <div class="common-button-wrapper">
-      <el-button size="small" type="info" @click="cancelFunc">取消 / 返回上一页</el-button>
+      <el-button size="small" type="info" @click="cancelFunc"
+        >取消 / 返回上一页</el-button
+      >
       <!--商家审核-->
       <template v-if="detail.isAgree == 0">
-        <el-button size="small" type="primary" @click="onSubmit(detail.orderRefundId)">确认审核</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          @click="onSubmit(detail.orderRefundId)"
+          >确认审核</el-button
+        >
       </template>
-      <template v-if="detail.type != 30 && detail.isAgree == 10 && detail.isUserSend == 1 && detail.isReceipt == 0">
-        <el-button size="small" type="primary" @click="refundMoney(detail.orderRefundId)">确认审核</el-button>
+      <template
+        v-if="
+          detail.type != 30 &&
+          detail.isAgree == 10 &&
+          detail.isUserSend == 1 &&
+          detail.isReceipt == 0
+        "
+      >
+        <el-button
+          size="small"
+          type="primary"
+          @click="refundMoney(detail.orderRefundId)"
+          >确认审核</el-button
+        >
       </template>
     </div>
   </div>
 </template>
 <script>
-import OrderApi from '@/api/order.js';
+import OrderApi from "@/api/order.js";
 export default {
   data() {
     return {
@@ -286,10 +371,10 @@ export default {
         images: [],
         is_plate_send: 0,
         sendexpress: {},
-        isPlateSend: '',
-        sendExpressName:'',
-        sendExpressNo:'',
-        expressNo:'',
+        isPlateSend: "",
+        sendExpressName: "",
+        sendExpressNo: "",
+        expressNo: "",
       },
       /*快递公司列表*/
       expressList: [],
@@ -299,19 +384,19 @@ export default {
       addressList: {},
       form: {
         isAgree: 10,
-        addressId: '',
-        refuseDesc: '',
-        refundMoney: 0
+        addressId: "",
+        refuseDesc: "",
+        refundMoney: 0,
       },
       money: {
-        refundMoney: 0
+        refundMoney: 0,
       },
       orderRefundId: 0,
       deliver: {
-        sendExpressId: '',
-        sendExpressNo: ''
+        sendExpressId: "",
+        sendExpressNo: "",
       },
-      loading: true
+      loading: true,
     };
   },
   created() {
@@ -326,28 +411,28 @@ export default {
       let order_refund_id = this.$route.query.orderRefundId;
       OrderApi.refundDetail(
         {
-          orderRefundId: order_refund_id
+          orderRefundId: order_refund_id,
         },
         true
       )
-        .then(res => {
+        .then((res) => {
           self.detail = res.data;
           self.order = res.data.order;
           self.addressList = res.data.addressList;
           self.expressList = res.data.expressList;
           self.loading = false;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*跳转订单详情*/
     gotoPage(row) {
       let self = this;
       this.$router.push({
-        path: '/order/order/detail',
+        path: "/order/order/detail",
         query: {
-          orderId: row.orderId
-        }
+          orderId: row.orderId,
+        },
       });
     },
 
@@ -362,18 +447,18 @@ export default {
           addressId: form.addressId,
           refuseDesc: form.refuseDesc,
           orderRefundId: orderRefundId,
-          refundMoney: form.refundMoney
+          refundMoney: form.refundMoney,
         },
         true
       )
-        .then(data => {
+        .then((data) => {
           ElMessage({
-            message: '恭喜你，操作成功',
-            type: 'success'
+            message: "恭喜你，操作成功",
+            type: "success",
           });
           this.getData();
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*确认收货退款*/
@@ -381,12 +466,12 @@ export default {
       let self = this;
       let form = {};
       let param = self.deliver;
-      if (param.sendExpressId == '' && self.detail.type == 20) {
-        ElMessage.error('请选择物流公司');
+      if (param.sendExpressId == "" && self.detail.type == 20) {
+        ElMessage.error("请选择物流公司");
         return;
       }
-      if (param.sendExpressNo == '' && self.detail.type == 20) {
-        ElMessage.error('请填写物流单号');
+      if (param.sendExpressNo == "" && self.detail.type == 20) {
+        ElMessage.error("请填写物流单号");
         return;
       }
       if (self.detail.type == 20) {
@@ -396,21 +481,21 @@ export default {
       form.refundMoney = self.money.refundMoney;
       form.orderRefundId = e;
       OrderApi.receipt(form, true)
-        .then(data => {
+        .then((data) => {
           ElMessage({
-            message: '恭喜你，操作成功',
-            type: 'success'
+            message: "恭喜你，操作成功",
+            type: "success",
           });
           this.getData();
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*取消*/
     cancelFunc() {
       this.$router.back(-1);
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

@@ -1,21 +1,48 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2019-10-25
-    	描述：组件-选择门店
-    -->
-  <el-dialog title="选择门店" v-model="dialogVisible" @close="dialogFormVisible" :close-on-click-modal="false" :close-on-press-escape="false" width="900px">
+  <el-dialog
+    title="选择门店"
+    v-model="dialogVisible"
+    @close="dialogFormVisible"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    width="900px"
+  >
     <div class="common-seach-wrap">
-      <el-form :inline="true" size="small" :model="formInline" class="demo-form-inline">
+      <el-form
+        :inline="true"
+        size="small"
+        :model="formInline"
+        class="demo-form-inline"
+      >
         <el-form-item label="商品分类">
-          <el-select v-model="formInline.category_id" placeholder="请选择商品分类">
+          <el-select
+            v-model="formInline.category_id"
+            placeholder="请选择商品分类"
+          >
             <template v-for="cat in cateList">
               <el-option :value="0" :label="'全部'"></el-option>
-              <el-option :value="cat.category_id" :key="cat.category_id" :label="cat.name"></el-option>
+              <el-option
+                :value="cat.category_id"
+                :key="cat.category_id"
+                :label="cat.name"
+              ></el-option>
               <template v-if="cat.child !== undefined" v-for="two in cat.child">
-                <el-option :value="two.category_id" :key="two.category_id" :label="two.name" style="padding-left: 30px;"></el-option>
-                <template v-if="two.child !== undefined" v-for="three in two.child">
-                  <el-option :value="three.category_id" :key="three.category_id" :label="three.name" style="padding-left: 60px;"></el-option>
+                <el-option
+                  :value="two.category_id"
+                  :key="two.category_id"
+                  :label="two.name"
+                  style="padding-left: 30px"
+                ></el-option>
+                <template
+                  v-if="two.child !== undefined"
+                  v-for="three in two.child"
+                >
+                  <el-option
+                    :value="three.category_id"
+                    :key="three.category_id"
+                    :label="three.name"
+                    style="padding-left: 60px"
+                  ></el-option>
                 </template>
               </template>
             </template>
@@ -36,16 +63,39 @@
     <!--内容-->
     <div class="product-content">
       <div class="table-wrap">
-        <el-table size="small" :data="productList" border style="width: 100%" highlight-current-row v-loading="loading" @selection-change="tableCurrentChange">
+        <el-table
+          size="small"
+          :data="productList"
+          border
+          style="width: 100%"
+          highlight-current-row
+          v-loading="loading"
+          @selection-change="tableCurrentChange"
+        >
           <el-table-column width="70" label="商品图片">
             <template #default="scope">
               <img :src="scope.row.image[0].file_path" width="30" height="30" />
             </template>
           </el-table-column>
-          <el-table-column prop="product_name" label="商品名称"></el-table-column>
-          <el-table-column prop="category.name" width="100" label="商品分类"></el-table-column>
-          <el-table-column prop="create_time" width="140" label="添加时间"></el-table-column>
-          <el-table-column type="selection" :selectable="selectableFunc" width="44"></el-table-column>
+          <el-table-column
+            prop="product_name"
+            label="商品名称"
+          ></el-table-column>
+          <el-table-column
+            prop="category.name"
+            width="100"
+            label="商品分类"
+          ></el-table-column>
+          <el-table-column
+            prop="create_time"
+            width="140"
+            label="添加时间"
+          ></el-table-column>
+          <el-table-column
+            type="selection"
+            :selectable="selectableFunc"
+            width="44"
+          ></el-table-column>
         </el-table>
       </div>
 
@@ -65,16 +115,17 @@
     </div>
     <template #footer>
       <div class="dialog-footer">
-        <el-button size="small" @click="dialogVisible=false">取 消</el-button>
-        <el-button size="small" type="primary" @click="addClerk">确 定</el-button>
+        <el-button size="small" @click="dialogVisible = false">取 消</el-button>
+        <el-button size="small" type="primary" @click="addClerk"
+          >确 定</el-button
+        >
       </div>
     </template>
-   
   </el-dialog>
 </template>
 
 <script>
-import storeApi from '@/api/store.js';
+import storeApi from "@/api/store.js";
 export default {
   data() {
     return {
@@ -95,45 +146,42 @@ export default {
       status: [
         {
           id: 10,
-          name: '上架'
+          name: "上架",
         },
         {
           id: 20,
-          name: '下架'
-        }
+          name: "下架",
+        },
       ],
       multipleSelection: [],
       /*左边长度*/
-      formLabelWidth: '120px',
+      formLabelWidth: "120px",
       /*是否显示*/
       dialogVisible: false,
       /*结果类别*/
-      type:'error',
+      type: "error",
       /*传出去的参数*/
-      params:null
+      params: null,
     };
   },
-  props: ['isstore', 'excludeIds','islist'],
-  watch:{
-    isstore:function(n,o){
-      if(n!=o){
-        if(n){
-          this.dialogVisible=n;
-          this.type='error';
-          this.params=null;
+  props: ["isstore", "excludeIds", "islist"],
+  watch: {
+    isstore: function (n, o) {
+      if (n != o) {
+        if (n) {
+          this.dialogVisible = n;
+          this.type = "error";
+          this.params = null;
           this.getData();
         }
       }
-    }
+    },
   },
-  created() {
-
-  },
+  created() {},
   methods: {
-
     /*是否可以勾选*/
-    selectableFunc(e){
-      if(typeof e.noChoose !=='boolean'){
+    selectableFunc(e) {
+      if (typeof e.noChoose !== "boolean") {
         return true;
       }
       return e.noChoose;
@@ -158,18 +206,23 @@ export default {
       let params = self.formInline;
       params.page = self.curPage;
       params.list_rows = self.pageSize;
-      storeApi.storeLists(params, true)
-        .then(res => {
+      storeApi
+        .storeLists(params, true)
+        .then((res) => {
           if (res.code == 1) {
             self.loading = false;
             self.cateList = res.data.catgory;
             /*判断是否需要去重*/
-            if(self.excludeIds&&typeof(self.excludeIds)!='undefined'&&self.excludeIds.length>0){
-              res.data.list.data.forEach(item=>{
-                if(self.excludeIds.indexOf(item.product_id)>-1){
-                  item.noChoose=false;
-                }else{
-                  item.noChoose=true;
+            if (
+              self.excludeIds &&
+              typeof self.excludeIds != "undefined" &&
+              self.excludeIds.length > 0
+            ) {
+              res.data.list.data.forEach((item) => {
+                if (self.excludeIds.indexOf(item.product_id) > -1) {
+                  item.noChoose = false;
+                } else {
+                  item.noChoose = true;
                 }
               });
             }
@@ -177,49 +230,49 @@ export default {
             self.totalDataNumber = res.data.list.total;
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     //点击确定
     addClerk() {
       let self = this;
       let params = null;
-      let type = 'success';
+      let type = "success";
       if (self.multipleSelection.length < 1) {
         ElMessage({
-          message: '请至少选择一件产品商品！',
-          type: 'error'
+          message: "请至少选择一件产品商品！",
+          type: "error",
         });
         return;
       }
-      if (self.islist&&typeof(self.islist)!='undefined') {
-        self.multipleSelection.forEach(item=>{
-          item.image=item.image[0].file_path;
+      if (self.islist && typeof self.islist != "undefined") {
+        self.multipleSelection.forEach((item) => {
+          item.image = item.image[0].file_path;
         });
         params = self.multipleSelection;
       } else {
         params = self.multipleSelection[0];
         params.image = params.image[0].file_path;
       }
-      self.params=params;
-      self.type='success';
-      self.dialogVisible=false;
+      self.params = params;
+      self.type = "success";
+      self.dialogVisible = false;
     },
 
     /*关闭弹窗*/
     dialogFormVisible() {
-      this.$emit('closeDialog', {
+      this.$emit("closeDialog", {
         type: this.type,
         openDialog: false,
-        params: this.params
+        params: this.params,
       });
     },
 
     /*监听复选按钮选中事件*/
     tableCurrentChange(val) {
       this.multipleSelection = val;
-    }
-  }
+    },
+  },
 };
 </script>
 

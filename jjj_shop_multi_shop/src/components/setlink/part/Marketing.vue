@@ -1,26 +1,30 @@
 <template>
-  <!--
-        作者：luoyiming
-        时间：2020-06-08
-        描述：超链接选择-营销
-    -->
   <div class="marketing-box">
-    <el-tabs v-model="activeTab">
-
-    </el-tabs>
-    <el-select v-model="activePage" placeholder="请选择" class="percent-w100" @change="changeFunc" value-key="id">
-      <el-option v-for="(item, index) in pages" :key="index" :label="item.name" :value="item"></el-option>
+    <el-tabs v-model="activeTab"> </el-tabs>
+    <el-select
+      v-model="activePage"
+      placeholder="请选择"
+      class="percent-w100"
+      @change="changeFunc"
+      value-key="id"
+    >
+      <el-option
+        v-for="(item, index) in pages"
+        :key="index"
+        :label="item.name"
+        :value="item"
+      ></el-option>
     </el-select>
   </div>
 </template>
 
 <script>
-import LinkApi from '@/api/link.js';
+import LinkApi from "@/api/link.js";
 export default {
   data() {
     return {
       /*tab切换选择中值*/
-      activeTab: '',
+      activeTab: "",
       /*页面数据*/
       pages: [],
       /*选中的值*/
@@ -28,40 +32,40 @@ export default {
     };
   },
   watch: {
-    activeTab: function(n, o) {
+    activeTab: function (n, o) {
       let self = this;
       self.pages = [];
       if (n != o) {
-        if (n == 'signin') {
+        if (n == "signin") {
           self.pages = self.signinList;
-        } else if (n == 'points') {
+        } else if (n == "points") {
           self.pages = self.pointsList;
-        } else if (n == 'presale') {
+        } else if (n == "presale") {
           self.pages = self.presaleList;
-        } else if (n == 'seckill') {
+        } else if (n == "seckill") {
           self.pages = self.seckillList;
-        } else if (n == 'assemble') {
+        } else if (n == "assemble") {
           self.pages = self.assembleList;
-        } else if (n == 'bargain') {
+        } else if (n == "bargain") {
           self.pages = self.bargainList;
-        } else if (n == 'package') {
+        } else if (n == "package") {
           self.pages = self.packageList;
-        } else if (n == 'invitation') {
+        } else if (n == "invitation") {
           self.pages = self.invitationList;
-        } else if (n == 'coupon') {
+        } else if (n == "coupon") {
           self.pages = self.couponList;
-        } else if (n == 'lottery') {
+        } else if (n == "lottery") {
           self.pages = self.lotteryList;
-        } else if (n == 'table') {
+        } else if (n == "table") {
           self.pages = self.tableList;
-        } else if (n == 'task') {
+        } else if (n == "task") {
           self.pages = self.taskList;
-        } else if (n == 'agent') {
+        } else if (n == "agent") {
           self.pages = self.agentList;
         }
         self.autoSend();
       }
-    }
+    },
   },
   created() {
     this.pages = this.couponList;
@@ -73,12 +77,12 @@ export default {
     getData() {
       let self = this;
       LinkApi.getList({}, true)
-        .then(res => {
+        .then((res) => {
           self.packageList = res.data.packageList;
           self.invitationList = res.data.invitationList;
           self.tableList = res.data.tableList;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     /*自动发送*/
     autoSend() {
@@ -89,9 +93,9 @@ export default {
     },
     /*选中的值*/
     changeFunc(e) {
-      this.$emit('changeData', this.activePage);
-    }
-  }
+      this.$emit("changeData", this.activePage);
+    },
+  },
 };
 </script>
 

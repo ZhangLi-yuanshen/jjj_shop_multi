@@ -1,16 +1,10 @@
 <template>
-  <!--
-          作者：luoyiming
-          时间：2019-10-24
-          描述：统计-会员统计
-      -->
-  <div class="statistics-member" v-loading="loading" style="min-height: 400px;">
+  <div class="statistics-member" v-loading="loading" style="min-height: 400px">
     <div class="common-form">会员统计</div>
     <div class="d-s-stretch bd-box">
       <div class="d-s-c d-c left-box">
-
-         <!--汇总-->
-         <Total v-if="!loading"></Total>
+        <!--汇总-->
+        <Total v-if="!loading"></Total>
 
         <!--新增会员-->
         <LineChart v-if="!loading"></LineChart>
@@ -21,58 +15,58 @@
 
     <!--排行榜-->
     <Ranking v-if="!loading"></Ranking>
-
   </div>
 </template>
 
 <script>
-import StatisticsApi from '@/api/statistics.js';
-import Total from './part/Total.vue';
-import LineChart from './part/LineChart.vue';
-import Pie from './part/Pie.vue'
-import Ranking from './part/Ranking.vue'
+import StatisticsApi from "@/api/statistics.js";
+import Total from "./part/Total.vue";
+import LineChart from "./part/LineChart.vue";
+import Pie from "./part/Pie.vue";
+import Ranking from "./part/Ranking.vue";
 export default {
   components: {
     Total,
     LineChart,
     Pie,
-    Ranking
+    Ranking,
   },
-  data(){
-    return{
+  data() {
+    return {
       /*是否正在加载*/
-      loading:true,
+      loading: true,
       /*数据对象*/
-      dataModel:{}
-    }
+      dataModel: {},
+    };
   },
   provide: function () {
     return {
-      dataModel: this.dataModel
-    }
+      dataModel: this.dataModel,
+    };
   },
   created() {
-
     this.getData();
   },
-  methods:{
-
+  methods: {
     /*获取数据*/
     getData() {
       let self = this;
       StatisticsApi.getUserTotal({}, true)
-        .then(res => {
+        .then((res) => {
           Object.assign(self.dataModel, res.data);
           self.loading = false;
         })
-        .catch(error => {});
-    }
-
-  }
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 
 <style scoped="scoped">
-  .statistics-member .bd-box{ border-top: 1px solid #EEEEEE;}
-  .statistics-member .left-box{ width: 100%;}
+.statistics-member .bd-box {
+  border-top: 1px solid #eeeeee;
+}
+.statistics-member .left-box {
+  width: 100%;
+}
 </style>

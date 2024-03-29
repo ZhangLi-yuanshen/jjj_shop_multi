@@ -1,10 +1,10 @@
 <template>
-  <!--
-        作者：luoyiming
-        时间：2020-07-25
-        描述：权限-操作日志-详情
-    -->
-  <el-dialog title="详情" v-model="dialogVisible" @close="dialogFormVisible" :close-on-press-escape="false">
+  <el-dialog
+    title="详情"
+    v-model="dialogVisible"
+    @close="dialogFormVisible"
+    :close-on-press-escape="false"
+  >
     <el-form size="small" :model="form">
       <el-form-item label="标题：" :label-width="formLabelWidth">
         <div class="item-content-box">{{ form.title }}</div>
@@ -35,8 +35,10 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <div class="dialog-footer"><el-button size="small" @click="dialogVisible = false">关闭</el-button></div>
-    </template> 
+      <div class="dialog-footer">
+        <el-button size="small" @click="dialogVisible = false">关闭</el-button>
+      </div>
+    </template>
   </el-dialog>
 </template>
 
@@ -45,35 +47,35 @@ export default {
   data() {
     return {
       /*左边长度*/
-      formLabelWidth: '140px',
+      formLabelWidth: "140px",
       /*是否显示*/
-      dialogVisible: false
+      dialogVisible: false,
     };
   },
-  props: ['open', 'form'],
+  props: ["open", "form"],
   created() {},
   watch: {
-    open: function(n, o) {
+    open: function (n, o) {
       if (n != o && n) {
         this.dialogVisible = this.open;
       }
-    }
+    },
   },
   methods: {
     /*关闭弹窗*/
     dialogFormVisible(e) {
-      this.$emit('close', {});
-    }
-  }
+      this.$emit("close", {});
+    },
+  },
 };
 </script>
 
 <style scoped="scoped">
-  .item-content-box{
-    padding-top: 4px;
-    line-height: 20px;
-     min-height: 20px;
-    color: #333333;
-    border-bottom: 1px solid #EEEEEE;
-  }
+.item-content-box {
+  padding-top: 4px;
+  line-height: 20px;
+  min-height: 20px;
+  color: #333333;
+  border-bottom: 1px solid #eeeeee;
+}
 </style>

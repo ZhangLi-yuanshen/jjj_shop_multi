@@ -1,12 +1,20 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2019-10-25
-    	描述：组件-选择商品
-    -->
-  <el-dialog title="选择商品" :append-to-body="true" v-model="dialogVisible" @close="dialogFormVisible" :close-on-click-modal="false" :close-on-press-escape="false" width="900px">
+  <el-dialog
+    title="选择商品"
+    :append-to-body="true"
+    v-model="dialogVisible"
+    @close="dialogFormVisible"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    width="900px"
+  >
     <div class="common-seach-wrap">
-      <el-form :inline="true" size="small" :model="formInline" class="demo-form-inline">
+      <el-form
+        :inline="true"
+        size="small"
+        :model="formInline"
+        class="demo-form-inline"
+      >
         <el-form-item label="商品名称">
           <el-input placeholder="请输入商品名称" v-model="formInline.search">
             <el-button @click="getData">
@@ -20,19 +28,48 @@
     <!--内容-->
     <div class="product-content">
       <div class="table-wrap">
-        <el-table size="small" :data="productList" border style="width: 100%" highlight-current-row v-loading="loading" @selection-change="tableCurrentChange">
+        <el-table
+          size="small"
+          :data="productList"
+          border
+          style="width: 100%"
+          highlight-current-row
+          v-loading="loading"
+          @selection-change="tableCurrentChange"
+        >
           <el-table-column width="70" label="商品图片">
             <template #default="scope">
               <img :src="scope.row.imagePath" width="30" height="30" />
             </template>
           </el-table-column>
-          <el-table-column prop="productName" label="商品名称"></el-table-column>
-          <el-table-column prop="categoryName" width="100" label="商品分类"></el-table-column>
-          <el-table-column prop="createTime" width="140" label="添加时间"></el-table-column>
-          <el-table-column type="selection" :selectable="selectableFunc" width="44" v-if="islist"></el-table-column>
+          <el-table-column
+            prop="productName"
+            label="商品名称"
+          ></el-table-column>
+          <el-table-column
+            prop="categoryName"
+            width="100"
+            label="商品分类"
+          ></el-table-column>
+          <el-table-column
+            prop="createTime"
+            width="140"
+            label="添加时间"
+          ></el-table-column>
+          <el-table-column
+            type="selection"
+            :selectable="selectableFunc"
+            width="44"
+            v-if="islist"
+          ></el-table-column>
           <el-table-column width="80" label="单选" v-if="!islist">
             <template #default="scope">
-              <el-button size="small" v-if="scope.row.noChoose" @click="SingleFunc(scope.row)">选择</el-button>
+              <el-button
+                size="small"
+                v-if="scope.row.noChoose"
+                @click="SingleFunc(scope.row)"
+                >选择</el-button
+              >
               <el-button size="small" v-else disabled>已选</el-button>
             </template>
           </el-table-column>
@@ -56,14 +93,16 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="addClerk" v-if="islist">确 定</el-button>
+        <el-button size="small" type="primary" @click="addClerk" v-if="islist"
+          >确 定</el-button
+        >
       </div>
     </template>
   </el-dialog>
 </template>
 
 <script>
-import PorductApi from '@/api/product.js';
+import PorductApi from "@/api/product.js";
 export default {
   data() {
     return {
@@ -84,42 +123,42 @@ export default {
       status: [
         {
           id: 10,
-          name: '上架'
+          name: "上架",
         },
         {
           id: 20,
-          name: '下架'
-        }
+          name: "下架",
+        },
       ],
       multipleSelection: [],
       /*左边长度*/
-      formLabelWidth: '120px',
+      formLabelWidth: "120px",
       /*是否显示*/
       dialogVisible: false,
       /*结果类别*/
-      type: 'error',
+      type: "error",
       /*传出去的参数*/
-      params: null
+      params: null,
     };
   },
-  props: ['isproduct', 'excludeIds', 'islist'],
+  props: ["isproduct", "excludeIds", "islist"],
   watch: {
-    isproduct: function(n, o) {
+    isproduct: function (n, o) {
       if (n != o) {
         if (n) {
           this.dialogVisible = n;
-          this.type = 'error';
+          this.type = "error";
           this.params = null;
           this.getData();
         }
       }
-    }
+    },
   },
   created() {},
   methods: {
     /*是否可以勾选*/
     selectableFunc(e) {
-      if (typeof e.noChoose !== 'boolean') {
+      if (typeof e.noChoose !== "boolean") {
         return true;
       }
       return e.noChoose;
@@ -145,13 +184,17 @@ export default {
       params.pageIndex = self.curPage;
       params.pageSize = self.pageSize;
       PorductApi.chooseLists(params, true)
-        .then(res => {
+        .then((res) => {
           if (res.code == 1) {
             self.loading = false;
             self.categoryList = res.data.categoryList;
             /*判断是否需要去重*/
-            if (self.excludeIds && typeof self.excludeIds != 'undefined' && self.excludeIds.length > 0) {
-              res.data.productList.records.forEach(item => {
+            if (
+              self.excludeIds &&
+              typeof self.excludeIds != "undefined" &&
+              self.excludeIds.length > 0
+            ) {
+              res.data.productList.records.forEach((item) => {
                 if (self.excludeIds.indexOf(item.productId) > -1) {
                   item.noChoose = false;
                 } else {
@@ -160,7 +203,7 @@ export default {
               });
             } else {
               if (!self.islist) {
-                res.data.productList.records.forEach(item => {
+                res.data.productList.records.forEach((item) => {
                   item.noChoose = true;
                 });
               }
@@ -169,7 +212,7 @@ export default {
             self.totalDataNumber = res.data.productList.total;
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*单选*/
@@ -182,16 +225,16 @@ export default {
     addClerk() {
       let self = this;
       let params = null;
-      let type = 'success';
+      let type = "success";
       if (self.multipleSelection.length < 1) {
         ElMessage({
-          message: '请至少选择一件产品商品！',
-          type: 'error'
+          message: "请至少选择一件产品商品！",
+          type: "error",
         });
         return;
       }
-      if (self.islist && typeof self.islist != 'undefined') {
-        self.multipleSelection.forEach(item => {
+      if (self.islist && typeof self.islist != "undefined") {
+        self.multipleSelection.forEach((item) => {
           item.image = item.imagePath;
         });
         params = self.multipleSelection;
@@ -200,24 +243,24 @@ export default {
         params.image = params.imagePath;
       }
       self.params = params;
-      self.type = 'success';
+      self.type = "success";
       self.dialogVisible = false;
     },
 
     /*关闭弹窗*/
     dialogFormVisible() {
-      this.$emit('closeDialog', {
+      this.$emit("closeDialog", {
         type: this.type,
         openDialog: false,
-        params: this.params
+        params: this.params,
       });
     },
 
     /*监听复选按钮选中事件*/
     tableCurrentChange(val) {
       this.multipleSelection = val;
-    }
-  }
+    },
+  },
 };
 </script>
 

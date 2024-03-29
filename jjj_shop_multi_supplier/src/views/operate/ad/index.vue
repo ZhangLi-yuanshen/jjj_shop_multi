@@ -1,17 +1,22 @@
 <template>
-  <!--
-      	作者：luoyiming
-      	时间：2020-06-01
-      	描述：广告-列表
-      -->
   <div>
-    <div class="common-level-rail"><el-button size="small" type="primary" icon="Plus" @click="addAd">添加广告</el-button></div>
+    <div class="common-level-rail">
+      <el-button size="small" type="primary" icon="Plus" @click="addAd"
+        >添加广告</el-button
+      >
+    </div>
     <div class="table-wrap">
       <el-table :data="tableData" style="width: 100%" v-loading="loading">
-        <el-table-column prop="adId" label="广告ID" width="100"></el-table-column>
-         <el-table-column prop="title" label="广告标题">
+        <el-table-column
+          prop="adId"
+          label="广告ID"
+          width="100"
+        ></el-table-column>
+        <el-table-column prop="title" label="广告标题">
           <template #default="scope">
-            <div class="text-ellipsis" :title="scope.row.title">{{scope.row.title}}</div>
+            <div class="text-ellipsis" :title="scope.row.title">
+              {{ scope.row.title }}
+            </div>
           </template>
         </el-table-column>
         <el-table-column prop="address" label="广告图" width="250">
@@ -26,26 +31,44 @@
             <span v-if="scope.row.status == 0" class="gray">隐藏</span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="添加时间" width="140"></el-table-column>
-        <el-table-column prop="updateTime" label="更新时间" width="140"></el-table-column>
+        <el-table-column
+          prop="createTime"
+          label="添加时间"
+          width="140"
+        ></el-table-column>
+        <el-table-column
+          prop="updateTime"
+          label="更新时间"
+          width="140"
+        ></el-table-column>
         <el-table-column prop="name" label="操作" width="120">
           <template #default="scope">
-            <el-button @click="editAd(scope.row)" type="text" size="small">编辑</el-button>
-            <el-button @click="deleteAd(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="editAd(scope.row)" type="text" size="small"
+              >编辑</el-button
+            >
+            <el-button @click="deleteAd(scope.row)" type="text" size="small"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
 
       <!--分页-->
       <div class="pagination">
-        <el-pagination background :current-page="curPage" :page-size="pageSize" layout="total, prev, pager, next, jumper" :total="totalDataNumber"></el-pagination>
+        <el-pagination
+          background
+          :current-page="curPage"
+          :page-size="pageSize"
+          layout="total, prev, pager, next, jumper"
+          :total="totalDataNumber"
+        ></el-pagination>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AdApi from '@/api/ad.js';
+import AdApi from "@/api/ad.js";
 export default {
   components: {},
   data() {
@@ -67,7 +90,7 @@ export default {
       /*一共多少条数据*/
       totalDataNumber: 0,
       /*当前是第几页*/
-      curPage: 1
+      curPage: 1,
     };
   },
   created() {
@@ -75,19 +98,18 @@ export default {
     this.getTableList();
   },
   methods: {
-
     /*获取广告列表*/
     getTableList() {
       let self = this;
       let Params = {};
       Params.page = self.curPage;
       AdApi.adList(Params, true)
-        .then(res => {
+        .then((res) => {
           self.loading = false;
           self.tableData = res.data.records;
           self.totalDataNumber = res.data.total;
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -95,7 +117,7 @@ export default {
     /*添加广告*/
     addAd() {
       this.$router.push({
-        path: '/operate/ad/add'
+        path: "/operate/ad/add",
       });
     },
 
@@ -103,10 +125,10 @@ export default {
     editAd(row) {
       let params = row.adId;
       this.$router.push({
-        path: '/operate/ad/edit',
+        path: "/operate/ad/edit",
         query: {
-          adId: params
-        }
+          adId: params,
+        },
       });
     },
 
@@ -127,53 +149,50 @@ export default {
     /*删除广告*/
     deleteAd(row) {
       let self = this;
-      ElMessageBox.confirm('此操作将永久删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
+      ElMessageBox.confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
         .then(() => {
           self.loading = true;
           AdApi.deleteAd(
             {
-              adId: row.adId
+              adId: row.adId,
             },
             true
           )
-            .then(data => {
+            .then((data) => {
               ElMessage({
                 message: data.msg,
-                type: 'success'
+                type: "success",
               });
               self.loading = false;
               self.getTableList();
             })
-            .catch(error => {});
+            .catch((error) => {});
         })
         .catch(() => {});
     },
 
-
     handleClick(tab, event) {},
-
-
 
     /*关闭弹窗*/
     closeDialogFunc(e, f) {
-      if (f == 'add') {
+      if (f == "add") {
         this.open_add = e.openDialog;
-        if (e.type == 'success') {
+        if (e.type == "success") {
           this.getTableList();
         }
       }
-      if (f == 'edit') {
+      if (f == "edit") {
         this.open_edit = e.openDialog;
-        if (e.type == 'success') {
+        if (e.type == "success") {
           this.getTableList();
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

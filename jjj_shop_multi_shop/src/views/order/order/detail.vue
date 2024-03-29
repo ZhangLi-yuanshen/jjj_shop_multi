@@ -1,9 +1,4 @@
 <template>
-  <!--
-      作者：luoyiming
-      时间：2019-10-25
-      描述：订单详情
-  -->
   <div class="pb50" v-loading="loading">
     <!--内容-->
     <div class="product-content">
@@ -103,19 +98,39 @@
               {{ detail.advance.reduceMoney }}
             </div>
           </el-col> -->
-          <el-col :span="5" v-if="detail.payStatus == 10 && detail.orderStatus == 10 && detail.orderSource == 10" v-auth="'/order/order/updatePrice'">
-            <el-button @click="editClick(detail)" size="small">修改价格</el-button>
+          <el-col
+            :span="5"
+            v-if="
+              detail.payStatus == 10 &&
+              detail.orderStatus == 10 &&
+              detail.orderSource == 10
+            "
+            v-auth="'/order/order/updatePrice'"
+          >
+            <el-button @click="editClick(detail)" size="small"
+              >修改价格</el-button
+            >
           </el-col>
         </el-row>
       </div>
       <!-- 编辑 -->
-      <Add v-if="open_edit" :open_edit="open_edit" :order="userModel" @close="closeDialogFunc($event, 'edit')"></Add>
+      <Add
+        v-if="open_edit"
+        :open_edit="open_edit"
+        :order="userModel"
+        @close="closeDialogFunc($event, 'edit')"
+      ></Add>
       <!--商品信息-->
       <div class="common-form mt16">商品信息</div>
       <div class="table-wrap">
-        <el-table size="small" :data="detail.productList" border style="width: 100%">
+        <el-table
+          size="small"
+          :data="detail.productList"
+          border
+          style="width: 100%"
+        >
           <el-table-column prop="productName" label="商品" width="400">
-            <template  #default="scope">
+            <template #default="scope">
               <div class="product-info">
                 <div class="pic"><img v-img-url="scope.row.imagePath" /></div>
                 <div class="info">
@@ -125,22 +140,33 @@
                     {{ scope.row.refund.type.text }}-{{ scope.row.refund.status.text }}
                   </div> -->
                   <div class="price">
-                    <span :class="{ 'text-d-line': scope.row.isUserGrade == 1, gray6: scope.row.isUserGrade != 1 }">￥ {{ scope.row.productPrice }}</span>
-                    <span class="ml10" v-if="scope.row.isUserGrade == 1">会员折扣价：￥ {{ scope.row.gradeProductPrice }}</span>
+                    <span
+                      :class="{
+                        'text-d-line': scope.row.isUserGrade == 1,
+                        gray6: scope.row.isUserGrade != 1,
+                      }"
+                      >￥ {{ scope.row.productPrice }}</span
+                    >
+                    <span class="ml10" v-if="scope.row.isUserGrade == 1"
+                      >会员折扣价：￥ {{ scope.row.gradeProductPrice }}</span
+                    >
                   </div>
                 </div>
               </div>
             </template>
           </el-table-column>
           <el-table-column prop="productNo" label="商品编码"></el-table-column>
-          <el-table-column prop="productWeight" label="重量 (Kg)"></el-table-column>
+          <el-table-column
+            prop="productWeight"
+            label="重量 (Kg)"
+          ></el-table-column>
           <el-table-column prop="totalNum" label="购买数量">
-            <template  #default="scope">
+            <template #default="scope">
               <p>x {{ scope.row.totalNum }}</p>
             </template>
           </el-table-column>
           <el-table-column prop="totalPrice" label="商品总价(元)">
-            <template  #default="scope">
+            <template #default="scope">
               <p>￥ {{ scope.row.totalPrice }}</p>
             </template>
           </el-table-column>
@@ -176,11 +202,20 @@
             <el-col :span="5">
               <div class="pb16">
                 <span class="gray9">收货地址：</span>
-                {{ detail.address.region.province }} {{ detail.address.region.city }} {{ detail.address.region.region }} {{ detail.address.detail }}
+                {{ detail.address.region.province }}
+                {{ detail.address.region.city }}
+                {{ detail.address.region.region }} {{ detail.address.detail }}
               </div>
             </el-col>
-            <el-col :span="5" v-if="detail.deliveryStatus != 20 && detail.orderStatus == 10">
-              <div class="pb16"><el-button type="text" size="small" @click="changeAdd">修改地址</el-button></div>
+            <el-col
+              :span="5"
+              v-if="detail.deliveryStatus != 20 && detail.orderStatus == 10"
+            >
+              <div class="pb16">
+                <el-button type="text" size="small" @click="changeAdd"
+                  >修改地址</el-button
+                >
+              </div>
             </el-col>
           </el-row>
           <el-row>
@@ -255,9 +290,14 @@
         </div>
       </div>
       <!--  用户取消订单 -->
-      <div v-if="detail.payStatus == 20 && detail.orderStatus == 21" v-auth="'/order/operate/confirmCancel'">
+      <div
+        v-if="detail.payStatus == 20 && detail.orderStatus == 21"
+        v-auth="'/order/operate/confirmCancel'"
+      >
         <div class="common-form mt16">用户取消订单</div>
-        <p class="red pb16">当前买家已付款并申请取消订单，请审核是否同意，如同意则自动退回付款金额（微信支付原路退款）并关闭订单。</p>
+        <p class="red pb16">
+          当前买家已付款并申请取消订单，请审核是否同意，如同意则自动退回付款金额（微信支付原路退款）并关闭订单。
+        </p>
         <el-form size="small" ref="forms" :model="forms">
           <el-form-item label="审核状态">
             <div>
@@ -268,10 +308,17 @@
         </el-form>
       </div>
       <!--发货信息-->
-      <div v-if="detail.payStatus == 20 && detail.deliveryType == 10 && [20, 21].indexOf(detail.orderStatus) === -1" v-auth="'/order/order/delivery'">
+      <div
+        v-if="
+          detail.payStatus == 20 &&
+          detail.deliveryType == 10 &&
+          [20, 21].indexOf(detail.orderStatus) === -1
+        "
+        v-auth="'/order/order/delivery'"
+      >
         <div v-if="detail.deliveryStatus == 10">
           <!-- 去发货 -->
-<!--          <div class="common-form mt16">去发货</div>
+          <!--          <div class="common-form mt16">去发货</div>
           <el-form size="small" ref="form" :model="form" label-width="100px">
             <el-form-item label="物流公司">
               <el-select v-model="form.expressId" placeholder="请选择快递公司">
@@ -314,7 +361,10 @@
         </div>
       </div>
       <!--取消信息-->
-      <div class="table-wrap" v-if="detail.orderStatus == 20 && detail.cancelRemark != ''">
+      <div
+        class="table-wrap"
+        v-if="detail.orderStatus == 20 && detail.cancelRemark != ''"
+      >
         <div class="common-form mt16">取消信息</div>
         <div class="table-wrap">
           <el-row>
@@ -329,17 +379,43 @@
       </div>
 
       <!--门店自提核销-->
-      <div v-if="detail.deliveryType == 20 && detail.payStatus == 20 && detail.orderStatus != 21 && detail.orderStatus != 20" v-auth="'/order/order/operate/extract'">
+      <div
+        v-if="
+          detail.deliveryType == 20 &&
+          detail.payStatus == 20 &&
+          detail.orderStatus != 21 &&
+          detail.orderStatus != 20
+        "
+        v-auth="'/order/order/operate/extract'"
+      >
         <div class="common-form mt16">门店自提核销</div>
         <div v-if="detail.deliveryStatus == 10">
-          <el-form size="small" ref="extract_form" :model="extract_form" label-width="100px">
+          <el-form
+            size="small"
+            ref="extract_form"
+            :model="extract_form"
+            label-width="100px"
+          >
             <el-form-item label="门店核销员">
               <el-select v-model="extractClerkId" placeholder="点击选择">
-                <el-option :label="item.realName" v-for="(item, index) in shopClerkList" :key="item.clerkId" :value="item.clerkId"></el-option>
+                <el-option
+                  :label="item.realName"
+                  v-for="(item, index) in shopClerkList"
+                  :key="item.clerkId"
+                  :value="item.clerkId"
+                ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="买家取货状态 "><el-radio v-model="extract_form.order.extractStatus" :label="1">已取货</el-radio></el-form-item>
-            <el-form-item><el-button type="primary" @click="onExtract(detail.orderId)">确认核销</el-button></el-form-item>
+            <el-form-item label="买家取货状态 "
+              ><el-radio v-model="extract_form.order.extractStatus" :label="1"
+                >已取货</el-radio
+              ></el-form-item
+            >
+            <el-form-item
+              ><el-button type="primary" @click="onExtract(detail.orderId)"
+                >确认核销</el-button
+              ></el-form-item
+            >
           </el-form>
         </div>
         <div v-else class="table-wrap">
@@ -421,28 +497,37 @@
     <div class="common-button-wrapper">
       <el-button size="small" type="info" @click="cancelFunc">返回上一页</el-button> -->
       <!--确认发货-->
-<!--      <template v-if="detail.payStatus == 20 && detail.deliveryType == 10 && [20, 21].indexOf(detail.orderStatus) === -1">
+      <!--      <template v-if="detail.payStatus == 20 && detail.deliveryType == 10 && [20, 21].indexOf(detail.orderStatus) === -1">
         <el-button size="small" type="primary" @click="onSubmit" v-if="detail.deliveryStatus == 10">确认发货</el-button>
       </template> -->
       <!--用户取消-->
-<!--     <template v-if="detail.payStatus == 20 && detail.orderStatus == 21">
+      <!--     <template v-if="detail.payStatus == 20 && detail.orderStatus == 21">
         <el-button size="small" type="primary" @click="confirmCancel()">确认审核</el-button>
       </template> -->
     </div>
-    <changeAddress v-if="addressData != null" :isChange="isChange" :addressData="addressData" @closeDialog="closeAddress"></changeAddress>
-     <div class="common-button-wrapper"><el-button size="small" type="info" @click="cancelFunc">取消 / 返回上一页</el-button></div>
+    <changeAddress
+      v-if="addressData != null"
+      :isChange="isChange"
+      :addressData="addressData"
+      @closeDialog="closeAddress"
+    ></changeAddress>
+    <div class="common-button-wrapper">
+      <el-button size="small" type="info" @click="cancelFunc"
+        >取消 / 返回上一页</el-button
+      >
+    </div>
   </div>
 </template>
 
 <script>
-import OrderApi from '@/api/order.js';
-import changeAddress from '@/components/order/changeAddress.vue';
-import Add from './dialog/Add.vue';
-import { deepClone } from '@/utils/base.js';
+import OrderApi from "@/api/order.js";
+import changeAddress from "@/components/order/changeAddress.vue";
+import Add from "./dialog/Add.vue";
+import { deepClone } from "@/utils/base.js";
 export default {
   components: {
     Add,
-    changeAddress
+    changeAddress,
   },
   data() {
     return {
@@ -462,9 +547,9 @@ export default {
         extractStoreId: [],
         express: [],
         deliveryStatus: [],
-        extractClerk: {}
+        extractClerk: {},
       },
-      extractClerkId: '',
+      extractClerkId: "",
       /*是否打开添加弹窗*/
       open_add: false,
       /*一页多少条*/
@@ -478,19 +563,19 @@ export default {
         /*订单ID*/
         expressId: null,
         /*订单号*/
-        expressNo: ''
+        expressNo: "",
       },
       forms: {
-        isCancel: 1
+        isCancel: 1,
       },
       extract_form: {
         order: {
-          extractStatus: 1
-        }
+          extractStatus: 1,
+        },
       },
       /*虚拟商品发货*/
       virtual_form: {
-        virtual_content: ''
+        virtual_content: "",
       },
       order: {},
       deliveryType: 0,
@@ -501,14 +586,14 @@ export default {
       /*当前编辑的对象*/
       userModel: {},
       /*时间*/
-      createTime: '',
+      createTime: "",
       /*快递公司列表*/
       expressList: [],
       shopClerkList: [],
       isChange: false,
       /*是否打开编辑弹窗*/
       open_edit: false,
-      addressData:null
+      addressData: null,
     };
   },
   created() {
@@ -526,11 +611,11 @@ export default {
       const params = this.$route.query.orderId;
       OrderApi.orderdetail(
         {
-          orderId: params
+          orderId: params,
         },
         true
       )
-        .then(res => {
+        .then((res) => {
           self.loading = false;
           self.detail = res.data;
           console.log(self.detail.deliveryStatus == 10);
@@ -538,7 +623,7 @@ export default {
           self.shopClerkList = res.data.shopClerkList;
           self.addressData = res.data.address;
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -548,11 +633,11 @@ export default {
       let self = this;
       let param = self.form;
       if (param.expressId == null) {
-        ElMessage.error('请选择物流公司');
+        ElMessage.error("请选择物流公司");
         return;
       }
-      if (param.expressNo == '') {
-        ElMessage.error('请填写物流单号');
+      if (param.expressNo == "") {
+        ElMessage.error("请填写物流单号");
         return;
       }
       let orderId = this.$route.query.orderId;
@@ -560,19 +645,19 @@ export default {
         {
           expressId: param.expressId,
           expressNo: param.expressNo,
-          orderId: orderId
+          orderId: orderId,
         },
         true
       )
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           ElMessage({
-            message: '恭喜你，发货成功',
-            type: 'success'
+            message: "恭喜你，发货成功",
+            type: "success",
           });
           self.getParams();
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -585,19 +670,19 @@ export default {
       OrderApi.confirm(
         {
           orderId: orderId,
-          isCancel: isCancel
+          isCancel: isCancel,
         },
         true
       )
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           ElMessage({
-            message: '恭喜你，审核成功',
-            type: 'success'
+            message: "恭喜你，审核成功",
+            type: "success",
           });
           self.getParams();
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -611,15 +696,15 @@ export default {
       param.extractStatus = extract_form.order.extractStatus;
       param.extractClerkId = self.extractClerkId;
       OrderApi.extract(param, true)
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           ElMessage({
-            message: '恭喜你，操作成功',
-            type: 'success'
+            message: "恭喜你，操作成功",
+            type: "success",
           });
           self.getParams();
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -628,27 +713,27 @@ export default {
     onVirtual(e) {
       let self = this;
       let virtual_form = self.virtual_form;
-      if (virtual_form.virtual_content == '') {
-        ElMessage.error('请填写发货信息');
+      if (virtual_form.virtual_content == "") {
+        ElMessage.error("请填写发货信息");
         return;
       }
       virtual_form.order_id = e;
       OrderApi.virtual(
         {
           order_id: virtual_form.order_id,
-          virtual_content: virtual_form.virtual_content
+          virtual_content: virtual_form.virtual_content,
         },
         true
       )
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           ElMessage({
-            message: '恭喜你，操作成功',
-            type: 'success'
+            message: "恭喜你，操作成功",
+            type: "success",
           });
           self.getParams();
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -657,23 +742,19 @@ export default {
       let self = this;
       if (e == false) {
         self.isChange = false;
-        return false
+        return false;
       }
       let params = e.params;
-      params.orderId = self.$route.query.orderId
-      OrderApi.updateAddress(params,
-          true
-        )
-        .then(data => {
+      params.orderId = self.$route.query.orderId;
+      OrderApi.updateAddress(params, true)
+        .then((data) => {
           self.getParams();
           ElMessage({
-            message: '修改成功',
-            type: 'success'
+            message: "修改成功",
+            type: "success",
           });
         })
-        .catch(error => {
-
-        });
+        .catch((error) => {});
       self.isChange = false;
     },
 
@@ -685,7 +766,7 @@ export default {
 
     /*关闭弹窗*/
     closeDialogFunc(e, f) {
-      if (e && f == 'edit') {
+      if (e && f == "edit") {
         this.open_edit = e.openDialog;
         this.getParams();
       }
@@ -698,8 +779,8 @@ export default {
 
     changeAdd() {
       this.isChange = true;
-    }
-  }
+    },
+  },
 };
 </script>
 <style></style>

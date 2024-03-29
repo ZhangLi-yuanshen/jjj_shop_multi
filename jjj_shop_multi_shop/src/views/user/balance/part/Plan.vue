@@ -1,12 +1,11 @@
 <template>
-  <!--
-      作者 luoyiming
-      时间：2020-06-09
-      描述：会员-充值管理-充值设置
-  -->
   <div class="pb50 plan-setiting">
     <div class="d-s-s f-w">
-      <div class="item d-c-c d-c mb16" v-for="(item, index) in planList" :key="index">
+      <div
+        class="item d-c-c d-c mb16"
+        v-for="(item, index) in planList"
+        :key="index"
+      >
         <div class="f16 fb pb16">{{ item.planName }}</div>
         <div class="f14 gray9">
           支付金额：
@@ -31,7 +30,7 @@
       </div>
 
       <div class="item item-add d-c-c d-c" @click="openAdd">
-       <el-icon><Plus /></el-icon>
+        <el-icon><Plus /></el-icon>
         <span>添加</span>
       </div>
     </div>
@@ -39,17 +38,16 @@
     <Add :open="open_add" @close="closeAdd"></Add>
 
     <Edit :open="open_edit" @close="closeEdit" :curModel="curModel"></Edit>
-
   </div>
 </template>
 <script>
-import planApi from '@/api/balance.js';
-import Add from './plan/Add.vue';
-import Edit from './plan/Edit.vue';
+import planApi from "@/api/balance.js";
+import Add from "./plan/Add.vue";
+import Edit from "./plan/Edit.vue";
 export default {
   components: {
     Add,
-    Edit
+    Edit,
   },
   data() {
     return {
@@ -62,7 +60,7 @@ export default {
       /*是否打开编辑*/
       open_edit: false,
       /*当前项*/
-      curModel:{}
+      curModel: {},
     };
   },
   created() {
@@ -76,10 +74,10 @@ export default {
       let Params = {};
       planApi
         .listPlan(Params, true)
-        .then(res => {
+        .then((res) => {
           self.planList = res.data.records;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*打开添加*/
@@ -96,8 +94,8 @@ export default {
     },
 
     /*打开编辑*/
-    openEdit(e){
-      this.curModel=e;
+    openEdit(e) {
+      this.curModel = e;
       this.open_edit = true;
     },
 
@@ -110,25 +108,25 @@ export default {
     },
 
     /*删除*/
-    delClick: function(row) {
+    delClick: function (row) {
       let self = this;
-      ElMessageBox.confirm('删除后不可恢复，确认删除该记录吗?', '提示', {
-          type: 'warning'
-        })
-        .then(() => {
-          planApi.deletePlan({
-            id: row.planId
-          }).then(data => {
+      ElMessageBox.confirm("删除后不可恢复，确认删除该记录吗?", "提示", {
+        type: "warning",
+      }).then(() => {
+        planApi
+          .deletePlan({
+            id: row.planId,
+          })
+          .then((data) => {
             ElMessage({
-              message: '删除成功',
-              type: 'success'
+              message: "删除成功",
+              type: "success",
             });
             self.getData();
           });
-        });
+      });
     },
-
-  }
+  },
 };
 </script>
 

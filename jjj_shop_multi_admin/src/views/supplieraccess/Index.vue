@@ -1,17 +1,18 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2019-10-24
-    	描述：权限管理-菜单&权限
-    -->
   <div class="product">
     <!--添加菜单&权限-->
     <div class="common-level-rail d-b-c">
-      <el-button  type="primary" @click="addClick" icon="Plus">添加菜单&权限</el-button>
-      <el-form :inline="true" :model="formSearch" >
+      <el-button type="primary" @click="addClick" icon="Plus"
+        >添加菜单&权限</el-button
+      >
+      <el-form :inline="true" :model="formSearch">
         <el-form-item>
-          <el-checkbox v-model="formSearch.isMenu" @change="changeIsMenuFunc">只显示菜单</el-checkbox>
-          <el-checkbox v-model="formSearch.pack_up" @change="changePackUpFunc">收起</el-checkbox>
+          <el-checkbox v-model="formSearch.isMenu" @change="changeIsMenuFunc"
+            >只显示菜单</el-checkbox
+          >
+          <el-checkbox v-model="formSearch.pack_up" @change="changePackUpFunc"
+            >收起</el-checkbox
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -22,7 +23,7 @@
           <el-table
             size="small"
             :data="tableData"
-            style="width: 100%;margin-bottom: 20px;"
+            style="width: 100%; margin-bottom: 20px"
             row-key="accessId"
             border
             default-expand-all
@@ -32,20 +33,20 @@
           >
             <el-table-column prop="name" label="菜单名称">
               <template #default="scope">
-                <span v-if="scope.row.path=='/plus'" class="fb red f18">
-                  {{scope.row.name}}
+                <span v-if="scope.row.path == '/plus'" class="fb red f18">
+                  {{ scope.row.name }}
                 </span>
                 <span v-else>
-                  {{scope.row.name}}
+                  {{ scope.row.name }}
                 </span>
               </template>
             </el-table-column>
             <el-table-column prop="path" label="路径"></el-table-column>
             <el-table-column prop="isRoute" label="类别" width="90">
               <template #default="scope">
-                <span v-if="scope.row.isRoute==1">页面</span>
-                <span v-if="scope.row.isRoute==0">按钮</span>
-                <span v-if="scope.row.isRoute==2">独立单页面</span>
+                <span v-if="scope.row.isRoute == 1">页面</span>
+                <span v-if="scope.row.isRoute == 0">按钮</span>
+                <span v-if="scope.row.isRoute == 2">独立单页面</span>
               </template>
             </el-table-column>
             <el-table-column prop="isShow" label="是否显示" width="80">
@@ -60,14 +61,44 @@
                 ></el-switch>
               </template>
             </el-table-column>
-            <el-table-column prop="sort" label="排序" width="60"></el-table-column>
-            <el-table-column prop="createTime" label="添加时间" width="140"></el-table-column>
+            <el-table-column
+              prop="sort"
+              label="排序"
+              width="60"
+            ></el-table-column>
+            <el-table-column
+              prop="createTime"
+              label="添加时间"
+              width="140"
+            ></el-table-column>
             <el-table-column prop="name" label="操作" width="230">
               <template #default="scope">
-                <el-button @click="addClick(scope.row,'copy')" type="text" size="small" v-if="scope.row.path!='/plus'">一键复制</el-button>
-                <el-button @click="addClick(scope.row,'child')" type="text" size="small">添加子菜单</el-button>
-                <el-button @click="editClick(scope.row)" type="text" size="small">编辑</el-button>
-                <el-button @click="deleteClick(scope.row)" type="text" size="small" v-if="scope.row.path!='/plus'">删除</el-button>
+                <el-button
+                  @click="addClick(scope.row, 'copy')"
+                  type="text"
+                  size="small"
+                  v-if="scope.row.path != '/plus'"
+                  >一键复制</el-button
+                >
+                <el-button
+                  @click="addClick(scope.row, 'child')"
+                  type="text"
+                  size="small"
+                  >添加子菜单</el-button
+                >
+                <el-button
+                  @click="editClick(scope.row)"
+                  type="text"
+                  size="small"
+                  >编辑</el-button
+                >
+                <el-button
+                  @click="deleteClick(scope.row)"
+                  type="text"
+                  size="small"
+                  v-if="scope.row.path != '/plus'"
+                  >删除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -76,23 +107,35 @@
     </div>
 
     <!--添加-->
-    <Add v-if="open_add" :open_add="open_add" :add_type="add_type" :rawData="rawData" :selectModel="selectModel" @closeDialog="closeDialogFunc($event, 'add')"></Add>
+    <Add
+      v-if="open_add"
+      :open_add="open_add"
+      :add_type="add_type"
+      :rawData="rawData"
+      :selectModel="selectModel"
+      @closeDialog="closeDialogFunc($event, 'add')"
+    ></Add>
 
     <!--编辑-->
-    <Edit v-if="open_edit" :open_edit="open_edit" :rawData="rawData" :selectModel="selectModel" @closeDialog="closeDialogFunc($event, 'edit')"></Edit>
-
+    <Edit
+      v-if="open_edit"
+      :open_edit="open_edit"
+      :rawData="rawData"
+      :selectModel="selectModel"
+      @closeDialog="closeDialogFunc($event, 'edit')"
+    ></Edit>
   </div>
 </template>
 <script>
-import AccessApi from '@/api/access.js';
-import Edit from './part/Edit.vue';
-import Add from './part/Add.vue';;
-import { deepClone } from '@/utils/base.js';
+import AccessApi from "@/api/access.js";
+import Edit from "./part/Edit.vue";
+import Add from "./part/Add.vue";
+import { deepClone } from "@/utils/base.js";
 export default {
   components: {
     /*编辑组件*/
     Edit: Edit,
-    Add: Add
+    Add: Add,
   },
   data() {
     return {
@@ -103,7 +146,7 @@ export default {
         /*是否只显示菜单*/
         isMenu: false,
         /*是否收起*/
-        pack_up: false
+        pack_up: false,
       },
       /*原始数据*/
       rawData: [],
@@ -112,9 +155,9 @@ export default {
       /*是否打开添加弹窗*/
       open_add: false,
       /*添加类型*/
-      add_type:'',
+      add_type: "",
       /*选中的对象*/
-      selectModel:{},
+      selectModel: {},
       /*是否打开编辑弹窗*/
       open_edit: false,
       /*当前编辑的对象*/
@@ -141,16 +184,16 @@ export default {
     isShowFunc(e) {
       let self = this;
       AccessApi.supplierstatus({ id: e.accessId, status: e.isShow }, true)
-        .then(data => {
+        .then((data) => {
           if (data.code == 1) {
-           ElMessage({
+            ElMessage({
               message: data.msg,
-              type: 'success'
+              type: "success",
             });
             self.getTableList();
           }
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -162,7 +205,7 @@ export default {
 
     /*列表收起*/
     forArr(arr, isExpand) {
-      arr.forEach(i => {
+      arr.forEach((i) => {
         this.$refs.theTable.toggleRowExpansion(i, isExpand);
         if (i.children) {
           this.forArr(i.children, isExpand);
@@ -173,14 +216,14 @@ export default {
     /*切换显示类别*/
     changeShowFunc(e) {
       let list = deepClone(this.rawData);
-      if (e == 'all') {
+      if (e == "all") {
         this.tableData = list;
       } else {
         let type;
-        if (e == 'show') {
+        if (e == "show") {
           type = 1;
         }
-        if (e == 'hide') {
+        if (e == "hide") {
           type = 0;
         }
         this.showScreen(list, type);
@@ -192,7 +235,7 @@ export default {
     showScreen(list, type) {
       for (let i = 0; i < list.length; i++) {
         let item = list[i];
-        if (typeof item.isMenu != 'undefined' && item.isMenu != type) {
+        if (typeof item.isMenu != "undefined" && item.isMenu != type) {
           list.splice(i, 1);
           i--;
         } else {
@@ -208,23 +251,23 @@ export default {
       let self = this;
       let Params = {};
       AccessApi.supplieraccessList(Params, true)
-        .then(res => {
+        .then((res) => {
           self.loading = false;
           self.rawData = res.data;
           self.tableData = res.data;
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
 
     /*打开添加*/
-    addClick(e,type) {
-      if(e&&typeof(e)!='undefined'){
-        this.add_type=type;
-        this.selectModel=deepClone(e);
-      }else{
-        this.parentsId=0;
+    addClick(e, type) {
+      if (e && typeof e != "undefined") {
+        this.add_type = type;
+        this.selectModel = deepClone(e);
+      } else {
+        this.parentsId = 0;
       }
       this.open_add = true;
     },
@@ -236,15 +279,15 @@ export default {
     },
 
     closeDialogFunc(e, f) {
-      if (f == 'add') {
+      if (f == "add") {
         this.open_add = e.openDialog;
-        if (e.type == 'success') {
+        if (e.type == "success") {
           this.getTableList();
         }
       }
-      if (f == 'edit') {
+      if (f == "edit") {
         this.open_edit = e.openDialog;
-        if (e.type == 'success') {
+        if (e.type == "success") {
           this.getTableList();
         }
       }
@@ -253,35 +296,35 @@ export default {
     /*删除用户*/
     deleteClick(row) {
       let self = this;
-      ElMessageBox.confirm('删除后不可恢复，确认删除该记录吗?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
+      ElMessageBox.confirm("删除后不可恢复，确认删除该记录吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
         .then(() => {
           self.loading = true;
           AccessApi.supplierdelAccess(
             {
-              id: row.accessId
+              id: row.accessId,
             },
             true
           )
-            .then(data => {
+            .then((data) => {
               if (data.code == 1) {
                 self.loading = false;
                 ElMessage({
                   message: data.msg,
-                  type: 'success'
+                  type: "success",
                 });
                 self.getTableList();
               }
             })
-            .catch(error => {
+            .catch((error) => {
               self.loading = false;
             });
         })
         .catch(() => {});
-    }
-  }
+    },
+  },
 };
 </script>

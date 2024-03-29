@@ -1,9 +1,4 @@
 <template>
-  <!--
-          作者：luoyiming
-          时间：2019-10-24
-          描述：统计-销售统计-交易统计
-      -->
   <div class="mt30">
     <div class="common-form">交易统计</div>
     <el-tabs v-model="activeName" @tab-change="handleClick">
@@ -35,55 +30,55 @@
 </template>
 
 <script>
-import StatisticsApi from '@/api/statistics.js';
-import { formatDate } from '@/utils/DateTime.js'
-import * as echarts from 'echarts';
+import StatisticsApi from "@/api/statistics.js";
+import { formatDate } from "@/utils/DateTime.js";
+import * as echarts from "echarts";
 let myChart;
 export default {
   data() {
-    let endDate=new Date();
-    let startDate=new Date();
-    startDate.setTime(startDate.getTime()- 3600 * 1000 * 24 * 7);
+    let endDate = new Date();
+    let startDate = new Date();
+    startDate.setTime(startDate.getTime() - 3600 * 1000 * 24 * 7);
     return {
       /*是否正在加载*/
       loading: true,
       /*类别*/
-      activeName: 'order',
+      activeName: "order",
       /*时间快捷选项*/
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: "最近一周",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近一个月',
+            text: "最近一个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近三个月',
+            text: "最近三个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }
-        ]
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
       },
       datePicker: [],
-      startDate: formatDate(startDate,'YYYY-MM-DD'),
-      endDate: formatDate(endDate,'YYYY-MM-DD'),
+      startDate: formatDate(startDate, "YYYY-MM-DD"),
+      endDate: formatDate(endDate, "YYYY-MM-DD"),
       /*数据对象*/
       dataList: null,
       /*交易统计图表对象*/
@@ -94,26 +89,23 @@ export default {
           //text: 'ECharts 入门示例'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: "axis",
         },
-        yAxis: {}
-      }
+        yAxis: {},
+      },
     };
   },
-  created() {
-
-  },
+  created() {},
   mounted() {
     this.myEcharts();
   },
   methods: {
-
     /*切换*/
     handleClick(e) {
       this.activeName = e;
@@ -122,15 +114,15 @@ export default {
 
     /*选择时间*/
     changeDate() {
-      this.startDate = this.datePicker[0],
-      this.endDate = this.datePicker[1],
-      this.getData();
+      (this.startDate = this.datePicker[0]),
+        (this.endDate = this.datePicker[1]),
+        this.getData();
     },
 
     /*创建图表对象*/
     myEcharts() {
       // 基于准备好的dom，初始化echarts实例
-      myChart = echarts.init(document.getElementById('TransactionChart'));
+      myChart = echarts.init(document.getElementById("TransactionChart"));
       /*获取列表*/
       this.getData();
     },
@@ -142,44 +134,44 @@ export default {
         let xAxis = this.dataList.days;
         let series1 = [];
         let series2 = [];
-        this.dataList.data.forEach(item => {
+        this.dataList.data.forEach((item) => {
           series1.push(item.totalMoney);
           series2.push(item.totalNum);
         });
-        if (this.activeName == 'order') {
-          names = ['成交额', '成交量'];
-        } else if (this.activeName == 'refund') {
-          names = ['退单额', '退单量'];
+        if (this.activeName == "order") {
+          names = ["成交额", "成交量"];
+        } else if (this.activeName == "refund") {
+          names = ["退单额", "退单量"];
         }
 
         // 指定图表的配置项和数据
         this.option.xAxis = {
-          type: 'category',
+          type: "category",
           boundaryGap: false,
-          data: xAxis
+          data: xAxis,
         };
-        this.option.color=["red", "#409EFF"];
+        this.option.color = ["red", "#409EFF"];
 
         this.option.legend = {
-          data: [{ name: names[0], color: '#ccc' }, { name: names[1] }]
+          data: [{ name: names[0], color: "#ccc" }, { name: names[1] }],
         };
         this.option.series = [
           {
             name: names[0],
-            type: 'line',
+            type: "line",
             data: series1,
             lineStyle: {
-              color: 'red'
-            }
+              color: "red",
+            },
           },
           {
             name: names[1],
-            type: 'line',
+            type: "line",
             data: series2,
             lineStyle: {
-              color: '#409EFF'
-            }
-          }
+              color: "#409EFF",
+            },
+          },
         ];
 
         myChart.setOption(this.option);
@@ -195,18 +187,18 @@ export default {
         {
           startDate: self.startDate,
           endDate: self.endDate,
-          type: self.activeName
+          type: self.activeName,
         },
         true
       )
-        .then(res => {
+        .then((res) => {
           self.dataList = res.data;
           self.loading = false;
           self.createOption();
         })
-        .catch(error => {});
-    }
-  }
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 

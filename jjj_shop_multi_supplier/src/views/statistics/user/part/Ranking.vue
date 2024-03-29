@@ -1,9 +1,4 @@
 <template>
-  <!--
-      作者：luoyiming
-      时间：2019-10-24
-      描述：统计-会员统计-排行榜
-  -->
   <div class="member-rangking">
     <div class="common-form mt30">排行榜</div>
     <div class="d-b-s">
@@ -11,10 +6,18 @@
         <div class="f16">用户消费榜</div>
         <div class="pt16">
           <ul>
-            <li class="d-b-c p-10-0 border-b-d" v-for="(item, index) in dataModel.payRanking" :key="index">
+            <li
+              class="d-b-c p-10-0 border-b-d"
+              v-for="(item, index) in dataModel.payRanking"
+              :key="index"
+            >
               <div class="d-s-c">
                 <span class="key-box">{{ index + 1 }}</span>
-                <img class="ml10 photo" v-img-url="item.avatarUrl" :alt="item.nickName" />
+                <img
+                  class="ml10 photo"
+                  v-img-url="item.avatarUrl"
+                  :alt="item.nickName"
+                />
                 <span class="ml4">{{ item.nickName }}</span>
               </div>
               <div class="red">
@@ -29,10 +32,18 @@
         <div class="f16">积分排行榜</div>
         <div class="pt16">
           <ul>
-            <li class="d-b-c p-10-0 border-b-d" v-for="(item, index) in dataModel.pointsRanking" :key="index">
+            <li
+              class="d-b-c p-10-0 border-b-d"
+              v-for="(item, index) in dataModel.pointsRanking"
+              :key="index"
+            >
               <div class="d-s-c">
                 <span class="key-box">{{ index + 1 }}</span>
-                <img class="ml10 photo" v-img-url="item.avatarUrl" :alt="item.nickName" />
+                <img
+                  class="ml10 photo"
+                  v-img-url="item.avatarUrl"
+                  :alt="item.nickName"
+                />
                 <span class="ml4">{{ item.nickName }}</span>
               </div>
               <div class="orange">
@@ -47,10 +58,18 @@
         <div class="f16">邀请人排行榜</div>
         <div class="pt16">
           <ul>
-            <li class="d-b-c p-10-0 border-b-d" v-for="(item, index) in dataModel.inviteRanking" :key="index">
+            <li
+              class="d-b-c p-10-0 border-b-d"
+              v-for="(item, index) in dataModel.inviteRanking"
+              :key="index"
+            >
               <div class="d-s-c">
                 <span class="key-box">{{ index + 1 }}</span>
-                <img class="ml10 photo" v-img-url="item.avatarUrl" :alt="item.nickName" />
+                <img
+                  class="ml10 photo"
+                  v-img-url="item.avatarUrl"
+                  :alt="item.nickName"
+                />
                 <span class="ml4">{{ item.nickName }}</span>
               </div>
               <div class="blue">
@@ -71,12 +90,12 @@ export default {
   data() {
     return {
       /*是否正在加载*/
-      loading: true
+      loading: true,
     };
   },
-  inject: ['dataModel'],
+  inject: ["dataModel"],
   created() {},
-  methods: {}
+  methods: {},
 };
 </script>
 

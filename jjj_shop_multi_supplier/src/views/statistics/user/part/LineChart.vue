@@ -1,9 +1,4 @@
 <template>
-  <!--
-          作者：luoyiming
-          时间：2019-10-24
-          描述：统计-会员统计-访问趋势分析
-      -->
   <div class="ww100 mt30">
     <el-tabs v-model="activeName" @tab-change="handleClick">
       <el-tab-pane label="访问趋势分析" name="new"></el-tab-pane>
@@ -34,55 +29,55 @@
 </template>
 
 <script>
-import StatisticsApi from '@/api/statistics.js';
-import { formatDate } from '@/utils/DateTime.js'
-import * as echarts from 'echarts';
+import StatisticsApi from "@/api/statistics.js";
+import { formatDate } from "@/utils/DateTime.js";
+import * as echarts from "echarts";
 let myChart;
 export default {
   data() {
-    let endDate=new Date();
-    let startDate=new Date();
-    startDate.setTime(startDate.getTime()- 3600 * 1000 * 24 * 7);
+    let endDate = new Date();
+    let startDate = new Date();
+    startDate.setTime(startDate.getTime() - 3600 * 1000 * 24 * 7);
     return {
       /*是否正在加载*/
       loading: true,
       /*类别*/
-      activeName: 'new',
+      activeName: "new",
       /*时间快捷选项*/
       pickerOptions: {
         shortcuts: [
           {
-            text: '最近一周',
+            text: "最近一周",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近一个月',
+            text: "最近一个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
+              picker.$emit("pick", [start, end]);
+            },
           },
           {
-            text: '最近三个月',
+            text: "最近三个月",
             onClick(picker) {
               const end = new Date();
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }
-        ]
+              picker.$emit("pick", [start, end]);
+            },
+          },
+        ],
       },
       datePicker: [],
-      startDate: formatDate(startDate,'YYYY-MM-DD'),
-      endDate: formatDate(endDate,'YYYY-MM-DD'),
+      startDate: formatDate(startDate, "YYYY-MM-DD"),
+      endDate: formatDate(endDate, "YYYY-MM-DD"),
       /*数据对象*/
       dataList: null,
       /*交易统计图表对象*/
@@ -93,26 +88,23 @@ export default {
           //text: 'ECharts 入门示例'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: "axis",
         },
-        yAxis: {}
-      }
+        yAxis: {},
+      },
     };
   },
-  created() {
-
-  },
+  created() {},
   mounted() {
     this.myEcharts();
   },
   methods: {
-
     /*切换*/
     handleClick(e) {
       this.activeName = e;
@@ -121,19 +113,18 @@ export default {
 
     /*选择时间*/
     changeDate() {
-      this.startDate=this.datePicker[0];
-      this.endDate=this.datePicker[1];
+      this.startDate = this.datePicker[0];
+      this.endDate = this.datePicker[1];
       this.getData();
     },
 
     /*创建图表对象*/
     myEcharts() {
       // 基于准备好的dom，初始化echarts实例
-      myChart = echarts.init(document.getElementById('LineChart'));
+      myChart = echarts.init(document.getElementById("LineChart"));
       /*获取列表*/
       this.getData();
     },
-
 
     /*格式数据*/
     createOption() {
@@ -144,58 +135,63 @@ export default {
         let series2 = [];
         let series3 = [];
         let series4 = [];
-        this.dataList.data.forEach(item => {
+        this.dataList.data.forEach((item) => {
           series1.push(item.favStore);
           series2.push(item.favProduct);
           series3.push(item.visitUser);
           series4.push(item.visitTotal);
         });
-          names = ['店铺收藏数','商品收藏数','访客数','访客量'];
+        names = ["店铺收藏数", "商品收藏数", "访客数", "访客量"];
 
         // 指定图表的配置项和数据
         this.option.xAxis = {
-          type: 'category',
+          type: "category",
           boundaryGap: false,
-          data: xAxis
+          data: xAxis,
         };
-        this.option.color=["red", "#409EFF",'#E6A23C'];
+        this.option.color = ["red", "#409EFF", "#E6A23C"];
 
         this.option.legend = {
-          data: [{ name: names[0], color: '#ccc' },{ name: names[1]},{ name: names[2]},{ name: names[3]}]
+          data: [
+            { name: names[0], color: "#ccc" },
+            { name: names[1] },
+            { name: names[2] },
+            { name: names[3] },
+          ],
         };
         this.option.series = [
           {
             name: names[0],
-            type: 'line',
+            type: "line",
             data: series1,
             lineStyle: {
-              color: 'red'
-            }
+              color: "red",
+            },
           },
           {
             name: names[1],
-            type: 'line',
+            type: "line",
             data: series2,
             lineStyle: {
-              color: '#409EFF'
-            }
+              color: "#409EFF",
+            },
           },
           {
             name: names[2],
-            type: 'line',
+            type: "line",
             data: series3,
             lineStyle: {
-              color: '#E6A23C'
-            }
+              color: "#E6A23C",
+            },
           },
           {
             name: names[3],
-            type: 'line',
+            type: "line",
             data: series4,
             lineStyle: {
-              color: '#E6A23C'
-            }
-          }
+              color: "#E6A23C",
+            },
+          },
         ];
 
         myChart.setOption(this.option);
@@ -215,14 +211,14 @@ export default {
         },
         true
       )
-        .then(res => {
+        .then((res) => {
           self.dataList = res.data;
           self.loading = false;
           self.createOption();
         })
-        .catch(error => {});
-    }
-  }
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 

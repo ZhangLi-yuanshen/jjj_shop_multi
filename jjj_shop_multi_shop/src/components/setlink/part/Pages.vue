@@ -1,11 +1,18 @@
 <template>
-  <!--
-        作者：luoyiming
-        时间：2020-06-08
-        描述：超链接选择-页面
-    -->
-  <el-select v-model="activePage" placeholder="请选择" class="percent-w100" @change="changeFunc" value-key="url">
-    <el-option v-for="item in pages" :key="item.url" :value-key="item.name" :label="item.name" :value="item"></el-option>
+  <el-select
+    v-model="activePage"
+    placeholder="请选择"
+    class="percent-w100"
+    @change="changeFunc"
+    value-key="url"
+  >
+    <el-option
+      v-for="item in pages"
+      :key="item.url"
+      :value-key="item.name"
+      :label="item.name"
+      :value="item"
+    ></el-option>
   </el-select>
 </template>
 
@@ -16,45 +23,45 @@ export default {
       /*页面数据*/
       pages: [
         {
-          url: 'pages/index/index',
-          name: '首页',
-          type: '页面'
+          url: "pages/index/index",
+          name: "首页",
+          type: "页面",
         },
         {
-          url: 'pages/product/category',
-          name: '分类',
-          type: '页面'
+          url: "pages/product/category",
+          name: "分类",
+          type: "页面",
         },
         {
-          url: 'pages/article/list/list',
-          name: '文章首页',
-          type: '页面'
+          url: "pages/article/list/list",
+          name: "文章首页",
+          type: "页面",
         },
         {
-          url: 'pages/cart/cart',
-          name: '购物车',
-          type: '页面'
+          url: "pages/cart/cart",
+          name: "购物车",
+          type: "页面",
         },
         {
-          url: 'pages/order/myorder',
-          name: '订单',
-          type: '页面'
+          url: "pages/order/myorder",
+          name: "订单",
+          type: "页面",
         },
         {
-          url: 'pages/user/index/index',
-          name: '我的',
-          type: '页面'
+          url: "pages/user/index/index",
+          name: "我的",
+          type: "页面",
         },
         {
-          url: 'pages/shop/shopList',
-          name: '店铺',
-          type: '页面'
+          url: "pages/shop/shopList",
+          name: "店铺",
+          type: "页面",
         },
         {
-          url: 'pages/user/evaluate/list',
-          name: '我的评价',
-          type: '页面',
-        }
+          url: "pages/user/evaluate/list",
+          name: "我的评价",
+          type: "页面",
+        },
         // ,
         // {
         //   url: 'pages/code/code',
@@ -68,7 +75,7 @@ export default {
         // }
       ],
       /*选中的值*/
-      activePage: '首页'
+      activePage: "首页",
     };
   },
   created() {
@@ -78,9 +85,9 @@ export default {
   methods: {
     /*选中的值*/
     changeFunc(e) {
-      this.$emit('changeData', e);
-    }
-  }
+      this.$emit("changeData", e);
+    },
+  },
 };
 </script>
 

@@ -1,14 +1,19 @@
 <template>
-  <!--
-          作者：luoyiming
-          时间：2019-10-24
-          描述：统计-会员统计-成交会员占比
-      -->
   <div class="pie-container d-b-s d-c">
     <div class="ww100 d-b-c lh30">
       <span class="f16">成交会员占比</span>
-      <el-select size="mini" v-model="selectDay" @change="changeFunc" placeholder="请选择">
-        <el-option v-for="item in days" :key="item.value" :label="item.label" :value="item.value"></el-option>
+      <el-select
+        size="mini"
+        v-model="selectDay"
+        @change="changeFunc"
+        placeholder="请选择"
+      >
+        <el-option
+          v-for="item in days"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
       </el-select>
     </div>
     <div class="ww100">
@@ -19,9 +24,9 @@
 </template>
 
 <script>
-import StatisticsApi from '@/api/statistics.js';
-import * as echarts from 'echarts';
-let myChart
+import StatisticsApi from "@/api/statistics.js";
+import * as echarts from "echarts";
+let myChart;
 export default {
   data() {
     return {
@@ -30,37 +35,37 @@ export default {
       /*天数*/
       days: [
         {
-          label: '今天',
-          value: 1
+          label: "今天",
+          value: 1,
         },
         {
-          label: '最近7天',
-          value: 7
+          label: "最近7天",
+          value: 7,
         },
         {
-          label: '最近30天',
-          value: 30
+          label: "最近30天",
+          value: 30,
         },
         {
-          label: '最近90天',
-          value: 90
+          label: "最近90天",
+          value: 90,
         },
         {
-          label: '最近180天',
-          value: 180
+          label: "最近180天",
+          value: 180,
         },
         {
-          label: '最近1年',
-          value: 365
+          label: "最近1年",
+          value: 365,
         },
         {
-          label: '最近2年',
-          value: 730
+          label: "最近2年",
+          value: 730,
         },
         {
-          label: '所有占比',
-          value: 0
-        }
+          label: "所有占比",
+          value: 0,
+        },
       ],
       /*选择的天数*/
       selectDay: 7,
@@ -71,15 +76,15 @@ export default {
       /*图表配置*/
       option: {
         title: {
-          text: '',
-          subtext: '',
-          left: 'center'
+          text: "",
+          subtext: "",
+          left: "center",
         },
         tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        }
-      }
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
+        },
+      },
     };
   },
   mounted() {
@@ -94,46 +99,47 @@ export default {
     /*创建图表对象*/
     myEcharts() {
       // 基于准备好的dom，初始化echarts实例
-      myChart = echarts.init(document.getElementById('PieBox'));
+      myChart = echarts.init(document.getElementById("PieBox"));
       this.getData();
     },
 
     /*格式数据*/
     createOption() {
       if (!this.loading) {
-
-        this.option.color=["#e2e7f2", "#409EFF"];
+        this.option.color = ["#e2e7f2", "#409EFF"];
 
         this.option.legend = {
-          orient: 'vertical',
-          left: 'left',
+          orient: "vertical",
+          left: "left",
           data: [
             {
-              name: '成交会员',
-              color:"#666"
-
+              name: "成交会员",
+              color: "#666",
             },
             {
-              name: '未成交会员',
-               color:"#666"
-            }
-          ]
+              name: "未成交会员",
+              color: "#666",
+            },
+          ],
         };
         this.option.series = [
           {
-            name: '成交会员占比',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: [{ value: this.payScale.no_pay, name: '未成交会员' }, { value: this.payScale.pay, name: '成交会员'}],
+            name: "成交会员占比",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [
+              { value: this.payScale.no_pay, name: "未成交会员" },
+              { value: this.payScale.pay, name: "成交会员" },
+            ],
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
                 shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
+            },
+          },
         ];
 
         myChart.setOption(this.option);
@@ -146,18 +152,18 @@ export default {
       let self = this;
       StatisticsApi.getUserScale(
         {
-          day: self.selectDay
+          day: self.selectDay,
         },
         true
       )
-        .then(res => {
+        .then((res) => {
           self.payScale = res.data;
           self.loading = false;
           self.createOption();
         })
-        .catch(error => {});
-    }
-  }
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 

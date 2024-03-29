@@ -1,36 +1,63 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2019-10-24
-    	描述：商城管理
-    -->
   <div v-loading="loading">
     <!--添加商城-->
-    <div class="common-level-rail"><el-button size="small" type="primary" @click="addClick">添加商城</el-button></div>
+    <div class="common-level-rail">
+      <el-button size="small" type="primary" @click="addClick"
+        >添加商城</el-button
+      >
+    </div>
     <!--内容-->
     <div class="product-content">
       <div class="table-wrap">
         <div>
-          <el-table size="small" :data="tableData" style="width: 100%;" border default-expand-all v-loading="loading">
+          <el-table
+            size="small"
+            :data="tableData"
+            style="width: 100%"
+            border
+            default-expand-all
+            v-loading="loading"
+          >
             <el-table-column prop="appId" label="商城ID"></el-table-column>
             <el-table-column prop="appName" label="商城名称"></el-table-column>
             <el-table-column prop="userName" label="超管账号"></el-table-column>
             <el-table-column prop="isRecycle" label="状态">
               <template #default="scope">
-                <el-checkbox v-model="scope.row.isRecycle" @change="checked => statusChange(checked, scope.row)">启用</el-checkbox>
+                <el-checkbox
+                  v-model="scope.row.isRecycle"
+                  @change="(checked) => statusChange(checked, scope.row)"
+                  >启用</el-checkbox
+                >
               </template>
             </el-table-column>
             <el-table-column prop="expireTime" label="过期时间">
               <template #default="scope">
                 <span v-if="scope.row.expireTime == null">永不过期</span>
-                <span v-if="scope.row.expireTime != null">{{scope.row.expireTime}}</span>
+                <span v-if="scope.row.expireTime != null">{{
+                  scope.row.expireTime
+                }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="添加时间"></el-table-column>
+            <el-table-column
+              prop="createTime"
+              label="添加时间"
+            ></el-table-column>
             <el-table-column label="操作" width="110">
               <template #default="scope">
-                <el-link class="ml10" @click="editClick(scope.row)" type="text" size="small">编辑</el-link>
-                <el-link class="ml10" @click="deleteClick(scope.row)" type="text" size="small">删除</el-link>
+                <el-link
+                  class="ml10"
+                  @click="editClick(scope.row)"
+                  type="text"
+                  size="small"
+                  >编辑</el-link
+                >
+                <el-link
+                  class="ml10"
+                  @click="deleteClick(scope.row)"
+                  type="text"
+                  size="small"
+                  >删除</el-link
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -38,10 +65,19 @@
       </div>
     </div>
     <!--添加-->
-    <Add v-if="open_add" :open_add="open_add" @closeDialog="closeDialogFunc($event, 'add')"></Add>
+    <Add
+      v-if="open_add"
+      :open_add="open_add"
+      @closeDialog="closeDialogFunc($event, 'add')"
+    ></Add>
 
     <!--编辑-->
-    <Edit v-if="open_edit" :open_edit="open_edit" :curModel="curModel" @closeDialog="closeDialogFunc($event, 'edit')"></Edit>
+    <Edit
+      v-if="open_edit"
+      :open_edit="open_edit"
+      :curModel="curModel"
+      @closeDialog="closeDialogFunc($event, 'edit')"
+    ></Edit>
 
     <!--分页-->
     <div class="pagination">
@@ -58,15 +94,15 @@
   </div>
 </template>
 <script>
-import ShopApi from '@/api/shop.js';
-import Edit from './part/Edit.vue';
-import Add from './part/Add.vue';
-import {deepClone} from '@/utils/base.js'
+import ShopApi from "@/api/shop.js";
+import Edit from "./part/Edit.vue";
+import Add from "./part/Add.vue";
+import { deepClone } from "@/utils/base.js";
 export default {
   components: {
     /*编辑组件*/
     Edit: Edit,
-    Add: Add
+    Add: Add,
   },
   data() {
     return {
@@ -93,7 +129,6 @@ export default {
     this.getData();
   },
   methods: {
-
     /*选择第几页*/
     handleCurrentChange(val) {
       let self = this;
@@ -115,19 +150,19 @@ export default {
       ShopApi.shopList(
         {
           pageIndex: self.curPage,
-          pageSize: self.pageSize
+          pageSize: self.pageSize,
         },
         true
       )
-        .then(res => {
+        .then((res) => {
           self.loading = false;
           self.tableData = res.data.records;
           self.totalDataNumber = res.data.total;
-          self.tableData.forEach(function(message) {
-             // message.isRecycle = !message.isRecycle;
+          self.tableData.forEach(function (message) {
+            // message.isRecycle = !message.isRecycle;
           });
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*打开添加*/
@@ -136,68 +171,68 @@ export default {
     },
 
     /*打开编辑*/
-    editClick(e){
+    editClick(e) {
       this.open_edit = true;
       this.curModel = deepClone(e);
-      if(this.curModel.expireTime == null){
+      if (this.curModel.expireTime == null) {
         this.curModel.expireTime = null;
-        this.curModel['noExpire']= true;
-      }else{
-         this.curModel['noExpire']= false;
+        this.curModel["noExpire"] = true;
+      } else {
+        this.curModel["noExpire"] = false;
       }
     },
 
     /*关闭*/
     closeDialogFunc(e, f) {
-      if (f == 'add') {
+      if (f == "add") {
         this.open_add = e.openDialog;
-        if (e.type == 'success') {
+        if (e.type == "success") {
           this.getData();
         }
       }
-      if (f == 'edit') {
+      if (f == "edit") {
         this.open_edit = e.openDialog;
-        if (e.type == 'success') {
+        if (e.type == "success") {
           this.getData();
         }
       }
     },
 
     /*启用*/
-    statusChange: function(checked, row) {
+    statusChange: function (checked, row) {
       let self = this;
       self.loading = true;
       ShopApi.updateStatus(
         {
-          appId: row.appId
+          appId: row.appId,
         },
         true
       )
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           row.isRecycle = checked;
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
           row.isRecycle = !checked;
         });
     },
 
     /*启用*/
-    wxStatusChange: function(checked, row) {
+    wxStatusChange: function (checked, row) {
       let self = this;
       self.loading = true;
       ShopApi.updateWxStatus(
         {
-          appId: row.appId
+          appId: row.appId,
         },
         true
       )
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           row.weixinService = checked;
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
           row.weixinService = !checked;
         });
@@ -206,30 +241,30 @@ export default {
     /*删除商城*/
     deleteClick(row) {
       let self = this;
-      ElMessageBox.confirm('删除后不可恢复，确认删除该记录吗?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
+      ElMessageBox.confirm("删除后不可恢复，确认删除该记录吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
         .then(() => {
           self.loading = true;
           ShopApi.deleteShop(
             {
-              appId: row.appId
+              appId: row.appId,
             },
             true
           )
-            .then(data => {
+            .then((data) => {
               self.loading = false;
               if (data.code == 1) {
                 ElMessage({
                   message: data.msg,
-                  type: 'success'
+                  type: "success",
                 });
                 self.getData();
               }
             })
-            .catch(error => {
+            .catch((error) => {
               self.loading = false;
             });
         })
@@ -241,14 +276,14 @@ export default {
       let self = this;
       ShopApi.storeEnter(
         {
-          appId: e
+          appId: e,
         },
         true
       )
-        .then(data => {})
-        .catch(error => {});
-    }
-  }
+        .then((data) => {})
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 <style>

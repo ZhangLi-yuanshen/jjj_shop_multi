@@ -1,9 +1,4 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2020-06-20
-    	描述：diy组件-参数设置-下线门店
-    -->
   <div>
     <div class="common-form">
       <span>{{ curItem.name }}</span>
@@ -20,15 +15,22 @@
       <template v-if="curItem.params.source == 'choice'">
         <el-form-item label="门店列表：">
           <div class="choice-shop-list">
-            <div :key="index" v-for="(shop, index) in curItem.data" class="item" @click="log(shop)">
+            <div
+              :key="index"
+              v-for="(shop, index) in curItem.data"
+              class="item"
+              @click="log(shop)"
+            >
               <div class="delete-box">
-                <el-icon @click="$parent.onEditorDeleleData(index, selectedIndex)">
+                <el-icon
+                  @click="$parent.onEditorDeleleData(index, selectedIndex)"
+                >
                   <CircleCloseFilled />
                 </el-icon>
-                <el-icon  ><Error /></el-icon>
+                <el-icon><Error /></el-icon>
               </div>
-              <img v-if="shop.logoImagePath"  :src="shop.logoImagePath" alt="">
-              <img v-else  :src="shop.logoImage" alt="">
+              <img v-if="shop.logoImagePath" :src="shop.logoImagePath" alt="" />
+              <img v-else :src="shop.logoImage" alt="" />
             </div>
             <div class="item plus-btn" @click.stop="$parent.openStore(true)">
               <el-icon><Plus /></el-icon>
@@ -41,14 +43,24 @@
       <template v-show="curItem.params.source == 'auto'">
         <!-- 展示数量 -->
         <el-form-item label="展示数量：">
-          <el-input style="width: auto;" v-model="curItem.params.auto.showNum" class="w-auto"></el-input>
+          <el-input
+            style="width: auto"
+            v-model="curItem.params.auto.showNum"
+            class="w-auto"
+          ></el-input>
         </el-form-item>
       </template>
       <!-- 背景颜色 -->
       <el-form-item label="背景颜色：">
         <div class="d-s-c">
           <el-color-picker v-model="curItem.style.background"></el-color-picker>
-          <el-button type="button" style="margin-left: 10px;" @click.stop="$parent.onEditorResetColor(curItem.style, 'background', '#ffffff')">重置
+          <el-button
+            type="button"
+            style="margin-left: 10px"
+            @click.stop="
+              $parent.onEditorResetColor(curItem.style, 'background', '#ffffff')
+            "
+            >重置
           </el-button>
         </div>
       </el-form-item>
@@ -57,63 +69,60 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {};
-    },
-    props: ['curItem', 'selectedIndex', 'opts'],
-    mounted() {
-
-    },
-    methods: {
-    }
-  };
+export default {
+  data() {
+    return {};
+  },
+  props: ["curItem", "selectedIndex", "opts"],
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style scoped>
-  .choice-shop-list {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
+.choice-shop-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 
-  .choice-shop-list .item {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
-    border: 1px solid #dddddd;
-  }
+.choice-shop-list .item {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  border: 1px solid #dddddd;
+}
 
-  .choice-shop-list .item .delete-box {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    top: -10px;
-    right: -10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #999999;
-  }
+.choice-shop-list .item .delete-box {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: -10px;
+  right: -10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999999;
+}
 
-  .choice-shop-list .item .delete-box:hover {
-    color: rgb(255, 51, 0);
-  }
+.choice-shop-list .item .delete-box:hover {
+  color: rgb(255, 51, 0);
+}
 
-  .choice-shop-list .item.plus-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+.choice-shop-list .item.plus-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .choice-shop-list .item.plus-btn>i {
-    font-size: 30px;
-    color: #cccccc;
-  }
+.choice-shop-list .item.plus-btn > i {
+  font-size: 30px;
+  color: #cccccc;
+}
 
-  .choice-shop-list img {
-    width: 100%;
-    height: 100%;
-  }
+.choice-shop-list img {
+  width: 100%;
+  height: 100%;
+}
 </style>

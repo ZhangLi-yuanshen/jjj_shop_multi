@@ -1,9 +1,4 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2020-06-20
-    	描述：diy组件-参数设置
-    -->
   <div id="diy-editor" ref="diy-editor" class="diy-editor form-horizontal">
     <template v-if="form.curItem">
       <!--顶部设置-->
@@ -16,129 +11,208 @@
       </template>
       <!--图片轮播-->
       <template v-if="form.curItem.type == 'banner'">
-        <Banner :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Banner>
+        <Banner
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Banner>
       </template>
       <!--图片-->
       <template v-if="form.curItem.type == 'imageSingle'">
-        <ImageSingle :curItem="form.curItem" :selectedIndex="form.selectedIndex"></ImageSingle>
+        <ImageSingle
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></ImageSingle>
       </template>
       <!--图片橱窗-->
       <template v-if="form.curItem.type == 'window'">
-        <Window :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Window>
+        <Window
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Window>
       </template>
       <!--视频组件-->
       <template v-if="form.curItem.type == 'video'">
-        <Video :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Video>
+        <Video
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Video>
       </template>
       <!--文章组件-->
       <template v-if="form.curItem.type == 'article'">
-        <ArticleIndex :curItem="form.curItem" :selectedIndex="form.selectedIndex"></ArticleIndex>
+        <ArticleIndex
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></ArticleIndex>
       </template>
       <!--头条快报-->
       <template v-if="form.curItem.type == 'special'">
-        <Special :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Special>
+        <Special
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Special>
       </template>
       <!--公告组-->
       <template v-if="form.curItem.type == 'notice'">
-        <Notice :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Notice>
+        <Notice
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Notice>
       </template>
       <!--导航组-->
       <template v-if="form.curItem.type == 'navBar'">
-        <NavBar :curItem="form.curItem" :selectedIndex="form.selectedIndex"></NavBar>
+        <NavBar
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></NavBar>
       </template>
       <!--商品组-->
       <template v-if="form.curItem.type == 'product'">
-        <ProductIndex :curItem="form.curItem" :selectedIndex="form.selectedIndex"></ProductIndex>
+        <ProductIndex
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></ProductIndex>
       </template>
       <!--优惠券-->
       <template v-if="form.curItem.type == 'coupon'">
-        <Coupon :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Coupon>
+        <Coupon
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Coupon>
       </template>
       <!--门店-->
       <template v-if="form.curItem.type == 'store'">
-        <Store :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Store>
+        <Store
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Store>
       </template>
       <!--客服-->
       <template v-if="form.curItem.type == 'service'">
-        <Service :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Service>
+        <Service
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Service>
       </template>
       <!--富文本-->
       <template v-if="form.curItem.type == 'richText'">
-        <RichText :curItem="form.curItem" :selectedIndex="form.selectedIndex"></RichText>
+        <RichText
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></RichText>
       </template>
       <!--辅助空白-->
       <template v-if="form.curItem.type == 'blank'">
-        <Blank :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Blank>
+        <Blank
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Blank>
       </template>
       <!--辅助线-->
       <template v-if="form.curItem.type == 'guide'">
-        <Guide :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Guide>
+        <Guide
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Guide>
       </template>
       <!--秒杀-->
       <template v-if="form.curItem.type == 'seckillProduct'">
-        <Seckill :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Seckill>
+        <Seckill
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Seckill>
       </template>
       <!--拼团-->
       <template v-if="form.curItem.type == 'assembleProduct'">
-        <assembleProduct :curItem="form.curItem" :selectedIndex="form.selectedIndex"></assembleProduct>
+        <assembleProduct
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></assembleProduct>
       </template>
       <!--砍价-->
       <template v-if="form.curItem.type == 'bargainProduct'">
-        <BargainProduct :curItem="form.curItem" :selectedIndex="form.selectedIndex"></BargainProduct>
+        <BargainProduct
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></BargainProduct>
       </template>
       <!--APP直播-->
       <template v-else-if="form.curItem.type == 'appLive'">
-        <AppLive :curItem="form.curItem" :selectedIndex="form.selectedIndex"></AppLive>
+        <AppLive
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></AppLive>
       </template>
       <!--微信直播-->
-      <template  v-if="form.curItem.type == 'wxlive'">
-        <Wxlive :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Wxlive>
+      <template v-if="form.curItem.type == 'wxlive'">
+        <Wxlive
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Wxlive>
       </template>
       <!--标题-->
-      <template  v-if="form.curItem.type == 'title'">
-        <Title :curItem="form.curItem" :selectedIndex="form.selectedIndex"></Title>
+      <template v-if="form.curItem.type == 'title'">
+        <Title
+          :curItem="form.curItem"
+          :selectedIndex="form.selectedIndex"
+        ></Title>
       </template>
     </template>
 
     <!--上传图片-->
-    <Upload v-if="isupload" :isupload="isupload" :config="{ total: 3 }" @returnImgs="returnImgsFunc"></Upload>
+    <Upload
+      v-if="isupload"
+      :isupload="isupload"
+      :config="{ total: 3 }"
+      @returnImgs="returnImgsFunc"
+    ></Upload>
 
     <!--选择商品-->
-    <ProductSelect :isProduct="isproduct" :excludeIds="excludeIds" :islist="islist" @closeDialog="closeProductDialogFunc($event)">产品列表弹出层</ProductSelect>
+    <ProductSelect
+      :isProduct="isproduct"
+      :excludeIds="excludeIds"
+      :islist="islist"
+      @closeDialog="closeProductDialogFunc($event)"
+      >产品列表弹出层</ProductSelect
+    >
 
     <!--选择门店-->
-    <StoreSelect :isstore="isstore" :excludeIds="excludeStoreIds" :islist="isstorelist" @closeDialog="closeStoreDialogFunc($event)"></StoreSelect>
+    <StoreSelect
+      :isstore="isstore"
+      :excludeIds="excludeStoreIds"
+      :islist="isstorelist"
+      @closeDialog="closeStoreDialogFunc($event)"
+    ></StoreSelect>
   </div>
 </template>
 
 <script>
-import { deepClone } from '@/utils/base.js';
-import Setpages from './params/Setpages.vue';
-import Search from './params/Search.vue';
-import Banner from './params/Banner.vue';
-import ImageSingle from './params/ImageSingle.vue';
-import Window from './params/Window.vue';
-import Video from './params/Video.vue';
-import ArticleIndex from './params/Article.vue';
-import Special from './params/Special.vue';
-import Notice from './params/Notice.vue';
-import NavBar from './params/NavBar.vue';
-import ProductIndex from './params/Product.vue';
-import Coupon from './params/Coupon.vue';
-import Store from './params/Store.vue';
-import Service from './params/Service.vue';
-import RichText from './params/RichText.vue';
-import Blank from './params/Blank.vue';
-import Guide from './params/Guide.vue';
-import Seckill from './params/Seckill.vue';
-import assembleProduct from './params/assembleProduct.vue';
-import BargainProduct from './params/BargainProduct.vue';
-import AppLive from './params/AppLive.vue';
-import Wxlive from './params/Wxlive.vue';
-import Title from './params/Title.vue';
-import Upload from '@/components/file/Upload.vue';
-import ProductSelect from '@/components/product/Product.vue';
-import StoreSelect from '@/components/store/StoreSelect.vue';
+import { deepClone } from "@/utils/base.js";
+import Setpages from "./params/Setpages.vue";
+import Search from "./params/Search.vue";
+import Banner from "./params/Banner.vue";
+import ImageSingle from "./params/ImageSingle.vue";
+import Window from "./params/Window.vue";
+import Video from "./params/Video.vue";
+import ArticleIndex from "./params/Article.vue";
+import Special from "./params/Special.vue";
+import Notice from "./params/Notice.vue";
+import NavBar from "./params/NavBar.vue";
+import ProductIndex from "./params/Product.vue";
+import Coupon from "./params/Coupon.vue";
+import Store from "./params/Store.vue";
+import Service from "./params/Service.vue";
+import RichText from "./params/RichText.vue";
+import Blank from "./params/Blank.vue";
+import Guide from "./params/Guide.vue";
+import Seckill from "./params/Seckill.vue";
+import assembleProduct from "./params/assembleProduct.vue";
+import BargainProduct from "./params/BargainProduct.vue";
+import AppLive from "./params/AppLive.vue";
+import Wxlive from "./params/Wxlive.vue";
+import Title from "./params/Title.vue";
+import Upload from "@/components/file/Upload.vue";
+import ProductSelect from "@/components/product/Product.vue";
+import StoreSelect from "@/components/store/StoreSelect.vue";
 
 export default {
   components: {
@@ -193,7 +267,7 @@ export default {
     /*微信直播*/
     Wxlive,
     /*标题*/
-    Title
+    Title,
   },
   data() {
     return {
@@ -215,16 +289,18 @@ export default {
       excludeStoreIds: [],
     };
   },
-  props: ['form', 'defaultData', 'diyData', 'opts'],
+  props: ["form", "defaultData", "diyData", "opts"],
   created() {},
   methods: {
     /**
      * 编辑器：添加data元素
      */
-    onEditorAddData: function() {
+    onEditorAddData: function () {
       let self = this;
       // 新增data数据
-      var newDataItem = deepClone(self.defaultData[self.form.curItem.type].data[0]);
+      var newDataItem = deepClone(
+        self.defaultData[self.form.curItem.type].data[0]
+      );
       self.form.curItem.data.push(newDataItem);
     },
     /**
@@ -233,7 +309,7 @@ export default {
      * @param attribute
      * @param color
      */
-    onEditorResetColor: function(holder, attribute, color) {
+    onEditorResetColor: function (holder, attribute, color) {
       holder[attribute] = color;
     },
     /**
@@ -241,12 +317,12 @@ export default {
      * @param index
      * @param selectedIndex
      */
-    onEditorDeleleData: function(index, selectedIndex) {
+    onEditorDeleleData: function (index, selectedIndex) {
       let self = this;
       if (self.diyData.items[selectedIndex].data.length <= 1) {
         ElMessage({
-          message: '至少保留一个',
-          type: 'error'
+          message: "至少保留一个",
+          type: "error",
         });
         return false;
       }
@@ -257,18 +333,18 @@ export default {
      * @param source
      * @param index
      */
-    onEditorSelectImage: function(index, imgUrl) {
+    onEditorSelectImage: function (index, imgUrl) {
       this.isupload = true;
       this.imgModel = {
         index: index,
-        imgUrl: imgUrl
+        imgUrl: imgUrl,
       };
     },
 
     /*上传图片*/
     returnImgsFunc(e) {
       if (e != null) {
-        this.imgModel.index[this.imgModel.imgUrl] = e[0]['filePath'];
+        this.imgModel.index[this.imgModel.imgUrl] = e[0]["filePath"];
       }
       this.isupload = false;
     },
@@ -276,11 +352,11 @@ export default {
     /*商品选择列表弹出层*/
     openProduct(list, islist) {
       let arr = [];
-      list.forEach(item => {
+      list.forEach((item) => {
         arr.push(item.productId);
       });
       this.excludeIds = arr;
-      if (islist && typeof islist != 'undefined') {
+      if (islist && typeof islist != "undefined") {
         this.islist = true;
       } else {
         this.islist = false;
@@ -294,7 +370,7 @@ export default {
         return;
       }
       this.isproduct = false;
-      if (e && e.type == 'success') {
+      if (e && e.type == "success") {
         if (this.islist) {
           this.form.curItem.data = this.form.curItem.data.concat(e.params);
         } else {
@@ -306,13 +382,13 @@ export default {
     /*商品选择列表弹出层*/
     openStore(islist) {
       let arr = [];
-      this.form.curItem.data.forEach(item => {
-        if(typeof item.store_id != 'undefined'){
+      this.form.curItem.data.forEach((item) => {
+        if (typeof item.store_id != "undefined") {
           arr.push(item.store_id);
         }
       });
       this.excludeStoreIds = arr;
-      if (islist && typeof islist != 'undefined') {
+      if (islist && typeof islist != "undefined") {
         this.isstorelist = true;
       } else {
         this.isstorelist = false;
@@ -326,7 +402,7 @@ export default {
         return;
       }
       console.log(e.params);
-      if (e && e.type == 'success') {
+      if (e && e.type == "success") {
         if (this.isstorelist) {
           this.form.curItem.data = this.form.curItem.data.concat(e.params);
         } else {
@@ -334,7 +410,7 @@ export default {
         }
       }
     },
-  }
+  },
 };
 </script>
 

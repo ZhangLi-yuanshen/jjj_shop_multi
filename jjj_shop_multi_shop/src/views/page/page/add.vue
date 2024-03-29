@@ -1,33 +1,53 @@
 <template>
-  <!--
-      作者：wangxw
-      时间：2020-06-10
-      描述：页面-页面列表-添加页面
-  -->
   <div v-loading="loading" class="diy-container clearfix">
     <!--类别选择-->
-    <div class="diy-menu"><Type v-if="!loading" :defaultData="defaultData"></Type></div>
+    <div class="diy-menu">
+      <Type v-if="!loading" :defaultData="defaultData"></Type>
+    </div>
 
     <!--手机diy容器-->
-    <div class="diy-phone"><Model v-if="!loading" ref="model" :form="form" :defaultData="defaultData" :diyData="diyData"></Model></div>
+    <div class="diy-phone">
+      <Model
+        v-if="!loading"
+        ref="model"
+        :form="form"
+        :defaultData="defaultData"
+        :diyData="diyData"
+      ></Model>
+    </div>
 
     <!--参数设置-->
-    <div class="diy-info"><Params v-if="!loading" :form="form" :defaultData="defaultData" :diyData="diyData"></Params></div>
+    <div class="diy-info">
+      <Params
+        v-if="!loading"
+        :form="form"
+        :defaultData="defaultData"
+        :diyData="diyData"
+      ></Params>
+    </div>
 
     <!--提交-->
     <div class="common-button-wrapper">
-      <el-button  size="small" type="info" @click="gotoBack">返回上一页</el-button>
-      <el-button size="small" type="primary" @click="Submit()" :loading="loading">保存</el-button>
+      <el-button size="small" type="info" @click="gotoBack"
+        >返回上一页</el-button
+      >
+      <el-button
+        size="small"
+        type="primary"
+        @click="Submit()"
+        :loading="loading"
+        >保存</el-button
+      >
     </div>
   </div>
 </template>
 
 <script>
-import {deepClone} from '@/utils/base.js'
-import PageApi from '@/api/page.js';
-import Type from './diy/Type.vue';
-import Model from './diy/Model.vue';
-import Params from './diy/Params.vue';
+import { deepClone } from "@/utils/base.js";
+import PageApi from "@/api/page.js";
+import Type from "./diy/Type.vue";
+import Model from "./diy/Model.vue";
+import Params from "./diy/Params.vue";
 export default {
   components: {
     /*组件类别*/
@@ -35,7 +55,7 @@ export default {
     /*组件信息*/
     Model,
     /*参数信息*/
-    Params
+    Params,
   },
   data() {
     return {
@@ -45,7 +65,7 @@ export default {
       defaultData: {},
       /*组件数据列表*/
       diyData: {
-        items: []
+        items: [],
       },
       opts: {},
       /*表单对象*/
@@ -54,8 +74,8 @@ export default {
         /*当前选中*/
         curItem: {},
         /*当前选中的元素（下标）*/
-        selectedIndex: -1
-      }
+        selectedIndex: -1,
+      },
     };
   },
   created() {
@@ -63,19 +83,18 @@ export default {
     this.getData();
   },
   methods: {
-
     /*获取初始化数据*/
     getData() {
       let self = this;
       PageApi.toAddPage({}, true)
-        .then(res => {
+        .then((res) => {
           self.defaultData = res.data.defaultData;
           self.diyData = res.data.jsonData;
-          self.form.curItem=self.diyData.page;
+          self.form.curItem = self.diyData.page;
           self.opts = res.data.opts;
           self.loading = false;
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
@@ -84,7 +103,7 @@ export default {
      * 新增Diy组件
      * @param key
      */
-    onAddItem: function(key) {
+    onAddItem: function (key) {
       // 复制默认diy组件数据
       let item = deepClone(this.defaultData[key]);
       this.diyData.items.push(item);
@@ -97,38 +116,37 @@ export default {
       let self = this;
       let params = self.diyData;
       if (params.items.length < 1) {
-       ElMessage({
-          message: '至少要选择一个组件',
-          type: 'warning'
+        ElMessage({
+          message: "至少要选择一个组件",
+          type: "warning",
         });
         return;
       }
       self.loading = true;
       PageApi.addPage(
         {
-          params: JSON.stringify(params)
+          params: JSON.stringify(params),
         },
         true
       )
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           ElMessage({
-            message: '恭喜你，添加成功',
-            type: 'success'
+            message: "恭喜你，添加成功",
+            type: "success",
           });
           self.gotoBack();
         })
-        .catch(error => {
+        .catch((error) => {
           self.loading = false;
         });
     },
 
     /*返回上一页面*/
-    gotoBack(){
+    gotoBack() {
       this.$router.back(-1);
-    }
-
-  }
+    },
+  },
 };
 </script>
 

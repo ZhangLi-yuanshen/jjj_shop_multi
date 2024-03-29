@@ -1,9 +1,4 @@
 <template>
-  <!--
-      作者 WuYuseng
-      时间：2019-10-26
-      描述：物流编码
-  -->
   <div class="express-company">
     <div class="common-form">物流公司列表</div>
 
@@ -4349,17 +4344,19 @@
 
     <!--提交-->
     <div class="common-button-wrapper">
-      <el-button size="small" type="info" @click="gotoBack">返回上一页</el-button>
+      <el-button size="small" type="info" @click="gotoBack"
+        >返回上一页</el-button
+      >
     </div>
   </div>
 </template>
 <script>
-import SettingApi from '@/api/setting.js';
+import SettingApi from "@/api/setting.js";
 export default {
   data() {
     return {
       tableData: [],
-      loading: true
+      loading: true,
     };
   },
   created() {
@@ -4367,31 +4364,29 @@ export default {
     //this.getData();
   },
   methods: {
-
     /*获取数据*/
     getData() {
       let self = this;
       let Params = {};
       SettingApi.getCompany(Params, true)
-        .then(data => {
+        .then((data) => {
           self.loading = false;
           self.tableData = data.data.data;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*返回上一页*/
-    gotoBack(){
+    gotoBack() {
       this.$router.back(-1);
-    }
-
-  }
+    },
+  },
 };
 </script>
 <style>
-  .express-company{
-    padding-bottom: 80px;
-  }
+.express-company {
+  padding-bottom: 80px;
+}
 .express-company table {
   width: 100%;
   border-collapse: collapse;

@@ -1,11 +1,12 @@
 <template>
-  <!--
-      	作者：luoyiming
-      	时间：2020-06-01
-      	描述：插件中心-分销-提现申请-弹窗
-      -->
   <div v-if="status != 30">
-    <el-dialog title="提现审核" v-model="dialogVisible" @close="dialogFormVisible" :close-on-click-modal="false" :close-on-press-escape="false">
+    <el-dialog
+      title="提现审核"
+      v-model="dialogVisible"
+      @close="dialogFormVisible"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
       <el-form :model="form">
         <el-form-item label="审核状态" :label-width="formLabelWidth">
           <div>
@@ -14,20 +15,28 @@
           </div>
         </el-form-item>
         <div v-if="form.applyStatus == 30">
-          <el-form-item label="驳回原因" :label-width="formLabelWidth"><el-input v-model="form.rejectReason" autocomplete="off"></el-input></el-form-item>
+          <el-form-item label="驳回原因" :label-width="formLabelWidth"
+            ><el-input v-model="form.rejectReason" autocomplete="off"></el-input
+          ></el-form-item>
         </div>
       </el-form>
       <template #footer>
-      <div  class="dialog-footer">
-        <el-button @click="dialogFormVisible">取 消</el-button>
-        <el-button type="primary" @click="cashSubmit">确 定</el-button>
-      </div>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible">取 消</el-button>
+          <el-button type="primary" @click="cashSubmit">确 定</el-button>
+        </div>
       </template>
     </el-dialog>
   </div>
 
   <div v-else>
-    <el-dialog title="驳回原因" v-model="dialogVisible" @close="dialogFormVisible" :close-on-click-modal="false" :close-on-press-escape="false">
+    <el-dialog
+      title="驳回原因"
+      v-model="dialogVisible"
+      @close="dialogFormVisible"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
       <p>{{ rejectReason }}</p>
       <!-- <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible">取 消</el-button>
@@ -38,59 +47,56 @@
 </template>
 
 <script>
-import SupplierApi from '@/api/supplier.js';
+import SupplierApi from "@/api/supplier.js";
 export default {
   data() {
     return {
-      status: '',
-      rejectReason: '',
+      status: "",
+      rejectReason: "",
       /*左边长度*/
-      formLabelWidth: '120px',
+      formLabelWidth: "120px",
       /*是否显示*/
-      dialogVisible: false
+      dialogVisible: false,
     };
   },
-  props: ['open', 'form'],
-  watch:{
-    open:function(n,o){
-       this.dialogVisible = this.open;
-      if(n!=o&&n){
+  props: ["open", "form"],
+  watch: {
+    open: function (n, o) {
+      this.dialogVisible = this.open;
+      if (n != o && n) {
         this.status = this.form.applyStatus;
         if (this.status == 30) {
           this.rejectReason = this.form.rejectReason;
         }
       }
-    }
+    },
   },
-  created() {
-
-  },
+  created() {},
   methods: {
-
     /*审核*/
     cashSubmit() {
       let self = this;
       let params = this.form;
       SupplierApi.cashSubmit(params, true)
-        .then(data => {
+        .then((data) => {
           ElMessage({
-            message: '恭喜你，修改成功',
-            type: 'success'
+            message: "恭喜你，修改成功",
+            type: "success",
           });
           self.dialogFormVisible(true);
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
 
     /*关闭弹窗*/
     dialogFormVisible(e) {
       if (e) {
-        this.$emit('close', true);
+        this.$emit("close", true);
       } else {
-        this.$emit('close', false);
+        this.$emit("close", false);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

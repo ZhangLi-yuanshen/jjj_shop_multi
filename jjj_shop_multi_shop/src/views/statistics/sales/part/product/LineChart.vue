@@ -1,11 +1,8 @@
 <template>
-  <!--
-          作者：luoyiming
-          时间：2019-10-24
-          描述：统计-销售统计-商品统计-已付款商品
-      -->
   <div class="ww100 mt30">
-    <el-tabs v-model="activeName"><el-tab-pane label="已付款商品" name="first"></el-tab-pane></el-tabs>
+    <el-tabs v-model="activeName"
+      ><el-tab-pane label="已付款商品" name="first"></el-tab-pane
+    ></el-tabs>
     <div class="d-b-c">
       <div>
         <el-date-picker
@@ -20,7 +17,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           @change="changeDate"
-           :shortcuts="shortcuts"
+          :shortcuts="shortcuts"
         ></el-date-picker>
       </div>
     </div>
@@ -31,21 +28,21 @@
 </template>
 
 <script>
-import StatisticsApi from '@/api/statistics.js';
-import { formatDate } from '@/utils/DateTime.js';
-import * as echarts from 'echarts';
-let myChart
+import StatisticsApi from "@/api/statistics.js";
+import { formatDate } from "@/utils/DateTime.js";
+import * as echarts from "echarts";
+let myChart;
 export default {
   data() {
     let endDate = new Date();
     let startDate = new Date();
     startDate.setTime(startDate.getTime() - 3600 * 1000 * 24 * 7);
     return {
-      activeName: 'first',
+      activeName: "first",
       /*时间快捷选项*/
 
-        shortcuts: [
-           {
+      shortcuts: [
+        {
           text: "最近一周",
           value: () => {
             const end = new Date();
@@ -72,11 +69,11 @@ export default {
             return [start, end];
           },
         },
-        ],
-    
+      ],
+
       datePicker: [],
-      startDate: formatDate(startDate, 'yyyy-MM-dd'),
-      endDate: formatDate(endDate, 'yyyy-MM-dd'),
+      startDate: formatDate(startDate, "yyyy-MM-dd"),
+      endDate: formatDate(endDate, "yyyy-MM-dd"),
       /*数据对象*/
       dataList: null,
       /*交易统计图表对象*/
@@ -87,16 +84,16 @@ export default {
           //text: 'ECharts 入门示例'
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '6%',
-          containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "6%",
+          containLabel: true,
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: "axis",
         },
-        yAxis: {}
-      }
+        yAxis: {},
+      },
     };
   },
   mounted() {
@@ -105,14 +102,14 @@ export default {
   methods: {
     /*选择时间*/
     changeDate() {
-      this.startDate=this.datePicker[0];
-      this.endDate=this.datePicker[1];
+      this.startDate = this.datePicker[0];
+      this.endDate = this.datePicker[1];
       this.getData();
     },
 
     myEcharts() {
       // 基于准备好的dom，初始化echarts实例
-     myChart = echarts.init(document.getElementById('LineChart'));
+      myChart = echarts.init(document.getElementById("LineChart"));
       /*获取列表*/
       this.getData();
     },
@@ -123,18 +120,18 @@ export default {
         let names = [];
         let xAxis = this.dataList.days;
         let series1 = [];
-        this.dataList.data.forEach(item => {
+        this.dataList.data.forEach((item) => {
           series1.push(item.totalNum);
         });
-        names = ['商品件数'];
+        names = ["商品件数"];
 
         // 指定图表的配置项和数据
         this.option.xAxis = {
-          type: 'category',
+          type: "category",
           boundaryGap: false,
-          data: xAxis
+          data: xAxis,
         };
-        this.option.color = ['red', '#409EFF'];
+        this.option.color = ["red", "#409EFF"];
 
         /* this.option.legend = {
             data: [{ name: names[0], color: '#ccc' }]
@@ -142,16 +139,16 @@ export default {
         this.option.series = [
           {
             name: names[0],
-            type: 'line',
+            type: "line",
             data: series1,
             lineStyle: {
-              color: 'red'
-            }
-          }
+              color: "red",
+            },
+          },
         ];
 
-       myChart.setOption(this.option);
-      myChart.resize();
+        myChart.setOption(this.option);
+        myChart.resize();
       }
     },
 
@@ -164,18 +161,18 @@ export default {
         {
           startDate: self.startDate,
           endDate: self.endDate,
-          type: self.activeName
+          type: self.activeName,
         },
         true
       )
-        .then(res => {
+        .then((res) => {
           self.dataList = res.data;
           self.loading = false;
           self.createOption();
         })
-        .catch(error => {});
-    }
-  }
+        .catch((error) => {});
+    },
+  },
 };
 </script>
 

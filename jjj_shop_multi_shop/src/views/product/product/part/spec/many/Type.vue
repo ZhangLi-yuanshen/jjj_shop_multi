@@ -1,41 +1,82 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2019-10-26
-    	描述：商品管理-商品编辑-规格/库存-多规格-类别
-    -->
   <div class="spec-many-type">
     <!--规格属性-->
     <div class="spec-wrap">
-      <div class="mb16 min-spc" :key="attr.groupName" v-for="(attr, index) in form.model.specMany.specAttr">
+      <div
+        class="mb16 min-spc"
+        :key="attr.groupName"
+        v-for="(attr, index) in form.model.specMany.specAttr"
+      >
         <div class="spec-hd">
           <div class="input-box">{{ attr.groupName }}</div>
-          <a href="javascript:void(0);" @click="onDeleteGroup(index)"><el-icon ><Delete /></el-icon></a>
+          <a href="javascript:void(0);" @click="onDeleteGroup(index)"
+            ><el-icon><Delete /></el-icon
+          ></a>
         </div>
         <div class="spec-bd">
-          <div class="item" v-for="(items, i) in attr.specItems" :key="items.specValue">
-            <el-tag closable @close="onDeleteValue(index, i)">{{ items.specValue }}</el-tag>
+          <div
+            class="item"
+            v-for="(items, i) in attr.specItems"
+            :key="items.specValue"
+          >
+            <el-tag closable @close="onDeleteValue(index, i)">{{
+              items.specValue
+            }}</el-tag>
           </div>
-          <div class="item"><el-input size="small" v-model="attr.tempValue" style="width: 160px;"></el-input></div>
-          <div class="item"><el-button size="small" @click="onSubmitAddValue(attr)" :loading="attr.loading">添加</el-button></div>
+          <div class="item">
+            <el-input
+              size="small"
+              v-model="attr.tempValue"
+              style="width: 160px"
+            ></el-input>
+          </div>
+          <div class="item">
+            <el-button
+              size="small"
+              @click="onSubmitAddValue(attr)"
+              :loading="attr.loading"
+              >添加</el-button
+            >
+          </div>
         </div>
       </div>
       <!--添加规格-->
       <div v-if="!form.isSpecLocked">
-        <el-button size="small" class="el-icon-circle-plus" v-show="showAddGroupBtn" @click="onToggleAddGroupForm">添加规格</el-button>
+        <el-button
+          size="small"
+          class="el-icon-circle-plus"
+          v-show="showAddGroupBtn"
+          @click="onToggleAddGroupForm"
+          >添加规格</el-button
+        >
       </div>
       <!--规格列表-->
       <div class="add-spec mb16" v-show="!showAddGroupBtn">
         <div class="from-box">
           <div class="item">
             <span class="key">规格名：</span>
-            <el-input size="small" v-model="addGroupFrom.specName" placeholder="请输入规格名称"></el-input>
+            <el-input
+              size="small"
+              v-model="addGroupFrom.specName"
+              placeholder="请输入规格名称"
+            ></el-input>
           </div>
           <div class="item">
             <span class="key">规格值：</span>
-            <el-input size="small" v-model="addGroupFrom.specValue" placeholder="请输入规格值"></el-input>
+            <el-input
+              size="small"
+              v-model="addGroupFrom.specValue"
+              placeholder="请输入规格值"
+            ></el-input>
           </div>
-          <el-button type="primary" size="small" :loading="groupLoading" @click="onSubmitAddGroup" plain>确定</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            :loading="groupLoading"
+            @click="onSubmitAddGroup"
+            plain
+            >确定</el-button
+          >
           <el-button size="small" @click="onToggleAddGroupForm">取消</el-button>
         </div>
       </div>
@@ -44,7 +85,7 @@
 </template>
 
 <script>
-import PorductApi from '@/api/product.js';
+import PorductApi from "@/api/product.js";
 export default {
   data() {
     return {
@@ -54,103 +95,107 @@ export default {
       showAddGroupForm: false,
       /*新增规格组值*/
       addGroupFrom: {
-        specName: '',
-        specValue: ''
+        specName: "",
+        specValue: "",
       },
-      groupLoading: false
+      groupLoading: false,
     };
   },
-  inject: ['form'],
+  inject: ["form"],
   created() {
     /*获取列表*/
-    if (this.form.model.specMany && this.form.model.specMany.specList.length > 0) {
+    if (
+      this.form.model.specMany &&
+      this.form.model.specMany.specList.length > 0
+    ) {
       this.buildSkulist();
     }
   },
   methods: {
-
     /*显示/隐藏添加规则组 */
-    onToggleAddGroupForm: function() {
+    onToggleAddGroupForm: function () {
       this.showAddGroupBtn = !this.showAddGroupBtn;
       this.showAddGroupForm = !this.showAddGroupForm;
     },
 
     /*表单提交：新增规格组 */
-    onSubmitAddGroup: function() {
+    onSubmitAddGroup: function () {
       let self = this;
-      if (self.addGroupFrom.specName === '' || self.addGroupFrom.specValue === '') {
-        ElMessage('请填写规则名或规则值');
+      if (
+        self.addGroupFrom.specName === "" ||
+        self.addGroupFrom.specValue === ""
+      ) {
+        ElMessage("请填写规则名或规则值");
         return false;
       }
       // 添加到数据库
       self.groupLoading = true;
       let Params = {
         specName: self.addGroupFrom.specName,
-        specValue: self.addGroupFrom.specValue
+        specValue: self.addGroupFrom.specValue,
       };
       PorductApi.addSpec(Params, true)
-        .then(res => {
+        .then((res) => {
           self.groupLoading = false;
           // 记录规格数据
           self.form.model.specMany.specAttr.push({
-            groupId: res.data['specId'],
+            groupId: res.data["specId"],
             groupName: self.addGroupFrom.specName,
             specItems: [
               {
-                itemId: res.data['specValueId'],
-                specValue: self.addGroupFrom.specValue
-              }
+                itemId: res.data["specValueId"],
+                specValue: self.addGroupFrom.specValue,
+              },
             ],
-            tempValue: '',
-            loading: false
+            tempValue: "",
+            loading: false,
           });
           // 清空输入内容
-          self.addGroupFrom.specName = '';
-          self.addGroupFrom.specValue = '';
+          self.addGroupFrom.specName = "";
+          self.addGroupFrom.specValue = "";
           // 隐藏添加规则组
           self.onToggleAddGroupForm();
           // 构建规格组合列表
           self.buildSkulist();
         })
-        .catch(error => {
+        .catch((error) => {
           self.groupLoading = false;
         });
     },
 
     /*新增规格值*/
-    onSubmitAddValue: function(specAttr) {
+    onSubmitAddValue: function (specAttr) {
       let self = this;
-      if (!specAttr.hasOwnProperty('tempValue') || specAttr.tempValue === '') {
-       ElMessage('规格值不能为空');
+      if (!specAttr.hasOwnProperty("tempValue") || specAttr.tempValue === "") {
+        ElMessage("规格值不能为空");
         return false;
       }
       // 添加到数据库
       specAttr.loading = true;
       let Params = {
         specId: specAttr.groupId,
-        specValue: specAttr.tempValue
+        specValue: specAttr.tempValue,
       };
       PorductApi.addSpecValue(Params, true)
-        .then(data => {
+        .then((data) => {
           specAttr.loading = false;
           // 记录规格数据
           specAttr.specItems.push({
-            itemId: data.data['specValueId'],
-            specValue: specAttr.tempValue
+            itemId: data.data["specValueId"],
+            specValue: specAttr.tempValue,
           });
           // 清空输入内容
-          specAttr.tempValue = '';
+          specAttr.tempValue = "";
           // 构建规格组合列表
           self.buildSkulist();
         })
-        .catch(error => {
+        .catch((error) => {
           specAttr.loading = false;
         });
     },
 
     /*构建规格组合列表*/
-    buildSkulist: function() {
-
+    buildSkulist: function () {
       let self = this;
       let specAttr = self.form.model.specMany.specAttr;
       let specArr = [];
@@ -174,21 +219,23 @@ export default {
         }
         specList.push({
           productSkuId: 0,
-          specSkuId: specSkuIdAttr.join('_'),
+          specSkuId: specSkuIdAttr.join("_"),
           rows: rows,
-          specForm: {}
+          specForm: {},
         });
       }
 
       // 合并旧sku数据
       if (self.form.model.specMany.specList.length > 0 && specList.length > 0) {
         for (let i = 0; i < specList.length; i++) {
-          let overlap = self.form.model.specMany.specList.filter(function(val) {
+          let overlap = self.form.model.specMany.specList.filter(function (
+            val
+          ) {
             return val.specSkuId === specList[i].specSkuId;
           });
           if (overlap.length > 0) {
             specList[i].specForm = overlap[0].specForm;
-            specList[i].productSkuId=overlap[0].productSkuId;
+            specList[i].productSkuId = overlap[0].productSkuId;
           }
         }
       }
@@ -197,12 +244,12 @@ export default {
     },
 
     /*规格组合*/
-    calcDescartes: function(array) {
+    calcDescartes: function (array) {
       if (array.length < 2) return array[0] || [];
-      return [].reduce.call(array, function(col, set) {
+      return [].reduce.call(array, function (col, set) {
         let res = [];
-        col.forEach(function(c) {
-          set.forEach(function(s) {
+        col.forEach(function (c) {
+          set.forEach(function (s) {
             let t = [].concat(Array.isArray(c) ? c : [c]);
             t.push(s);
             res.push(t);
@@ -213,41 +260,39 @@ export default {
     },
 
     /*删除规格组事件*/
-    onDeleteGroup: function(index) {
+    onDeleteGroup: function (index) {
       var self = this;
-      ElMessageBox.confirm('删除后不可恢复，确认删除该记录吗?', '提示', {
-          type: 'warning'
-        })
-        .then(() => {
-          // 删除指定规则组
-          self.form.model.specMany.specAttr.splice(index, 1);
-          // 构建规格组合列表
-          self.buildSkulist();
-        });
+      ElMessageBox.confirm("删除后不可恢复，确认删除该记录吗?", "提示", {
+        type: "warning",
+      }).then(() => {
+        // 删除指定规则组
+        self.form.model.specMany.specAttr.splice(index, 1);
+        // 构建规格组合列表
+        self.buildSkulist();
+      });
     },
 
     /*删除规格值值事件*/
-    onDeleteValue: function(index, itemIndex) {
+    onDeleteValue: function (index, itemIndex) {
       let self = this;
 
-      if(self.form.isSpecLocked){
+      if (self.form.isSpecLocked) {
         ElMessage({
-          message: '本商品正在搞活动，不能删除规格！',
-          type: 'warning'
+          message: "本商品正在搞活动，不能删除规格！",
+          type: "warning",
         });
         return;
       }
-ElMessageBox.confirm('删除后不可恢复，确认删除该记录吗?', '提示', {
-          type: 'warning'
-        })
-        .then(() => {
-          // 删除指定规则组
-          self.form.model.specMany.specAttr[index].specItems.splice(itemIndex, 1);
-          // 构建规格组合列表
-          self.buildSkulist();
-        });
-    }
-  }
+      ElMessageBox.confirm("删除后不可恢复，确认删除该记录吗?", "提示", {
+        type: "warning",
+      }).then(() => {
+        // 删除指定规则组
+        self.form.model.specMany.specAttr[index].specItems.splice(itemIndex, 1);
+        // 构建规格组合列表
+        self.buildSkulist();
+      });
+    },
+  },
 };
 </script>
 

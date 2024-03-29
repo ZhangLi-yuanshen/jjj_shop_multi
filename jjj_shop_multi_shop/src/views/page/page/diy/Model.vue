@@ -1,138 +1,229 @@
 <template>
-  <!--
-    	作者：luoyiming
-    	时间：2019-11-05
-    	描述：diy组件-模拟手机显示
-    -->
   <div class="diy-phone-container">
     <!--顶部设置栏-->
-    <div class="diy-phone-item" :class="{ active: form.selectedIndex < 0 }"><Setpages :diyData="diyData"></Setpages></div>
+    <div class="diy-phone-item" :class="{ active: form.selectedIndex < 0 }">
+      <Setpages :diyData="diyData"></Setpages>
+    </div>
 
-    <draggable class="wrapper" v-model="diyData.items" :options="{ animation: 120, filter: '.drag__nomove' }">
+    <draggable
+      class="wrapper"
+      v-model="diyData.items"
+      :options="{ animation: 120, filter: '.drag__nomove' }"
+    >
       <template #item="{ element, index }">
         <div>
           <!-- 搜索栏 -->
-          <div class="diy-phone-item" :class="{ active: form.selectedIndex == index }">
+          <div
+            class="diy-phone-item"
+            :class="{ active: form.selectedIndex == index }"
+          >
             <template v-if="element.type == 'search'">
-              <Search :item="element" :index="index" :selectedIndex="form.selectedIndex"></Search>
+              <Search
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Search>
             </template>
             <!-- 图片轮播 -->
             <template v-else-if="element.type == 'banner'">
-              <Banner :item="element" :index="index" :selectedIndex="form.selectedIndex"></Banner>
+              <Banner
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Banner>
             </template>
             <!-- 图片-->
             <template v-else-if="element.type == 'imageSingle'">
-              <ImageSingle :item="element" :index="index" :selectedIndex="form.selectedIndex"></ImageSingle>
+              <ImageSingle
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></ImageSingle>
             </template>
             <!-- 橱窗-->
             <template v-else-if="element.type == 'window'">
-              <Window :item="element" :index="index" :selectedIndex="form.selectedIndex"></Window>
+              <Window
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Window>
             </template>
             <!-- 视频组-->
             <template v-else-if="element.type == 'video'">
-              <Video :item="element" :index="index" :selectedIndex="form.selectedIndex"></Video>
+              <Video
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Video>
             </template>
             <!--文章-->
             <template v-else-if="element.type == 'article'">
-              <ArticleIndex :item="element" :index="index" :selectedIndex="form.selectedIndex"></ArticleIndex>
+              <ArticleIndex
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></ArticleIndex>
             </template>
             <!--头条快报-->
             <template v-else-if="element.type == 'special'">
-              <Special :item="element" :index="index" :selectedIndex="form.selectedIndex"></Special>
+              <Special
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Special>
             </template>
             <!--公告组-->
             <template v-else-if="element.type == 'notice'">
-              <Notice :item="element" :index="index" :selectedIndex="form.selectedIndex"></Notice>
+              <Notice
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Notice>
             </template>
             <!--导航组-->
             <template v-else-if="element.type == 'navBar'">
-              <NavBar :item="element" :index="index" :selectedIndex="form.selectedIndex"></NavBar>
+              <NavBar
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></NavBar>
             </template>
             <!--商品组-->
             <template v-else-if="element.type == 'product'">
-              <ProductIndex :item="element" :index="index" :selectedIndex="form.selectedIndex"></ProductIndex>
+              <ProductIndex
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></ProductIndex>
             </template>
             <!--优惠券-->
             <template v-else-if="element.type == 'coupon'">
-              <Coupon :item="element" :index="index" :selectedIndex="form.selectedIndex"></Coupon>
+              <Coupon
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Coupon>
             </template>
             <!--门店-->
             <template v-else-if="element.type == 'store'">
-              <Store :item="element" :index="index" :selectedIndex="form.selectedIndex"></Store>
+              <Store
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Store>
             </template>
             <!--客服-->
             <template v-else-if="element.type == 'service'">
-              <Service :item="element" :index="index" :selectedIndex="form.selectedIndex"></Service>
+              <Service
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Service>
             </template>
             <!--富文本-->
             <template v-else-if="element.type == 'richText'">
-              <RichText :item="element" :index="index" :selectedIndex="form.selectedIndex"></RichText>
+              <RichText
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></RichText>
             </template>
             <!--辅助空白-->
             <template v-else-if="element.type == 'blank'">
-              <Blank :item="element" :index="index" :selectedIndex="form.selectedIndex"></Blank>
+              <Blank
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Blank>
             </template>
             <!--辅助线-->
             <template v-else-if="element.type == 'guide'">
-              <Guide :item="element" :index="index" :selectedIndex="form.selectedIndex"></Guide>
+              <Guide
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Guide>
             </template>
             <!--秒杀-->
             <template v-else-if="element.type == 'seckillProduct'">
-              <Seckill :item="element" :index="index" :selectedIndex="form.selectedIndex"></Seckill>
+              <Seckill
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Seckill>
             </template>
             <!--拼团-->
             <template v-else-if="element.type == 'assembleProduct'">
-              <assembleProduct :item="element" :index="index" :selectedIndex="form.selectedIndex"></assembleProduct>
+              <assembleProduct
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></assembleProduct>
             </template>
             <!--砍价-->
             <template v-else-if="element.type == 'bargainProduct'">
-              <BargainProduct :item="element" :index="index" :selectedIndex="form.selectedIndex"></BargainProduct>
+              <BargainProduct
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></BargainProduct>
             </template>
             <!--App直播-->
             <template v-else-if="element.type == 'appLive'">
-              <AppLive :item="element" :index="index" :selectedIndex="form.selectedIndex"></AppLive>
+              <AppLive
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></AppLive>
             </template>
-             <!--微信直播-->
-            <template  v-else-if="element.type == 'wxlive'">
-            <Wxlive :item="element" :index="index" :selectedIndex="form.selectedIndex"></Wxlive>
-           </template>
+            <!--微信直播-->
+            <template v-else-if="element.type == 'wxlive'">
+              <Wxlive
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Wxlive>
+            </template>
             <!--标题-->
             <template v-else-if="element.type == 'title'">
-              <Title :item="element" :index="index" :selectedIndex="form.selectedIndex"></Title>
+              <Title
+                :item="element"
+                :index="index"
+                :selectedIndex="form.selectedIndex"
+              ></Title>
             </template>
           </div>
         </div>
-       
       </template>
     </draggable>
   </div>
 </template>
 
 <script>
-import Setpages from './model/Setpages.vue';
-import Search from './model/Search.vue';
-import Banner from './model/Banner.vue';
-import ImageSingle from './model/ImageSingle.vue';
-import Window from './model/Window.vue';
-import Video from './model/Video.vue';
-import ArticleIndex from './model/Article.vue';
-import Special from './model/Special.vue';
-import Notice from './model/Notice.vue';
-import NavBar from './model/NavBar.vue';
-import ProductIndex from './model/Product.vue';
-import Coupon from './model/Coupon.vue';
-import Store from './model/Store.vue';
-import Service from './model/Service.vue';
-import RichText from './model/RichText.vue';
-import Blank from './model/Blank.vue';
-import Guide from './model/Guide.vue';
-import Seckill from './model/Seckill.vue';
-import assembleProduct from './model/assembleProduct.vue';
-import BargainProduct from './model/BargainProduct.vue';
-import Wxlive from './model/Wxlive.vue';
-import AppLive from './model/AppLive.vue';
-import Title from './model/Title.vue';
-import draggable from 'vuedraggable';
+import Setpages from "./model/Setpages.vue";
+import Search from "./model/Search.vue";
+import Banner from "./model/Banner.vue";
+import ImageSingle from "./model/ImageSingle.vue";
+import Window from "./model/Window.vue";
+import Video from "./model/Video.vue";
+import ArticleIndex from "./model/Article.vue";
+import Special from "./model/Special.vue";
+import Notice from "./model/Notice.vue";
+import NavBar from "./model/NavBar.vue";
+import ProductIndex from "./model/Product.vue";
+import Coupon from "./model/Coupon.vue";
+import Store from "./model/Store.vue";
+import Service from "./model/Service.vue";
+import RichText from "./model/RichText.vue";
+import Blank from "./model/Blank.vue";
+import Guide from "./model/Guide.vue";
+import Seckill from "./model/Seckill.vue";
+import assembleProduct from "./model/assembleProduct.vue";
+import BargainProduct from "./model/BargainProduct.vue";
+import Wxlive from "./model/Wxlive.vue";
+import AppLive from "./model/AppLive.vue";
+import Title from "./model/Title.vue";
+import draggable from "vuedraggable";
 export default {
   components: {
     /*顶部状态栏*/
@@ -182,7 +273,7 @@ export default {
     /*微信直播*/
     Wxlive,
     /*标题*/
-    Title
+    Title,
   },
   data() {
     return {};
@@ -190,61 +281,63 @@ export default {
   props: {
     form: Object,
     defaultData: Object,
-    diyData: Object
+    diyData: Object,
   },
   created() {},
   methods: {
     /*删除diy元素*/
-    onDeleleItem: function(index) {
+    onDeleleItem: function (index) {
       let self = this;
-     ElMessageBox.confirm('确定要删除吗?', '提示', {
-          type: 'warning'
-        })
-        .then(() => {
-          self.diyData.items.splice(index, 1);
-          self.form.selectedIndex = -1;
-        });
+      ElMessageBox.confirm("确定要删除吗?", "提示", {
+        type: "warning",
+      }).then(() => {
+        self.diyData.items.splice(index, 1);
+        self.form.selectedIndex = -1;
+      });
     },
 
     /*编辑当前选中的Diy元素*/
-    onEditer: function(index) {
+    onEditer: function (index) {
       let self = this;
       // 记录当前选中元素的索引
       self.form.selectedIndex = index;
       // 当前选中的元素数据
-      self.form.curItem = self.form.selectedIndex < 0 ? self.diyData.page : self.diyData.items[self.form.selectedIndex];
-     // 注册编辑器事件
+      self.form.curItem =
+        self.form.selectedIndex < 0
+          ? self.diyData.page
+          : self.diyData.items[self.form.selectedIndex];
+      // 注册编辑器事件
       //self.initEditor();
     },
 
     /* 注册编辑器事件*/
-    initEditor: function() {
+    initEditor: function () {
       let self = this;
       // 注册dom事件
-      self.$nextTick(function() {
+      self.$nextTick(function () {
         // 销毁 umeditor 组件
-        if (self.form.umeditor.hasOwnProperty('key')) {
+        if (self.form.umeditor.hasOwnProperty("key")) {
           self.form.umeditor.destroy();
         }
         // 注册html组件
         self.editorHtmlComponent();
         // 富文本事件
-        if (self.form.curItem.type === 'richText') {
+        if (self.form.curItem.type === "richText") {
           //self.onRichText(self.form.curItem);
         }
       });
     },
 
     /*编辑器事件：html组件*/
-    editorHtmlComponent: function() {
+    editorHtmlComponent: function () {
       let self = this;
-      var editor = self.$refs['diy-editor'];
+      var editor = self.$refs["diy-editor"];
       // 单/多选框
       //editor.find('input[type=checkbox], input[type=radio]').uCheck();
       // select组件
       // $editor.find('select').selected();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -254,7 +347,7 @@ export default {
   height: calc(100vh - 150px);
 }
 .diy-phone-container .wrapper {
-  height:calc(100% - 90px) ;
+  height: calc(100% - 90px);
   overflow-y: auto;
 }
 </style>

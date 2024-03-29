@@ -1,9 +1,4 @@
 <template>
-  <!--
-      作者：luoyiming
-      时间：2019-10-25
-      描述：应用-小程序设置
-  -->
   <div class="product-add">
     <!--form表单-->
     <el-form size="small" ref="form" :model="form" label-width="250px">
@@ -18,69 +13,59 @@
 
       <!--提交-->
       <div class="common-button-wrapper">
-          <el-button type="primary" @click="onSubmit">提交</el-button>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
       </div>
     </el-form>
-
-
   </div>
-
 </template>
 
 <script>
-  import AppSettingApi from '@/api/appsetting.js';
+import AppSettingApi from "@/api/appsetting.js";
 
-  export default {
-    data() {
-      return {
-        /*切换菜单*/
-        // activeIndex: '1',
-        /*form表单数据*/
-        form: {
-        },
+export default {
+  data() {
+    return {
+      /*切换菜单*/
+      // activeIndex: '1',
+      /*form表单数据*/
+      form: {},
+    };
+  },
+  created() {
+    this.getData();
+  },
 
-
-      };
+  methods: {
+    getData() {
+      let self = this;
+      AppSettingApi.appwxDetail({}, true)
+        .then((res) => {
+          if (res.data != null) {
+            self.form = res.data;
+          }
+        })
+        .catch((error) => {});
     },
-    created() {
-      this.getData()
-    },
-
-    methods: {
-      getData() {
-        let self = this;
-        AppSettingApi.appwxDetail({}, true)
-          .then(res => {
-            if(res.data != null){
-              self.form = res.data;
-            }
-          })
-          .catch(error => {});
-
-      },
-      //提交表单
-      onSubmit() {
-        let self = this;
-        let params = this.form;
-        AppSettingApi.editAppWx(params, true)
-          .then(data => {
-            ElMessage({
-              message: '恭喜你，设置成功',
-              type: 'success'
-            });
-            self.$router.push('/appsetting/appwx/index');
-          })
-          .catch(error => {
-
+    //提交表单
+    onSubmit() {
+      let self = this;
+      let params = this.form;
+      AppSettingApi.editAppWx(params, true)
+        .then((data) => {
+          ElMessage({
+            message: "恭喜你，设置成功",
+            type: "success",
           });
-      },
-    }
-
-  };
+          self.$router.push("/appsetting/appwx/index");
+        })
+        .catch((error) => {});
+    },
+  },
+};
 </script>
 
 <style>
-  .tips {
-    color: #ccc;
-  }
+.tips {
+  color: #ccc;
+}
 </style>
