@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import net.jjjshop.common.entity.order.Order;
+import net.jjjshop.common.entity.order.OrderExtract;
 import net.jjjshop.common.entity.settings.Express;
 import net.jjjshop.common.vo.order.OrderProductVo;
 import net.jjjshop.shop.vo.store.ExtractStoreVo;
@@ -81,4 +82,6 @@ public class OrderVo extends Order {
     @ApiModelProperty("用户手机号")
     private String mobile;
 
+    @ApiModelProperty("自提信息")
+    private OrderExtract orderExtract;
 }

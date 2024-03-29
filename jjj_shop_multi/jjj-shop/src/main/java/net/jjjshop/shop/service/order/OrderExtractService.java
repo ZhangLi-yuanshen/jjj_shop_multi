@@ -1,4 +1,7 @@
 package net.jjjshop.shop.service.order;
 
-public interface OrderExtractService {
+import net.jjjshop.common.entity.order.OrderExtract;
+import net.jjjshop.framework.common.service.BaseService;
+
+public interface OrderExtractService extends BaseService<OrderExtract> {
 }

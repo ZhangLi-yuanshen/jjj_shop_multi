@@ -246,8 +246,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         OrderExtract extract = new OrderExtract();
         extract.setOrderId(orderId);
         extract.setUserId(params.getUser().getUserId());
-        extract.setLinkman(params.getOrderBuyParam().getLinkman());
-        extract.setPhone(params.getOrderBuyParam().getPhone());
+        UserAddressVo address = params.getCommonOrderData().getAddress();
+        extract.setLinkman(address.getName());
+        extract.setPhone(address.getPhone());
         orderExtractService.save(extract);
     }
 

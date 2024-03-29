@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.order.Order;
 import net.jjjshop.common.entity.order.OrderAddress;
+import net.jjjshop.common.entity.order.OrderExtract;
 import net.jjjshop.common.entity.order.OrderProduct;
 import net.jjjshop.common.entity.store.Store;
 import net.jjjshop.common.entity.user.User;
@@ -28,10 +29,7 @@ import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.supplier.param.order.*;
-import net.jjjshop.supplier.service.order.ExportService;
-import net.jjjshop.supplier.service.order.OrderAddressService;
-import net.jjjshop.supplier.service.order.OrderProductService;
-import net.jjjshop.supplier.service.order.OrderService;
+import net.jjjshop.supplier.service.order.*;
 import net.jjjshop.supplier.service.product.ProductService;
 import net.jjjshop.supplier.service.settings.ExpressService;
 import net.jjjshop.supplier.service.store.StoreClerkService;
@@ -98,6 +96,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     private StoreOrderService storeOrderService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private OrderExtractService orderExtractService;
 
     /**
      * 订单列表
@@ -304,6 +304,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 vo.setExtractStore(extractStoreVo);
                 vo.setShopClerkList(storeClerkService.getClerkByStoreId(vo.getExtractStoreId()));
             }
+            OrderExtract orderExtract = orderExtractService.getOne(new LambdaQueryWrapper<OrderExtract>().eq(OrderExtract::getOrderId, orderId));
+            vo.setOrderExtract(orderExtract);
         }
         if (vo.getDeliveryStatus() == 20) {
             vo.setExpress(expressService.getById(vo.getExpressId()));
