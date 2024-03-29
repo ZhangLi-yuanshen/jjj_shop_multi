@@ -229,6 +229,68 @@
         </div>
       </div>
       <!-- 自提门店信息 -->
+      <template v-if="detail.deliveryType == 20">
+        <div class="common-form mt16">自提用户信息</div>
+        <div class="table-wrap" v-if="detail.orderExtract">
+          <el-row>
+            <el-col :span="5">
+              <div class="pb16">
+                <span class="gray9">联系人：</span>
+                {{ orderExtract.linkman }}
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div class="pb16">
+                <span class="gray9">联系电话：</span>
+                {{ orderExtract.phone }}
+              </div>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="25">
+              <div class="pb16">
+                <span class="gray9">备注：</span>
+                {{ detail.buyerRemark }}
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="common-form mt16">自提信息</div>
+        <div class="table-wrap" v-if="detail.extractStore">
+          <el-row>
+            <el-col :span="5">
+              <div class="pb16">
+                <span class="gray9">门店ID：</span>
+                {{ detail.extractStore.storeId }}
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div class="pb16">
+                <span class="gray9">门店名称：</span>
+                {{ detail.extractStore.storeName }}
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div class="pb16">
+                <span class="gray9">联系人：</span>
+                {{ detail.extractStore.linkman }}
+              </div>
+            </el-col>
+            <el-col :span="5">
+              <div class="pb16">
+                <span class="gray9">联系电话：</span>
+                {{ detail.extractStore.phone }}
+              </div>
+            </el-col>
+            <el-col :span="15">
+              <div class="pb16">
+                <span class="gray9">门店地址：</span>
+                {{ detail.extractStore.address }}
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </template>
       <!--无需发货-->
       <template v-if="detail.deliveryType == 30">
         <div class="common-form mt16">用户信息</div>
@@ -630,6 +692,7 @@ export default {
       /*是否打开编辑弹窗*/
       open_edit: false,
       addressData: null,
+      orderExtract: {},
     };
   },
   created() {
@@ -658,6 +721,7 @@ export default {
           self.expressList = res.data.expressList;
           self.shopClerkList = res.data.shopClerkList;
           self.addressData = res.data.address;
+          self.orderExtract = res.data.orderExtract;
         })
         .catch((error) => {
           self.loading = false;
