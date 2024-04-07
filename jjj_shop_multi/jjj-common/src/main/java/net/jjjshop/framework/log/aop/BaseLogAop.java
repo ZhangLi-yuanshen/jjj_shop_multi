@@ -527,7 +527,7 @@ public abstract class BaseLogAop {
      * @param responseResultString
      */
     protected void printRequestResponseString(int code, String requestInfoString, String responseResultString) {
-        if (code == ApiCode.SUCCESS.getCode()) {
+        if (code == ApiCode.SUCCESS.getCode() || code == 1) {
             //log.info(requestInfoString + "\n" + responseResultString);
         } else {
             log.error(requestInfoString + "\n" + responseResultString);
@@ -579,7 +579,7 @@ public abstract class BaseLogAop {
                 responseResultString += Jackson.toJsonString(apiResult);
             }
             int code = apiResult.getCode();
-            if (code == ApiCode.SUCCESS.getCode()) {
+            if (code == ApiCode.SUCCESS.getCode() || code == 1) {
                 return AnsiUtil.getAnsi(Ansi.Color.BLUE, responseResultString);
             } else {
                 return AnsiUtil.getAnsi(Ansi.Color.RED, responseResultString);
@@ -597,7 +597,7 @@ public abstract class BaseLogAop {
      * @param responseResultString
      */
     protected void printResponseResult(int code, String responseResultString) {
-        if (code == ApiCode.SUCCESS.getCode()) {
+        if (code == ApiCode.SUCCESS.getCode() || code == 1) {
             log.info(responseResultString);
         } else {
             log.error(responseResultString);
