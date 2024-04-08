@@ -55,6 +55,19 @@ public class ShopLoginUtil {
     }
 
     /**
+     * 获取当前登录用户的AppId
+     *
+     * @return
+     */
+    public static Integer getAppId() {
+        LoginShopUserRedisVo loginShopUserRedisVo = getLoginShopUserRedisVo();
+        if (loginShopUserRedisVo == null) {
+            return 0;
+        }
+        return loginShopUserRedisVo.getAppId();
+    }
+
+    /**
      * 获取当前登录用户的账号
      *
      * @return

@@ -41,8 +41,7 @@ public class BaseController {
             }
             return null;
         }
-        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUserId,vo.getUserId())
-                .comment(CommonConstant.NOT_WITH_App_Id));
+        User user = userService.getById(vo.getUserId());
         if(user == null && isForce){
             throw new BusinessException(-1, "未找到用户信息");
         }

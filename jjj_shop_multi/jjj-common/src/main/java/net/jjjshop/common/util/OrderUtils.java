@@ -201,6 +201,7 @@ public class OrderUtils {
                 UserPointsLog log = new UserPointsLog();
                 log.setUserId(order.getUserId());
                 log.setValue(pointsBonus);
+                log.setAppId(order.getAppId());
                 log.setDescription(String.format("订单赠送：%s", order.getOrderNo()));
                 logList.add(log);
             }

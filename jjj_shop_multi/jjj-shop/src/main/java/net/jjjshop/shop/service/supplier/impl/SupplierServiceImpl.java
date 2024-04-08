@@ -19,6 +19,7 @@ import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.framework.shiro.util.SaltUtil;
 import net.jjjshop.framework.util.PasswordUtil;
+import net.jjjshop.framework.util.ShopLoginUtil;
 import net.jjjshop.shop.param.supplier.SupplierPageParam;
 import net.jjjshop.shop.param.supplier.SupplierParam;
 import net.jjjshop.shop.service.product.ProductService;
@@ -103,6 +104,8 @@ public class SupplierServiceImpl extends BaseServiceImpl<SupplierMapper, Supplie
         //添加供应商
         Supplier supplier = new Supplier();
         BeanUtils.copyProperties(supplierParam, supplier);
+        Integer appId = ShopLoginUtil.getAppId();
+        supplier.setAppId(appId);
         this.save(supplier);
         //添加登陆用户
         SupplierUser supplierUser = new SupplierUser();
@@ -116,6 +119,7 @@ public class SupplierServiceImpl extends BaseServiceImpl<SupplierMapper, Supplie
         supplierUser.setRealName(supplierParam.getUserName());
         supplierUser.setShopSupplierId(supplier.getShopSupplierId());
         supplierUser.setIsSuper(1);
+        supplierUser.setAppId(appId);
         supplierUserService.save(supplierUser);
         //后台添加的直接算审核通过
         if (user != null) {

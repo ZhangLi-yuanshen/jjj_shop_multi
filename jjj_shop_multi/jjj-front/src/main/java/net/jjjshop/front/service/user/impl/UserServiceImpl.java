@@ -24,6 +24,7 @@ import net.jjjshop.config.properties.JwtProperties;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
+import net.jjjshop.framework.core.util.RequestDetailThreadLocal;
 import net.jjjshop.framework.shiro.cache.UserLoginRedisService;
 import net.jjjshop.framework.shiro.jwt.JwtToken;
 import net.jjjshop.framework.shiro.util.JwtTokenUtil;
@@ -111,9 +112,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @return
      */
     public LoginUserTokenVo login(String mobile, String password) {
+        Long appId = RequestDetailThreadLocal.getRequestDetail().getAppId();
+        if(appId == null){
+            throw new BusinessException("appId不能为空");
+        }
         List<User> userList = this.list(new LambdaQueryWrapper<User>()
-                .eq(User::getMobile, mobile).ne(User::getPassword, "")
-                .comment(CommonConstant.NOT_WITH_App_Id));
+                .eq(User::getMobile, mobile)
+                .ne(User::getPassword, "")
+                .eq(User::getAppId, appId)
+        );
         if (userList.size() == 0) {
             throw new AuthenticationException("用户名不存在");
         }
