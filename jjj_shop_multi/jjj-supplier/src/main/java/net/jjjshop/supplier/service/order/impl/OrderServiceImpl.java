@@ -672,16 +672,17 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
      * @param startDate
      * @return
      */
-    public Integer getPayOrderUserTotal(String startDate,Integer shopSupplierId) throws ParseException {
+    public Integer getPayOrderUserTotal(String startDate,Integer shopSupplierId) {
         LambdaQueryWrapper<Order> wrapper = new LambdaQueryWrapper<>();
         wrapper.ge(Order::getPayTime, DateUtil.parse(startDate+" 00:00:00"));
         //如果结束查询时间为空,开始查询时间不为空，就默认设置时间查询区间为开始时间+1天
         wrapper.lt(Order::getPayTime,  DateUtil.parse(startDate+" 23:59:59"));
-        wrapper.eq(Order::getShopSupplierId, shopSupplierId);
         wrapper.eq(Order::getIsDelete, 0);
         wrapper.eq(Order::getPayStatus, 20);
-        wrapper.groupBy(Order::getUserId);
-        return this.list(wrapper).size();
+        wrapper.eq(Order::getShopSupplierId, shopSupplierId);
+        List<Order> orderList = this.list(wrapper);
+        List<Integer> idList = orderList.stream().map(Order::getUserId).collect(Collectors.toList());
+        return new HashSet<>(idList).size();
     }
 
     /**
