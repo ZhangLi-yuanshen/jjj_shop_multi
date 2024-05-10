@@ -5,6 +5,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.util.wx.AppWxUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -62,6 +63,9 @@ public class WxMessageUtils {
      * @return
      */
     private String getValueStr(String value){
+        if(StringUtils.isEmpty(value)){
+            return " ";
+        }
         if(value.length() > 20){
             return value.substring(0,20);
         }

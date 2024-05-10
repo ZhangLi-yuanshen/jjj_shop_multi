@@ -78,7 +78,7 @@ public class MessageUtils {
         // 支付方式
         data.put("pay_type", OrderPayTypeEnum.getName(order.getPayType()));
         // 支付时间
-        data.put("pay_time", DateUtil.format(order.getPayTime(), "YYYY-MM-dd HH:mm:ss"));
+        data.put("pay_time", DateUtil.format(new Date(), "YYYY-MM-dd HH:mm:ss"));
         this.sendMessage(settings, data, user);
     }
 
