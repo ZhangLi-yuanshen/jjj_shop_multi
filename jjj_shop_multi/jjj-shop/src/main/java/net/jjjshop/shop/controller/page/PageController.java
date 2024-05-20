@@ -2,7 +2,6 @@
 
 package net.jjjshop.shop.controller.page;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +12,7 @@ import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
-import net.jjjshop.shop.controller.page.diy.DefaultItems;
+import net.jjjshop.common.util.diy.DefaultItems;
 import net.jjjshop.shop.param.CommonPageParam;
 import net.jjjshop.shop.service.page.PageService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

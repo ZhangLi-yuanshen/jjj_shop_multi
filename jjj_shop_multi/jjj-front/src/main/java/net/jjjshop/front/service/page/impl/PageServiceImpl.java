@@ -9,6 +9,7 @@ import net.jjjshop.common.entity.page.Page;
 import net.jjjshop.common.entity.user.User;
 import net.jjjshop.common.enums.SettingEnum;
 import net.jjjshop.common.mapper.page.PageMapper;
+import net.jjjshop.common.util.PageUtils;
 import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.Paging;
@@ -49,11 +50,28 @@ public class PageServiceImpl extends BaseServiceImpl<PageMapper, Page> implement
      * @param pageId
      * @return
      */
-    public JSONObject getPageData(User user, Integer pageId){
+    public synchronized JSONObject getPageData(User user, Integer pageId){
         // 如果pageId为空，则查首页
         Page page = null;
+        LambdaQueryWrapper<Page> wrapper = new LambdaQueryWrapper<Page>()
+                //页面类型(10首页 20自定义页 30个人中心)
+                .eq(Page::getPageType, 10)
+                .eq(Page::getIsDelete, 0)
+                .eq(Page::getIsDefault, true);
         if(pageId == null){
-            page = this.getOne(new LambdaQueryWrapper<Page>().eq(Page::getIsDefault, true));
+            page = this.getOne(wrapper);
+            if(page == null){
+                //生成默认页
+                page = PageUtils.getPage(10);
+                int num  = this.count(new LambdaQueryWrapper<Page>()
+                        .eq(Page::getPageType, 10)
+                        .eq(Page::getIsDelete, 0)
+                        .eq(Page::getIsDefault, true));
+                //防止重复
+                if(num == 0){
+                    this.save(page);
+                }
+            }
         }else{
             page = this.getOne(new LambdaQueryWrapper<Page>().eq(Page::getPageId, pageId));
         }

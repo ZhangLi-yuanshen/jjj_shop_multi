@@ -1,4 +1,4 @@
-package net.jjjshop.shop.controller.page.diy.items;
+package net.jjjshop.common.util.diy.items;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -7,37 +7,36 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import net.jjjshop.shop.controller.page.diy.DiyItem;
+import net.jjjshop.common.util.diy.DiyItem;
 
 /**
- * 辅助线组件
+ * 富文本
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel("video")
-public class Video implements java.io.Serializable{
+@ApiModel("richText")
+public class RichText implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("diyItem")
     private DiyItem item;
 
-    public Video(String imagePath){
+    public RichText(){
         this.item = new DiyItem();
-        item.setName("视频组");
-        item.setType("video");
-        item.setGroup("media");
+        item.setName("富文本");
+        item.setType("richText");
+        item.setGroup("tools");
         // 样式
         JSONObject style = new JSONObject();
         style.put("paddingTop", 0);
-        style.put("height", 100);
+        style.put("paddingLeft", 0);
+        style.put("background", "#ffffff");
         item.setStyle(style);
 
         // 参数
         JSONObject params = new JSONObject();
-        params.put("videoUrl", "http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400");
-        params.put("poster", imagePath + "image/diy/video_poster.png");
-        params.put("autoplay", 0);
+        params.put("content", "<p>这里是文本的内容</p>");
         item.setParams(params);
 
         // 默认数据

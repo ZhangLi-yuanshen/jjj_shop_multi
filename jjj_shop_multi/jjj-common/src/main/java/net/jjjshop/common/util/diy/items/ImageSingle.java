@@ -1,4 +1,4 @@
-package net.jjjshop.shop.controller.page.diy.items;
+package net.jjjshop.common.util.diy.items;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import net.jjjshop.shop.controller.page.diy.DiyItem;
+import net.jjjshop.common.util.diy.DiyItem;
 
 /**
  * 单图组组件

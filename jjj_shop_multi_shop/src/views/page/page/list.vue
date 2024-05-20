@@ -76,7 +76,6 @@
                   >编辑</el-button
                 >
                 <el-button
-                  v-if="!scope.row.isDefault"
                   @click="deleteClick(scope.row.pageId)"
                   type="text"
                   size="small"

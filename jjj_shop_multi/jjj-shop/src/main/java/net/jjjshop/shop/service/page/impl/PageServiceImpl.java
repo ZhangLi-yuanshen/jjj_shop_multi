@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.page.Page;
 import net.jjjshop.common.mapper.page.PageMapper;
+import net.jjjshop.common.util.PageUtils;
 import net.jjjshop.common.vo.page.PageVo;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.core.pagination.PageInfo;
@@ -49,9 +50,24 @@ public class PageServiceImpl extends BaseServiceImpl<PageMapper, Page> implement
      * @param
      * @return
      */
-    public PageVo getDefault(){
+    public synchronized PageVo getDefault(){
         PageVo vo = new PageVo();
-        Page page = this.getOne(new LambdaQueryWrapper<Page>().eq(Page::getIsDefault, true));
+        Page page = this.getOne(new LambdaQueryWrapper<Page>()
+                .eq(Page::getPageType, 10)
+                .eq(Page::getIsDelete, 0)
+                .eq(Page::getIsDefault, true));
+        if(page == null){
+            //生成默认页
+            page = PageUtils.getPage(10);
+            int num  = this.count(new LambdaQueryWrapper<Page>()
+                    .eq(Page::getPageType, 10)
+                    .eq(Page::getIsDelete, 0)
+                    .eq(Page::getIsDefault, true));
+            //防止重复
+            if(num == 0){
+                this.save(page);
+            }
+        }
         BeanUtils.copyProperties(page, vo);
         vo.setPageDataJson(JSON.parseObject(page.getPageData()));
         vo.setPageData("");

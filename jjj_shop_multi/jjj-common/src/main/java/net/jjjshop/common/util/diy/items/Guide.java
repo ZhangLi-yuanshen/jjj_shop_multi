@@ -1,4 +1,4 @@
-package net.jjjshop.shop.controller.page.diy.items;
+package net.jjjshop.common.util.diy.items;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -7,36 +7,37 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import net.jjjshop.shop.controller.page.diy.DiyItem;
+import net.jjjshop.common.util.diy.DiyItem;
 
 /**
- * 富文本
+ * 辅助线组件
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel("richText")
-public class RichText implements java.io.Serializable{
+@ApiModel("guide")
+public class Guide implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("diyItem")
     private DiyItem item;
 
-    public RichText(){
+    public Guide(){
         this.item = new DiyItem();
-        item.setName("富文本");
-        item.setType("richText");
+        item.setName("辅助线");
+        item.setType("guide");
         item.setGroup("tools");
         // 样式
         JSONObject style = new JSONObject();
-        style.put("paddingTop", 0);
-        style.put("paddingLeft", 0);
         style.put("background", "#ffffff");
+        style.put("lineColor", "#000000");
+        style.put("lineStyle", "solid");
+        style.put("lineHeight", 1);
+        style.put("paddingTop", 10);
         item.setStyle(style);
 
         // 参数
         JSONObject params = new JSONObject();
-        params.put("content", "<p>这里是文本的内容</p>");
         item.setParams(params);
 
         // 默认数据

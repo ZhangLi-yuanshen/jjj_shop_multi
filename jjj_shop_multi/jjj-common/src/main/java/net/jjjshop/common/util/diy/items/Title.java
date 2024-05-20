@@ -1,4 +1,4 @@
-package net.jjjshop.shop.controller.page.diy.items;
+package net.jjjshop.common.util.diy.items;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -7,38 +7,38 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import net.jjjshop.shop.controller.page.diy.DiyItem;
+import net.jjjshop.common.util.diy.DiyItem;
 
 /**
- * 头条快报
+ * 标题
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel("service")
-public class Service implements java.io.Serializable{
+@ApiModel("title")
+public class Title implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("diyItem")
     private DiyItem item;
 
-    public Service(String imagePath){
+    public Title(){
         this.item = new DiyItem();
-        item.setName("在线客服");
-        item.setType("service");
-        item.setGroup("tools");
+        item.setName("标题");
+        item.setType("title");
+        item.setGroup("media");
         // 样式
         JSONObject style = new JSONObject();
-        style.put("right", "1");
-        style.put("bottom", "10");
-        style.put("opacity", "100");
+        style.put("paddingTop", 0);
+        style.put("background", "#f5f5f5");
+        style.put("textColor", "#FF0000");
         item.setStyle(style);
 
         // 参数
         JSONObject params = new JSONObject();
-        params.put("type", "chat");// '客服类型' => chat在线聊天，phone拨打电话
-        params.put("image", imagePath + "image/diy/service.png");
-        params.put("phoneNum", "");
+        params.put("title", "标题名称");
+        params.put("showIcon", "yes");
+        params.put("icon", "");
         item.setParams(params);
 
         // 默认数据

@@ -1,4 +1,4 @@
-package net.jjjshop.shop.controller.page.diy;
+package net.jjjshop.common.util.diy;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;

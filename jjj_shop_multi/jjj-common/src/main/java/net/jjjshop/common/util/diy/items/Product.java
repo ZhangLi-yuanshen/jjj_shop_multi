@@ -1,4 +1,4 @@
-package net.jjjshop.shop.controller.page.diy.items;
+package net.jjjshop.common.util.diy.items;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import net.jjjshop.shop.controller.page.diy.DiyItem;
+import net.jjjshop.common.util.diy.DiyItem;
 
 /**
  * 商品组
@@ -27,20 +27,6 @@ public class Product implements java.io.Serializable{
         item.setName("商品组");
         item.setType("product");
         item.setGroup("shop");
-        // 样式
-        JSONObject style = new JSONObject();
-        style.put("display", "list"); // list; slide
-        style.put("background", "#F6F6F6");
-        style.put("column", 2);
-        JSONObject show = new JSONObject();
-        show.put("productName", 1);
-        show.put("productPrice", 1);
-        show.put("linePrice", 1);
-        show.put("sellingPoint", 0);
-        show.put("productSales", 0);
-        style.put("show", show);
-        item.setStyle(style);
-
         // 参数
         JSONObject params = new JSONObject();
         params.put("source", "auto"); // choice; auto
@@ -51,8 +37,33 @@ public class Product implements java.io.Serializable{
         params.put("auto", auto);
         item.setParams(params);
 
-        // 默认数据
-        JSONArray data = new JSONArray();
+        // 样式
+        JSONObject style = new JSONObject();
+        style.put("paddingTop", 1);
+        style.put("paddingBottom", 10);
+        style.put("paddingLeft", 10);
+        style.put("topRadio", 5);
+        style.put("bottomRadio", 8);
+        style.put("bgcolor", "#F2f2f2");
+        style.put("background", "#Ffffff");
+        style.put("display", "list"); // list; slide
+        style.put("column", 2);
+        style.put("productNameColor", "#333333");
+        style.put("productPriceColor", "#333333");
+        style.put("productLineColor", "#999999");
+        style.put("productLineprice", 1);
+        style.put("productPrice", 1);
+        style.put("productName", 1);
+        JSONObject show = new JSONObject();
+        show.put("productName", 1);
+        show.put("productPrice", 1);
+        show.put("linePrice", 1);
+        show.put("sellingPoint", 0);
+        show.put("productSales", 0);
+        style.put("show", show);
+        item.setStyle(style);
+
+
         JSONObject itemData = new JSONObject();
         itemData.put("productName", "此处显示商品名称");
         itemData.put("image", imagePath + "image/diy/product/01.png");
@@ -60,25 +71,22 @@ public class Product implements java.io.Serializable{
         itemData.put("linePrice", "139.00");
         itemData.put("sellingPoint", "此款商品美观大方 不容错过");
         itemData.put("productSales", "100");
+
+        // 默认数据
+        JSONArray defaultData = new JSONArray();
         // 4条数据
-        data.add(itemData);
-        data.add(itemData);
+        defaultData.add(itemData);
+        defaultData.add(itemData);
+        defaultData.add(itemData);
+        defaultData.add(itemData);
+        item.setDefaultData(defaultData);
+
+        // 默认数据
+        JSONArray data = new JSONArray();
+        // 2条数据
         data.add(itemData);
         data.add(itemData);
         item.setData(data);
 
-
-        // 默认数据
-        JSONArray defaultData = new JSONArray();
-        itemData.put("productName", "此处显示商品名称");
-        itemData.put("image", imagePath + "image/diy/product/01.png");
-        itemData.put("productPrice", "99.00");
-        itemData.put("linePrice", "139.00");
-        itemData.put("sellingPoint", "此款商品美观大方 不容错过");
-        itemData.put("productSales", "100");
-        // 4条数据
-        defaultData.add(itemData);
-        defaultData.add(itemData);
-        item.setDefaultData(defaultData);
     }
 }
