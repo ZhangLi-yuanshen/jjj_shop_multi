@@ -68,8 +68,8 @@ public class NotifyController extends BaseController {
         String wechatpaySerial = request.getHeader("wechatpay-serial");
         log.info("wechatpaySerial="+wechatpaySerial);
         if(StringUtils.hasText(wechatpaySerial)){
-            App app = appService.getOne(new LambdaQueryWrapper<App>()
-                    .eq(App::getWechatpaySerial, wechatpaySerial));
+            App app = appService.list(new LambdaQueryWrapper<App>()
+                    .eq(App::getWechatpaySerial, wechatpaySerial)).get(0);
             return this.wxPayV3(request, app);
         }else{
             return this.wxPayV2(request);
