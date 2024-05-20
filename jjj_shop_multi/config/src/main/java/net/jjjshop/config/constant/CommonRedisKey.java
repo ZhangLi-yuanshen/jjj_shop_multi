@@ -12,32 +12,32 @@ public interface CommonRedisKey {
      * 登录用户token信息key
      * login:token:tokenMd5
      */
-    String ADMIN_LOGIN_TOKEN = "admin:login:token:%s";
+    String ADMIN_LOGIN_TOKEN = "multi3.admin:login:token:%s";
 
     /**
      * 登录用户信息key
      * login:user:username
      */
-    String ADMIN_LOGIN_USER = "admin:login:user:%s";
+    String ADMIN_LOGIN_USER = "multi3.admin:login:user:%s";
 
     /**
      * 登录用户盐值信息key
      * login:salt:username
      */
-    String ADMIN_LOGIN_SALT = "admin:login:salt:%s";
+    String ADMIN_LOGIN_SALT = "multi3.admin:login:salt:%s";
 
     /**
      * 登录用户username token
      * login:user:token:username:token
      */
-    String ADMIN_LOGIN_USER_TOKEN = "admin:login:user:token:%s:%s";
+    String ADMIN_LOGIN_USER_TOKEN = "multi3.admin:login:user:token:%s:%s";
 
 
     /**
      * 登录用户下的所有token
      * login:user:token:username:*
      */
-    String ADMIN_LOGIN_USER_ALL_TOKEN = "admin:login:user:token:%s:*";
+    String ADMIN_LOGIN_USER_ALL_TOKEN = "multi3.admin:login:user:token:%s:*";
 
     // --------------------admin端登录信息结束----------------------
 
@@ -46,32 +46,32 @@ public interface CommonRedisKey {
      * 登录用户token信息key
      * login:token:tokenMd5
      */
-    String SHOP_LOGIN_TOKEN = "shop:login:token:%s";
+    String SHOP_LOGIN_TOKEN = "multi3.shop:login:token:%s";
 
     /**
      * 登录用户信息key
      * login:user:username
      */
-    String SHOP_LOGIN_USER = "shop:login:user:%s";
+    String SHOP_LOGIN_USER = "multi3.shop:login:user:%s";
 
     /**
      * 登录用户盐值信息key
      * login:salt:username
      */
-    String SHOP_LOGIN_SALT = "shop:login:salt:%s";
+    String SHOP_LOGIN_SALT = "multi3.shop:login:salt:%s";
 
     /**
      * 登录用户username token
      * login:user:token:username:token
      */
-    String SHOP_LOGIN_USER_TOKEN = "shop:login:user:token:%s:%s";
+    String SHOP_LOGIN_USER_TOKEN = "multi3.shop:login:user:token:%s:%s";
 
 
     /**
      * 登录用户下的所有token
      * login:user:token:username:*
      */
-    String SHOP_LOGIN_USER_ALL_TOKEN = "shop:login:user:token:%s:*";
+    String SHOP_LOGIN_USER_ALL_TOKEN = "multi3.shop:login:user:token:%s:*";
 
     // --------------------shop端登录信息结束----------------------
 
@@ -80,32 +80,32 @@ public interface CommonRedisKey {
      * 登录用户token信息key
      * login:token:tokenMd5
      */
-    String SUPPLIER_LOGIN_TOKEN = "supplier:login:token:%s";
+    String SUPPLIER_LOGIN_TOKEN = "multi3.supplier:login:token:%s";
 
     /**
      * 登录用户信息key
      * login:user:username
      */
-    String SUPPLIER_LOGIN_USER = "supplier:login:user:%s";
+    String SUPPLIER_LOGIN_USER = "multi3.supplier:login:user:%s";
 
     /**
      * 登录用户盐值信息key
      * login:salt:username
      */
-    String SUPPLIER_LOGIN_SALT = "supplier:login:salt:%s";
+    String SUPPLIER_LOGIN_SALT = "multi3.supplier:login:salt:%s";
 
     /**
      * 登录用户username token
      * login:user:token:username:token
      */
-    String SUPPLIER_LOGIN_USER_TOKEN = "supplier:login:user:token:%s:%s";
+    String SUPPLIER_LOGIN_USER_TOKEN = "multi3.supplier:login:user:token:%s:%s";
 
 
     /**
      * 登录用户下的所有token
      * login:user:token:username:*
      */
-    String SUPPLIER_LOGIN_USER_ALL_TOKEN = "supplier:login:user:token:%s:*";
+    String SUPPLIER_LOGIN_USER_ALL_TOKEN = "multi3.supplier:login:user:token:%s:*";
 
     // --------------------shop端登录信息结束----------------------
 
@@ -114,32 +114,32 @@ public interface CommonRedisKey {
      * 登录用户token信息key
      * login:token:tokenMd5
      */
-    String USER_LOGIN_TOKEN = "user:login:token:%s";
+    String USER_LOGIN_TOKEN = "multi3.user:login:token:%s";
 
     /**
      * 登录用户信息key
      * login:user:username
      */
-    String USER_LOGIN_USER = "user:login:user:%s";
+    String USER_LOGIN_USER = "multi3.user:login:user:%s";
 
     /**
      * 登录用户盐值信息key
      * login:salt:username
      */
-    String USER_LOGIN_SALT = "user:login:salt:%s";
+    String USER_LOGIN_SALT = "multi3.user:login:salt:%s";
 
     /**
      * 登录用户username token
      * login:user:token:username:token
      */
-    String USER_LOGIN_USER_TOKEN = "user:login:user:token:%s:%s";
+    String USER_LOGIN_USER_TOKEN = "multi3.user:login:user:token:%s:%s";
 
 
     /**
      * 登录用户下的所有token
      * login:user:token:username:*
      */
-    String USER_LOGIN_USER_ALL_TOKEN = "user:login:user:token:%s:*";
+    String USER_LOGIN_USER_ALL_TOKEN = "multi3.user:login:user:token:%s:*";
 
     // --------------------front端登录信息结束----------------------
 
@@ -148,30 +148,30 @@ public interface CommonRedisKey {
      * 验证码
      * verify.code:888888
      */
-    String VERIFY_CODE = "verify.code:%s";
+    String VERIFY_CODE = "multi3.verify.code:%s";
 
     /**
      * 地区缓存
      */
-    String REGION_DATA = "region.data";
+    String REGION_DATA = "multi3.region.data";
     /**
      * 设置缓存
      */
-    String SETTING_DATA = "setting.data:%s:%s";
+    String SETTING_DATA = "multi3.setting.data:%s:%s";
     /**
      * 设置缓存
      */
-    String SUPPLIER_SETTING_DATA = "setting.data:%s:%s:%s";
+    String SUPPLIER_SETTING_DATA = "multi3.setting.data:%s:%s:%s";
     /**
      * 所有设置缓存
      */
-    String SETTING_DATA_ALL = "setting.data:%s:*";
+    String SETTING_DATA_ALL = "multi3.setting.data:%s:*";
     /**
      * 商品分类缓存
      */
-    String PRODUCT_CATEGORY_DATA = "product.category.data:%s";
+    String PRODUCT_CATEGORY_DATA = "multi3.product.category.data:%s";
     /**
      * uat测试安全ip
      */
-    String UAT_IP = "uat.ip";
+    String UAT_IP = "multi3.uat.ip";
 }
