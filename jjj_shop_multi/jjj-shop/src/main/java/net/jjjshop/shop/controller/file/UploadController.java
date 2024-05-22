@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.file.UploadFile;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
+import net.jjjshop.framework.util.ShopLoginUtil;
 import net.jjjshop.framework.util.UploadUtil;
 import net.jjjshop.shop.service.file.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class UploadController {
         // 文件后缀
         String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".") + 1).toLowerCase();
         file.setExtension(extension);
+        file.setAppId(ShopLoginUtil.getAppId());
         if(uploadFileService.addFile(file)) {
             return ApiResult.ok(null, "上传成功");
         }else{
