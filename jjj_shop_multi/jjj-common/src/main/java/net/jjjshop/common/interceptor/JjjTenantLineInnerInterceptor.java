@@ -122,7 +122,7 @@ public class JjjTenantLineInnerInterceptor extends JsqlParserSupport implements 
 
             if (InterceptorIgnoreHelper.willIgnoreTenantLine(ms.getId())
                     || Long.parseLong(this.tenantLineHandler.getTenantId().toString()) == 0
-                    || this.notWithAppId) {
+                    ) {
                 return;
             }
 
