@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.file.UploadFile;
 import net.jjjshop.common.entity.supplier.SupplierUser;
+import net.jjjshop.common.util.UploadFileUtils;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.framework.util.SupplierLoginUtil;
@@ -45,7 +46,7 @@ public class UploadController {
     @Autowired
     private UploadUtil uploadUtil;
     @Autowired
-    private SupplierUserService supplierUserService;
+    private UploadFileUtils uploadFileUtils;
 
     @RequestMapping(value = "/image", method = RequestMethod.POST)
     @OperationLog(name = "上传单个图片")
@@ -65,7 +66,8 @@ public class UploadController {
         String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".") + 1).toLowerCase();
         file.setExtension(extension);
         if(uploadFileService.addFile(file)) {
-            return ApiResult.ok(null, "上传成功");
+            String filePath =  uploadFileUtils.getFilePathByFile(file);
+            return ApiResult.ok(filePath, "上传成功");
         }else{
             return ApiResult.fail("上传失败");
         }
