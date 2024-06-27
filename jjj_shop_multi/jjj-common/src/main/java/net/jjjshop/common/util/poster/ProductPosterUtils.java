@@ -177,6 +177,6 @@ public class ProductPosterUtils {
      */
     private String getPosterUrl(Product product, User user, String source)
     {
-        return springBootJjjProperties.getResourceAccessUrl() + "uploads/temp/product/" + product.getAppId() + "/" +source+ "/" + this.getPosterName(user, product.getProductId()) + "?t="+System.currentTimeMillis();
+        return springBootJjjProperties.getResourceAccessUrl() + "temp/product/" + product.getAppId() + "/" +source+ "/" + this.getPosterName(user, product.getProductId()) + "?t="+System.currentTimeMillis();
     }
 }

@@ -91,6 +91,6 @@ public class ExtractUtils {
      */
     private String getPosterUrl(User user, Integer orderId)
     {
-        return springBootJjjProperties.getResourceAccessUrl() + "uploads/temp/extract/" + user.getAppId() + "/" + this.getPosterName(user, orderId) + "?t="+System.currentTimeMillis();
+        return springBootJjjProperties.getResourceAccessUrl() + "temp/extract/" + user.getAppId() + "/" + this.getPosterName(user, orderId) + "?t="+System.currentTimeMillis();
     }
 }

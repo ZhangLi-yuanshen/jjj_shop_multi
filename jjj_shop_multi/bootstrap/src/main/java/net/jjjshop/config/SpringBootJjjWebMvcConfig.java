@@ -128,7 +128,7 @@ public class SpringBootJjjWebMvcConfig implements WebMvcConfigurer {
 
         // 设置上传文件访问路径
         registry.addResourceHandler(springBootJjjProperties.getResourceAccessPatterns())
-                .addResourceLocations("file:" + springBootJjjProperties.getUploadPath());
+                .addResourceLocations("file:" + springBootJjjProperties.getUploadPath() + "/");
     }
 
 }
