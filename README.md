@@ -53,9 +53,9 @@
 - saas端演示：https://demo-multi-java.jjjshop.net/admin     账号密码：admin/Jjjshop@123
 
 
-- 本地运行saas端和shop端账号密码均为    **admin/Jjjshop@123** 
+- 本地运行saas端和shop端账号密码均为    **admin/123456** 
 
-- 本地运行移动端建议运行到浏览器，方便调试 账号密码 **13888888888/Jjjshop@123** 正式发布选择发布到微信小程序
+- 本地运行移动端建议运行到浏览器，方便调试 账号密码 **18888888888/123456** 正式发布选择发布到微信小程序
 
  ### 扫码体验微信小程序，更多演示请扫码公众号查看 
 ![输入图片说明](https://www.jjjshop.net/gitee/multi-java/demo.png "demo.png")
