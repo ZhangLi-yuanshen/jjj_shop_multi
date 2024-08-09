@@ -200,39 +200,40 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @return
      */
     public LoginUserTokenVo loginWx(AppWxParam appWxParam) {
+        WxMaJscode2SessionResult result;
         try {
-            WxMaJscode2SessionResult result = wxMaService.switchoverTo(appWxUtils.getConfig(wxMaService, null)).getUserService().getSessionInfo(appWxParam.getCode());
-            // 查找用户是否存在，不存在则先注册
-            User user = null;
-            //先通过unionId查找
-            if (StringUtils.isNotBlank(result.getUnionid())) {
-                user = getUserByUnionId(result.getUnionid());
-            }
-            if (user == null) {
-                // 通过你openId查找
-                user = this.getOne(new LambdaQueryWrapper<User>().eq(User::getOpenId, result.getOpenid()));
-            }
-            if (user != null) {
-                return this.getLoginUserTokenVo(user);
-            } else {
-                // 注册后返回
-                String userInfoStr = StringEscapeUtils.unescapeHtml4(appWxParam.getUserInfo());
-                JSONObject userInfo = JSONObject.parseObject(userInfoStr);
-                User bean = new User();
-                if (StringUtils.isNotBlank(result.getUnionid())) {
-                    bean.setUnionId(result.getUnionid());
-                }
-                bean.setOpenId(result.getOpenid());
-                bean.setNickname(userInfo.getString("nickName"));
-                bean.setAvatarurl(userInfo.getString("avatarUrl"));
-                bean.setRegSource("wx");
-                this.save(bean);
-                this.afterReg(appWxParam.getRefereeId());
-                return this.getLoginUserTokenVo(bean);
-            }
+            result = wxMaService.switchoverTo(appWxUtils.getConfig(wxMaService, null)).getUserService().getSessionInfo(appWxParam.getCode());
         } catch (WxErrorException e) {
-            log.info("微信小程序登录异常：", e.getMessage());
-            return null;
+            log.info("微信小程序登录异常：{}", e.getMessage());
+            throw new BusinessException("微信小程序登录异常：" + e.getError().getErrorMsg());
+        }
+        // 查找用户是否存在，不存在则先注册
+        User user = null;
+        //先通过unionId查找
+        if (StringUtils.isNotBlank(result.getUnionid())) {
+            user = getUserByUnionId(result.getUnionid());
+        }
+        if (user == null) {
+            // 通过你openId查找
+            user = this.getOne(new LambdaQueryWrapper<User>().eq(User::getOpenId, result.getOpenid()));
+        }
+        if (user != null) {
+            return this.getLoginUserTokenVo(user);
+        } else {
+            // 注册后返回
+            String userInfoStr = StringEscapeUtils.unescapeHtml4(appWxParam.getUserInfo());
+            JSONObject userInfo = JSONObject.parseObject(userInfoStr);
+            User bean = new User();
+            if (StringUtils.isNotBlank(result.getUnionid())) {
+                bean.setUnionId(result.getUnionid());
+            }
+            bean.setOpenId(result.getOpenid());
+            bean.setNickname(userInfo.getString("nickName"));
+            bean.setAvatarurl(userInfo.getString("avatarUrl"));
+            bean.setRegSource("wx");
+            this.save(bean);
+            this.afterReg(appWxParam.getRefereeId());
+            return this.getLoginUserTokenVo(bean);
         }
     }
 
