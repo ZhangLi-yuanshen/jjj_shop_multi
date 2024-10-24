@@ -51,7 +51,7 @@ public class PayUtils {
                     paySource,result,orderType,multiple);
         }else {
             return this.onPaymentByWechatV3(user, tradeNo, onlineMoney,
-                    paySource);
+                    paySource,result,orderType,multiple);
         }
 
     }
@@ -95,7 +95,8 @@ public class PayUtils {
 
 
     public Object onPaymentByWechatV3(User user, String tradeNo, BigDecimal onlineMoney,
-                                      String paySource) throws Exception{
+                                      String paySource, Map<String, Object> result, Integer orderType,
+                                      Integer multiple) throws Exception{
         WxPayUnifiedOrderV3Request request = new WxPayUnifiedOrderV3Request();
         request.setOutTradeNo(tradeNo);
         WxPayUnifiedOrderV3Request.Amount am = new WxPayUnifiedOrderV3Request.Amount();
@@ -116,8 +117,9 @@ public class PayUtils {
         request.setSceneInfo(scen);
         request.setPayer(payer);
         JSONObject attach = new JSONObject();
-        attach.put("orderType", OrderTypeEnum.MASTER.getValue());
+        attach.put("orderType", orderType);
         attach.put("paySource", paySource);
+        attach.put("multiple", multiple);
         request.setAttach(attach.toJSONString());
         // 先设置，再调用
         this.wxPayService.switchover(wxPayUtils.getConfig(wxPayService, paySource, null));
