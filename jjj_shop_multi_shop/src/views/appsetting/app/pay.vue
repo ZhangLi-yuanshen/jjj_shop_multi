@@ -24,7 +24,6 @@
 
       <el-form-item label="证书类型">
         <div>
-          <el-radio v-model="form.wxPayKind" :label="2">V2</el-radio>
           <el-radio v-model="form.wxPayKind" :label="3">V3</el-radio>
         </div>
       </el-form-item>
@@ -35,28 +34,18 @@
       <el-form-item label="微信支付密钥 APIKEY ">
         <el-input v-model="form.apikey" class="max-w460"></el-input>
       </el-form-item>
-
-      <el-form-item label="p12证书" v-if="form.wxPayKind == 2">
-        <div class="leval-item upload-btn">
-          <el-upload
-            class="avatar-uploader"
-            ref="upload"
-            action="string"
-            accept=".p12"
-            :before-upload="onBeforeUploadP12"
-            :http-request="UploadP12"
-            :show-file-list="false"
-            :on-change="fileChange"
-          >
-            <el-button size="small" icon="Upload" type="primary"
-              >点击上传</el-button
-            >
-          </el-upload>
+      <el-form-item label="V3证书序列号serial" v-if="form.wxPayKind == 3">
+        <el-input
+          type="textarea"
+          :rows="4"
+          placeholder="微信商户平台-API安全-V3平台证书-序列号,将序列号的全部内容复制进来"
+          v-model="form.wechatpaySerial"
+          class="max-w460"
+        ></el-input>
+        <div class="tips">
+          微信商户平台-API安全-V3平台证书-序列号,将序列号的全部内容复制进来
         </div>
-        <el-col class="gray" v-if="form.p12 != null">已上传p12证书</el-col>
-        <el-col class="red" v-if="form.p12 == null">未上传p12证书</el-col>
       </el-form-item>
-
       <el-form-item label="apiclient_cert.pem" v-if="form.wxPayKind == 3">
         <el-input
           type="textarea"
@@ -100,10 +89,11 @@ export default {
         payType: [],
         mchid: "",
         p12: null,
-        wxPayKind: 2,
+        wxPayKind: 3,
         certPem: "",
         apikey: "",
         keyPem: "",
+        wechatpaySerial: "",
       },
       app: {},
       payType: [],
