@@ -32,6 +32,9 @@ public class PayParam implements Serializable {
     @ApiModelProperty("证书文件key")
     private String keyPem;
 
+    @ApiModelProperty("微信平台证书序列号")
+    private String wechatpaySerial;
+
     @ApiModelProperty("支付宝商户号")
     private String alipayAppid;
 
