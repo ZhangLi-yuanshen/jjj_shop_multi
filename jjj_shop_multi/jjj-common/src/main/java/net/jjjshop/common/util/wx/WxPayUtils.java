@@ -83,18 +83,9 @@ public class WxPayUtils {
                 payConfig.setAppId(StringUtils.trimToNull(appWx.getWxappId()));
             }
             if(app.getWxPayKind() == 3){
-                Verifier verifier = null;
-                try {
-                    verifier = payConfig.getVerifier();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    throw new BusinessException("v3证书错误，请检查或重试");
+                if(StringUtils.isBlank(app.getWechatpaySerial())){
+                    throw new BusinessException("微信平台证书序列号不能为空");
                 }
-                String serialNo = verifier.getValidCertificate().getSerialNumber().toString(16).toUpperCase();
-                if(StringUtils.isEmpty(serialNo)){
-                    throw new BusinessException("v3证书错误，请检查或重试");
-                }
-                appService.update(new LambdaUpdateWrapper<App>().eq(App::getAppId,app.getAppId()).set(App::getWechatpaySerial, serialNo));
             }
             wxPayService.addConfig(mchIdKey, payConfig);
         }
