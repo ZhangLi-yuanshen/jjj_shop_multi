@@ -5,7 +5,9 @@
 				<text class="key-name">头像</text>
 				<!-- #ifndef MP-WEIXIN -->
 				<view class="d-e-c" @click="changeavatarurl">
-					<view class="info-image"><image :src="userInfo.avatarurl || '/static/default.png'" mode=""></image></view>
+					<view class="info-image">
+						<image :src="userInfo.avatarurl || '/static/default.png'" mode=""></image>
+					</view>
 					<text class="icon iconfont icon-jiantou"></text>
 				</view>
 				<!-- #endif -->
@@ -58,13 +60,16 @@
 			<form @submit="subName" class="ww100">
 				<view class="d-s-s d-c p20 mpservice-wrap">
 					<view class="tc f32 fb ww100">修改</view>
-					<template v-if="type == 'mobile' || type == 'nickname' || type == 'user_name' || type == 'email' || type == 'idcard'">
+					<template
+						v-if="type == 'mobile' || type == 'nickname' || type == 'user_name' || type == 'email' || type == 'idcard'">
 						<view class="pop-input d-b-c">
 							<!-- #ifdef MP-WEIXIN -->
-							<input name='newName' :type="type=='nickname'?'nickname':'text'" class="flex-1" placeholder="请输入" v-model="newName" />
+							<input name='newName' :type="type=='nickname'?'nickname':'text'" class="flex-1"
+								placeholder="请输入" v-model="newName" />
 							<!-- #endif -->
 							<!-- #ifndef MP-WEIXIN -->
-							<input :type="type=='text'" name='newName' class="flex-1" placeholder="请输入" v-model="newName"  />
+							<input :type="type=='text'" name='newName' class="flex-1" placeholder="请输入"
+								v-model="newName" />
 							<!-- #endif -->
 							<view class="icon-guanbi icon iconfont" @click="clearName"></view>
 						</view>
@@ -105,30 +110,46 @@
 		},
 		methods: {
 			onChooseAvatar(e) {
-				console.log(e);
 				let self = this;
-				let params = {};
-				params.userId = self.userInfo.userId;
-				params.updateType = "avatarurl";
-				let uploadParams = {
-					token: uni.getStorageSync('token'),
-				    appId: self.getAppId()
+				console.log(e);
+				self.uploadFile([e.detail.avatarUrl]);
+			},
+			uploadFile: function(tempList) {
+				let self = this;
+				self.imageList = [];
+				let i = 0;
+				let img_length = tempList.length;
+				let params = {
+					token: uni.getStorageSync("token"),
+					appId: self.getAppId(),
 				};
-				// 上传文件
-				uni.uploadFile({
-					url: self.websiteUrl + '/api/front/file/upload/image',
-					filePath: e.detail.avatarurl,
-					name: 'iFile',
-					formData: uploadParams,
-					success: function(res) {
-						let result = typeof res.data === 'object' ? res.data : JSON.parse(res.data);
-						console.log(result);
-						params.updateValue = result.data.filePath;
-						self.update(params);
-					},
-					complete: function() {
-						
-					}
+				uni.showLoading({
+					title: "图片上传中",
+				});
+				tempList.forEach(function(filePath, fileKey) {
+					uni.uploadFile({
+						url: self.websiteUrl + "/api/front/file/upload/image",
+						filePath: filePath,
+						name: "iFile",
+						formData: params,
+						success: function(res) {
+							let result =
+								typeof res.data === "object" ? res.data : JSON.parse(res.data);
+							if (result.code === 1) {
+								self.imageList.push(result.data);
+							} else {
+								self.showError(result.msg);
+							}
+						},
+						complete: function() {
+							i++;
+							if (img_length === i) {
+								uni.hideLoading();
+								// 所有文件上传完成
+								self.getImgsFunc(self.imageList);
+							}
+						},
+					});
 				});
 			},
 			/*获取数据*/
