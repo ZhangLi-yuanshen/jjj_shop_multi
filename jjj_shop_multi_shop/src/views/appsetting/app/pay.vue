@@ -115,6 +115,7 @@ export default {
           self.platform = res.data.platform;
           self.form = formatModel(self.form, res.data.app);
           console.log(self.form);
+          self.form.wxPayKind = 3;
           if (self.app.payTypeJson == null || self.app.payTypeJson == "") {
             self.form.payType = deepClone(res.data.platform);
           } else {
