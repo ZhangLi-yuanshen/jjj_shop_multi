@@ -80,7 +80,9 @@ public class WxPayUtils {
                 payConfig.setAppId(StringUtils.trimToNull(appMp.getMpappId()));
             }else if ("wx".equals(paySource)) {
                 AppWx appWx = appWxService.getById(appId);
-                payConfig.setAppId(StringUtils.trimToNull(appWx.getWxappId()));
+                if(appWx != null){
+                    payConfig.setAppId(StringUtils.trimToNull(appWx.getWxappId()));
+                }
             }
             if(app.getWxPayKind() == 3){
                 if(StringUtils.isBlank(app.getWechatpaySerial())){
