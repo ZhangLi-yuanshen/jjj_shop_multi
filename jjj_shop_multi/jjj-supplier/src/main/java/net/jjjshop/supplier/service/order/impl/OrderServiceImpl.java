@@ -232,6 +232,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         if (order.getOrderStatus() != 21 || order.getPayStatus() != 20) {
             throw new BusinessException("订单不允许取消");
         }
+        if (orderParam.getIsCancel() == null) {
+            throw new BusinessException("审核状态不能为空");
+        }
         if (orderParam.getIsCancel()) {
             //执行退款操作
             orderRefundUtils.execute(order, order.getPayPrice());
