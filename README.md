@@ -34,9 +34,9 @@
 
 **安装教程、开发文档、操作手册请进入官网查询** 
 
- **[http://www.jjjshop.net/](http://http://www.jjjshop.net/)** 
+  **[https://www.jjjshop.net/](https://www.jjjshop.net/)** 
 
-【PHP版本】 [https://gitee.com/victor123/jjjshop-multi](http://https://gitee.com/victor123/jjjshop-multi)
+【PHP版本】 [https://gitee.com/victor123/jjjshop-multi](https://gitee.com/victor123/jjjshop-multi)
 
  ### 如果对您有帮助，您可以点右上角 "Star" 支持一下，这样我们才有继续免费下去的动力，谢谢！
 QQ交流群 (入群前，请在网页右上角点 "Star" )
@@ -60,19 +60,19 @@ QQ交流群 (入群前，请在网页右上角点 "Star" )
 ### 商业版演示
 ![输入图片说明](https://www.jjjshop.net/gitee/all/jmtop3.png)
 
-**多商户SAAS端演示地址:**  [https://demo-multi-java.jjjshop.net/admin](http://https://demo-multi-java.jjjshop.net/admin)
+**多商户SAAS端演示地址:**  [https://demo-multi-java.jjjshop.net/admin](https://demo-multi-java.jjjshop.net/admin)
 
 演示账号/密码：admin/Jjjshop@123
 
- **多商户平台管理端演示地址:**  [https://demo-multi-java.jjjshop.net/shop](http://https://demo-multi-java.jjjshop.net/shop)
+ **多商户平台管理端演示地址:**  [https://demo-multi-java.jjjshop.net/shop](https://demo-multi-java.jjjshop.net/shop)
 
 演示账号/密码：admin/Jjjshop@123(不可修改数据) test/Jjjshop@123(可修改数据)
 
- **多商户商户管理端演示地址:**  [https://demo-multi-java.jjjshop.net/supplier](http://https://demo-multi-java.jjjshop.net/supplier)
+ **多商户商户管理端演示地址:**  [https://demo-multi-java.jjjshop.net/supplier](https://demo-multi-java.jjjshop.net/supplier)
 
 演示账号/密码：admin/Jjjshop@123(不可修改数据)；test/Jjjshop@123(可修改数据)
  
-**多商户H5端演示地址:**  [https://demo-multi-java.jjjshop.net/h5](http://https://demo-multi-java.jjjshop.net/h5)(请打开浏览器直接登录)
+**多商户H5端演示地址:**  [https://demo-multi-java.jjjshop.net/h5](https://demo-multi-java.jjjshop.net/h5)(请打开浏览器直接登录)
 
 演示账号/密码：13800138000/Jjjshop@123
 
