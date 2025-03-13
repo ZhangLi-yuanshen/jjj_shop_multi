@@ -139,28 +139,23 @@
       </el-form-item>
       <!--提交-->
       <div class="common-button-wrapper">
-        <el-button type="primary" @click="onSubmit" :loading="loading"
-          >提交</el-button
-        >
+        <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
       </div>
     </el-form>
     <!--上传图片-->
-    <Upload
-      v-if="isupload"
-      :isupload="isupload"
-      :config="{ total: 3 }"
-      @returnImgs="returnImgsFunc"
-    ></Upload>
+    <Upload v-if="isupload" :isupload="isupload" :config="{ total: 3 }" @returnImgs="returnImgsFunc"></Upload>
+
   </div>
+
 </template>
 
 <script>
-import SettingApi from "@/api/setting.js";
-import Upload from "@/components/file/Upload.vue";
-import { formatModel } from "@/utils/base.js";
+import SettingApi from '@/api/setting.js';
+import Upload from '@/components/file/Upload.vue';
+import { formatModel } from '@/utils/base.js';
 export default {
-  components: {
-    Upload,
+  components:{
+    Upload
   },
   data() {
     return {
@@ -168,10 +163,10 @@ export default {
       loading: false,
       /*form表单数据*/
       form: {
-        name: "",
+        name: '',
         kuaiDi100: {
-          customer: "",
-          key: "",
+          customer: '',
+          key: ''
         },
         supplierCash: "",
         operateType: "",
@@ -190,35 +185,33 @@ export default {
         deliveryType: [],
         isGetLog: 0,
         policy: {
-          service: "",
-          privacy: "",
-        },
+          service: '',
+          privacy: ''
+        }
       },
       all_type: [],
       delivery_type: [],
       /*是否打开图片选择*/
-      isupload: false,
+      isupload:false
     };
   },
   created() {
-    this.getParams();
+    this.getParams()
   },
 
   methods: {
     /*获取配置数据*/
     getParams() {
       let self = this;
-      SettingApi.storeDetail({}, true)
-        .then((res) => {
-          self.form = formatModel(self.form, res.data);
-          console.log(self.form.supplierImage);
-          self.all_type = res.data.allType;
-          self.loading = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+      SettingApi.storeDetail({}, true).then(res => {
+        self.form = formatModel(self.form, res.data);
+        self.all_type = res.data.allType;
+        self.loading = false;
+      })
+          .catch(error => {
+            console.log(error);
+          });
+      },
 
     /*选择图片*/
     chooseImg(e) {
@@ -243,9 +236,9 @@ export default {
       let self = this;
       let params = this.form;
       if (params.deliveryType.length < 1) {
-        ElMessage({
-          message: "配送方式至少选择一种！",
-          type: "warning",
+        ElMessage ({
+          message: '配送方式至少选择一种！',
+          type: 'warning'
         });
         return;
       }
@@ -254,22 +247,24 @@ export default {
         if (valid) {
           self.loading = true;
           SettingApi.editStore(params, true)
-            .then((data) => {
-              self.loading = false;
-              ElMessage({
-                message: "恭喜你，商城设置成功",
-                type: "success",
+              .then(data => {
+                self.loading = false;
+                ElMessage ({
+                  message: '恭喜你，商城设置成功',
+                  type: 'success'
+                });
+                self.$router.push('/setting/store/index');
+                location.reload();
+              })
+              .catch(error => {
+                self.loading = false;
               });
-              self.$router.push("/setting/store/index");
-            })
-            .catch((error) => {
-              self.loading = false;
-            });
         }
-        location.reload();
       });
+
     },
-  },
+  }
+
 };
 </script>
 <style>

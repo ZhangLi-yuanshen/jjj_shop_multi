@@ -122,10 +122,6 @@ let SettingApi = {
   toAdd(data, errorback) {
     return request._get('/shop/setting/delivery/toAdd', data, errorback);
   },
-  /*运费模板详情*/
-  toAdd(data, errorback) {
-    return request._get('/shop/setting/delivery/toAdd', data, errorback);
-  },
   /*运费模板列表*/
   deliveryList(data, errorback) {
     return request._postBody('/shop/setting/delivery/index', data, errorback);
