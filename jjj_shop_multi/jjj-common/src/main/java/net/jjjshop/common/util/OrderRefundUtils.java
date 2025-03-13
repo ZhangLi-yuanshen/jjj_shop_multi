@@ -22,6 +22,7 @@ import net.jjjshop.common.service.app.AppService;
 import net.jjjshop.common.service.user.UserBalanceLogService;
 import net.jjjshop.common.service.user.UserService;
 import net.jjjshop.common.util.wx.WxPayUtils;
+import net.jjjshop.common.vo.WxPayResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -93,7 +94,8 @@ public class OrderRefundUtils {
 
     private boolean refundV2(Order order, BigDecimal money){
         try{
-            this.wxPayService.switchoverTo(wxPayUtils.getConfig(wxPayService, order.getPaySource(), Long.valueOf(order.getAppId())));
+            WxPayResult wxPayResult = wxPayUtils.getConfig(wxPayService, order.getPaySource(), Long.valueOf(order.getAppId()));
+            this.wxPayService.switchoverTo(wxPayResult.getMchId(),wxPayResult.getAppId());
             WxPayRefundRequest request = new WxPayRefundRequest();
             request.setTransactionId(order.getTransactionId());
             request.setTotalFee(order.getOnlineMoney().multiply(new BigDecimal(100)).intValue());
@@ -119,7 +121,8 @@ public class OrderRefundUtils {
 
     private boolean refundV3(Order order, BigDecimal money){
         try{
-            this.wxPayService.switchoverTo(wxPayUtils.getConfig(wxPayService, order.getPaySource(), Long.valueOf(order.getAppId())));
+            WxPayResult wxPayResult = wxPayUtils.getConfig(wxPayService, order.getPaySource(), Long.valueOf(order.getAppId()));
+            this.wxPayService.switchoverTo(wxPayResult.getMchId(),wxPayResult.getAppId());
             WxPayRefundV3Request request = new WxPayRefundV3Request();
             request.setTransactionId(order.getTransactionId());
             request.setOutRefundNo(OrderUtils.geneOrderNo(order.getUserId()));

@@ -15,6 +15,7 @@ import net.jjjshop.common.entity.user.User;
 import net.jjjshop.common.enums.OrderTypeEnum;
 import net.jjjshop.common.service.app.AppService;
 import net.jjjshop.common.util.wx.WxPayUtils;
+import net.jjjshop.common.vo.WxPayResult;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
 import net.jjjshop.framework.core.bean.RequestDetail;
 import net.jjjshop.framework.core.util.RequestDetailThreadLocal;
@@ -89,7 +90,8 @@ public class PayUtils {
         attach.put("multiple", multiple);
         request.setAttach(attach.toJSONString());
         // 先设置，再调用
-        this.wxPayService.switchover(wxPayUtils.getConfig(wxPayService, paySource, null));
+        WxPayResult wxPayResult = wxPayUtils.getConfig(wxPayService, paySource, null);
+        this.wxPayService.switchover(wxPayResult.getMchId(),wxPayResult.getAppId());
         return this.wxPayService.createOrder(request);
     }
 
@@ -122,7 +124,8 @@ public class PayUtils {
         attach.put("multiple", multiple);
         request.setAttach(attach.toJSONString());
         // 先设置，再调用
-        this.wxPayService.switchover(wxPayUtils.getConfig(wxPayService, paySource, null));
+        WxPayResult wxPayResult =  wxPayUtils.getConfig(wxPayService, paySource, null);
+        this.wxPayService.switchover(wxPayResult.getMchId(),wxPayResult.getAppId());
         return this.wxPayService.createOrderV3(tradeTypeEnum, request);
     }
 

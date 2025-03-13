@@ -24,6 +24,7 @@ import net.jjjshop.common.factory.paysuccess.type.PaySuccessOrder;
 import net.jjjshop.common.factory.paysuccess.type.PaySuccessTypeFactory;
 import net.jjjshop.common.service.app.AppService;
 import net.jjjshop.common.util.wx.WxPayUtils;
+import net.jjjshop.common.vo.WxPayResult;
 import net.jjjshop.common.vo.order.PayDataVo;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
 import net.jjjshop.framework.common.controller.BaseController;
@@ -90,7 +91,9 @@ public class NotifyController extends BaseController {
                 return WxPayNotifyResponse.success("处理成功!");
             }
             // 验签结果
-            WxPayOrderNotifyResult result = wxPayService.switchoverTo(wxPayUtils.getConfig(wxPayService, attach.getString("paySource"), Long.valueOf(order.getAppId()))).parseOrderNotifyResult(xmlResult);
+            WxPayResult wxPayResult =  wxPayUtils.getConfig(wxPayService, attach.getString("paySource"), Long.valueOf(order.getAppId()));
+            WxPayOrderNotifyResult result = wxPayService.switchoverTo(wxPayResult.getMchId(),wxPayResult.getAppId())
+                    .parseOrderNotifyResult(xmlResult, "MD5");
             // 处理支付回调
             PayDataVo payDataVo = new PayDataVo();
             payDataVo.setTransaction_id(result.getTransactionId());

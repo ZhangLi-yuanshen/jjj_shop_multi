@@ -1743,3 +1743,8 @@ ALTER TABLE `jjjshop_app`
     ADD COLUMN `wechatpay_serial` varchar(255) NULL DEFAULT '' COMMENT '微信平台证书序列号' AFTER `key_pem`;
 
 UPDATE `jjjshop_app` SET `is_recycle` = 1 WHERE `app_id` = 10001;
+
+ALTER TABLE `jjjshop_app`
+    ADD COLUMN `pub_key_pem` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '微信支付公钥文件Key' AFTER `key_pem`,
+    ADD COLUMN `wx_sign_type` tinyint(4) NULL DEFAULT 1 COMMENT '微信支付验签类型,0证书,1公钥' AFTER `pub_key_pem`,
+    MODIFY COLUMN `wechatpay_serial` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '微信平台证书序列号/公钥ID' AFTER `key_pem`;

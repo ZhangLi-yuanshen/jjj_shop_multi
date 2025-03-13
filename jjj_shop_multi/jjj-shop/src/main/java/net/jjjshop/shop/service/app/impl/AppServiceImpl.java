@@ -8,11 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.mapper.app.AppMapper;
 import net.jjjshop.common.util.wx.WxPayUtils;
+import net.jjjshop.common.vo.WxPayResult;
+import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.common.service.impl.BaseServiceImpl;
 import net.jjjshop.framework.util.ShopLoginUtil;
 import net.jjjshop.shop.param.app.PayParam;
 import net.jjjshop.shop.service.app.AppService;
 import net.jjjshop.shop.vo.app.AppVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,26 +75,38 @@ public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements A
         App app = this.detail();
         App updateBean = new App();
         BeanUtils.copyProperties(payParam, updateBean);
+        //支付验签类型,0证书,1公钥
+        if(updateBean.getWxSignType() != null && updateBean.getWxSignType() == 1){
+            if(StringUtils.isBlank(updateBean.getPubKeyPem())){
+                throw new BusinessException("支付公钥pub_key不能为空");
+            }
+        }
         updateBean.setPayType(payParam.getPayType().toJSONString());
         updateBean.setExpireTime(app.getExpireTime());
         updateBean.setAppId(app.getAppId());
         this.updateById(updateBean);
         // 删除缓存
         try{
-            wxPayService.removeConfig(payParam.getMchid()+"_mp");
-            wxPayService.removeConfig(payParam.getMchid()+"_wx");
-            wxPayService.removeConfig(payParam.getMchid()+"_open");
+            WxPayResult wxPayResult =  wxPayUtils.getWxPayResult("mp", Long.valueOf(app.getAppId()));
+            wxPayService.removeConfig(payParam.getMchid()+"_mp",wxPayResult.getAppId());
+            wxPayResult =  wxPayUtils.getWxPayResult( "wx", Long.valueOf(app.getAppId()));
+            wxPayService.removeConfig(payParam.getMchid()+"_wx",wxPayResult.getAppId());
             // 旧的也删除
             if(!payParam.getMchid().equals(app.getMchid())){
-                wxPayService.removeConfig(app.getMchid()+"_mp");
-                wxPayService.removeConfig(app.getMchid()+"_wx");
-                wxPayService.removeConfig(app.getMchid()+"_open");
+                wxPayResult =  wxPayUtils.getWxPayResult("mp", Long.valueOf(app.getAppId()));
+                wxPayService.removeConfig(app.getMchid()+"_mp",wxPayResult.getAppId());
+                wxPayResult =  wxPayUtils.getWxPayResult( "wx", Long.valueOf(app.getAppId()));
+                wxPayService.removeConfig(app.getMchid()+"_wx",wxPayResult.getAppId());
             }
         }catch (Exception e){
             log.info("保存设置删除缓存错误");
         }
         // v3支付获取平台序列号
         if(payParam.getWxPayKind() == 3){
+            // 序列号
+            if(StringUtils.isBlank(payParam.getWechatpaySerial())){
+                throw new BusinessException("证书序列号/公钥ID不能为空");
+            }
             wxPayUtils.getConfig(wxPayService, "wx", null);
         }
         return true;
@@ -116,7 +131,8 @@ public class AppServiceImpl extends BaseServiceImpl<AppMapper, App> implements A
             updateBean.setAppId(app.getAppId());
             // 删除缓存
             try{
-                wxPayService.removeConfig(app.getMchid());
+                WxPayResult wxPayResult =  wxPayUtils.getWxPayResult( "wx", Long.valueOf(app.getAppId()));
+                wxPayService.removeConfig(app.getMchid()+"_wx",wxPayResult.getAppId());
             }catch (Exception e){
                 log.info("保存设置删除缓存错误");
             }
