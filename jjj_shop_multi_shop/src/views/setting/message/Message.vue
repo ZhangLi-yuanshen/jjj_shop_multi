@@ -19,22 +19,22 @@
             label="通知名称"
           ></el-table-column>
           <el-table-column prop="remark" label="推送规则"></el-table-column>
-          <el-table-column label="公众号通知" v-if="message_to == 10">
-            <template #default="scope">
-              <el-checkbox
-                v-model="scope.row.mpStatus"
-                @change="(checked) => mpStatusChange(checked, scope.row)"
-                >启用</el-checkbox
-              >
-              <el-link
-                type="primary"
-                :underline="false"
-                style="padding-left: 10px"
-                @click="mpClick(scope.row)"
-                >设置</el-link
-              >
-            </template>
-          </el-table-column>
+<!--          <el-table-column label="公众号通知" v-if="message_to == 10">-->
+<!--            <template #default="scope">-->
+<!--              <el-checkbox-->
+<!--                v-model="scope.row.mpStatus"-->
+<!--                @change="(checked) => mpStatusChange(checked, scope.row)"-->
+<!--                >启用</el-checkbox-->
+<!--              >-->
+<!--              <el-link-->
+<!--                type="primary"-->
+<!--                :underline="false"-->
+<!--                style="padding-left: 10px"-->
+<!--                @click="mpClick(scope.row)"-->
+<!--                >设置</el-link-->
+<!--              >-->
+<!--            </template>-->
+<!--          </el-table-column>-->
           <el-table-column label="小程序通知" v-if="message_to == 10">
             <template #default="scope">
               <el-checkbox

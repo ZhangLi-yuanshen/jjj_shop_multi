@@ -37,10 +37,6 @@
           <p class="money">{{ supplier_data.nosettledMoney }}</p>
         </div>
         <div class="content">
-          <p class="title">店铺总保证金(元)</p>
-          <p class="money">{{ supplier_data.depositMoney }}</p>
-        </div>
-        <div class="content">
           <p class="title">已提现金额(元)</p>
           <p class="money">{{ supplier_data.cashMoney }}</p>
         </div>

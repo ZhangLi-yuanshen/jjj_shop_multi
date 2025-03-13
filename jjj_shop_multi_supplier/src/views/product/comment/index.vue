@@ -66,7 +66,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="nickName" label="	用户"></el-table-column>
+          <el-table-column prop="nickname" label="	用户"></el-table-column>
           <el-table-column prop="score" label="评分">
             <template #default="scope">
               <span v-if="scope.row.score == 10" class="red">好评</span>

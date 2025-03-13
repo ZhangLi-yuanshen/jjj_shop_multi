@@ -14,7 +14,7 @@
           <el-col :span="5">
             <div class="pb16">
               <span class="gray9">买家：</span>
-              {{ detail.user.nickName }}
+              {{ detail.user.nickname }}
             </div>
           </el-col>
           <el-col :span="5">

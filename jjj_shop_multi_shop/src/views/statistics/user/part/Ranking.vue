@@ -18,7 +18,7 @@
                   v-img-url="item.avatarurl"
                   :alt="item.nickname"
                 />
-                <span class="ml4">{{ item.nickName }}</span>
+                <span class="ml4">{{ item.nickname }}</span>
               </div>
               <div class="red">
                 ￥
@@ -44,7 +44,7 @@
                   v-img-url="item.avatarurl"
                   :alt="item.nickname"
                 />
-                <span class="ml4">{{ item.nickName }}</span>
+                <span class="ml4">{{ item.nickname }}</span>
               </div>
               <div class="orange">
                 <span class="fb">{{ item.totalPoints }}</span>

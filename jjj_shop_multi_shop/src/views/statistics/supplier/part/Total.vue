@@ -14,21 +14,6 @@
       <p class="f20 fb gray3">{{dataModel.supplierAddT}}</p>
       <p class="gray">{{dataModel.supplierAddY}}</p>
     </div>
-    <div class="flex-1 tc">
-      <p>新申请商户数</p>
-      <p class="f20 fb gray3">{{dataModel.supplierApplyT}}</p>
-      <p class="gray">{{dataModel.supplierApplyY}}</p>
-    </div>
-    <div class="flex-1 tc">
-      <p>商户退出数</p>
-      <p class="f20 fb gray3">{{dataModel.supplierRefundT}}</p>
-      <p class="gray">{{dataModel.supplierRefundY}}</p>
-    </div>
-    <div class="flex-1 tc">
-      <p>商户退出申请数</p>
-      <p class="f20 fb gray3">{{dataModel.supplierRefundApplyT}}</p>
-      <p class="gray">{{dataModel.supplierRefundApplyY}}</p>
-    </div>
   </div>
 </template>
 <script>

@@ -103,16 +103,6 @@
           <el-radio v-model="form.editAudit" :label="0">否</el-radio>
         </div>
       </el-form-item>
-      <div class="common-form">商户图片背景</div>
-      <el-form-item
-        label="商户入住背景"
-        :rules="[{ required: true, message: '请输入商户入住图片' }]"
-      >
-        <div class="ww100">
-          <el-button @click="chooseImg('image')">选择图片</el-button>
-        </div>
-        <img class="mt10" v-img-url="form.supplierImage" width="200" />
-      </el-form-item>
       <div class="common-form">政策协议</div>
       <el-form-item
         label="服务协议"

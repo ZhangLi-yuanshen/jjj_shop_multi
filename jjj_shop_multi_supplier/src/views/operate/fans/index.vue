@@ -2,7 +2,7 @@
   <div>
     <div class="table-wrap">
       <el-table :data="tableData" style="width: 100%" v-loading="loading">
-        <el-table-column prop="nickName" label="昵称"></el-table-column>
+        <el-table-column prop="nickname" label="昵称"></el-table-column>
         <el-table-column label="微信头像">
           <template #default="scope">
             <img :src="scope.row.avatarurl" :width="30" :height="30" />

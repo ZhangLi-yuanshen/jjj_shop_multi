@@ -116,9 +116,9 @@
             prop="orderProduct.totalPayPrice"
             label="付款价"
           ></el-table-column>
-          <el-table-column prop="user.nickName" label="买家">
+          <el-table-column prop="user.nickname" label="买家">
             <template #default="scope">
-              <span>{{ scope.row.user.nickName }}</span>
+              <span>{{ scope.row.user.nickname }}</span>
               <br />
               <span class="gray9">(ID:{{ scope.row.user.userId }})</span>
             </template>

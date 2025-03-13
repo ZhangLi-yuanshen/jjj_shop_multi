@@ -80,7 +80,7 @@
           <el-table-column prop="" label="买家">
             <template #default="scope">
               <template v-if="!scope.row.isTopRow">
-                <div>{{ scope.row.nickName }}</div>
+                <div>{{ scope.row.nickname }}</div>
                  <div class="gray9">ID：({{ scope.row.userId }})</div>
               </template>
             </template>

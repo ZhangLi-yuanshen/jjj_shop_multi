@@ -45,8 +45,8 @@
           v-loading="loading"
         >
           <el-table-column prop="orderNo" label="订单号"></el-table-column>
-          <el-table-column prop="nickName" label="微信昵称"></el-table-column>
-          <el-table-column prop="nickName" label="微信头像" width="70">
+          <el-table-column prop="nickname" label="微信昵称"></el-table-column>
+          <el-table-column prop="avatarUrl" label="微信头像" width="70">
             <template #default="scope">
               <img :src="scope.row.avatarUrl" width="30" height="30" />
             </template>

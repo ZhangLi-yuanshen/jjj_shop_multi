@@ -37,19 +37,6 @@
           <p class="title">提现中(元)</p>
           <p class="money">{{ supplier.freezeMoney }}</p>
         </div>
-        <div class="content">
-          <p class="title">
-            店铺保证金(元)
-            <span
-              v-if="supplier.status == 0"
-              class="subhead withdrawal ns-text-color"
-              @click="returndeposit()"
-              >退保证金</span
-            >
-            <span v-if="supplier.status == 10" style="color: red">申请中</span>
-          </p>
-          <p class="money">{{ supplier.depositMoney }}</p>
-        </div>
       </div>
     </div>
     <div class="cash cash_t_common cash_t_brief">

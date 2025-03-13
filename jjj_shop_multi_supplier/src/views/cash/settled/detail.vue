@@ -51,12 +51,6 @@
                <div class="detail_prici">{{ detail.refundMoney }}</div>
             </div>
           </el-col>
-          <el-col :span="6">
-            <div class="pb16">
-               <div >分销佣金 (元)</div>
-               <div class="detail_prici">{{ detail.agentMoney }}</div>
-            </div>
-          </el-col>
         </el-row>
         <el-row>
           <el-col :span="6">

@@ -3,7 +3,7 @@
     :close-on-press-escape="false">
     <el-form size="small" :label-width="formLabelWidth">
       <el-form-item label="姓名">
-        <el-input v-model="form.nickName" placeholder="请输入姓名"></el-input>
+        <el-input v-model="form.nickname" placeholder="请输入姓名"></el-input>
       </el-form-item>
       <el-form-item label="生日">
         <el-date-picker v-model="form.createTime" type="date" value-format="YYYY-MM-DD" style="width:100%"></el-date-picker>
