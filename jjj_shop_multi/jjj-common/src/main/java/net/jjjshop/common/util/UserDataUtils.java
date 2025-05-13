@@ -7,8 +7,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.user.UserFavorite;
 import net.jjjshop.common.entity.user.UserVisit;
-import net.jjjshop.common.service.user.UserFavoriteService;
-import net.jjjshop.common.service.user.UserVisitService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

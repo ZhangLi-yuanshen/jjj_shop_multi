@@ -8,8 +8,6 @@ import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.front.controller.BaseController;
-import net.jjjshop.front.service.plus.article.ArticleCategoryService;
-import net.jjjshop.front.service.plus.article.ArticleService;
 import net.jjjshop.front.vo.plus.article.ArticleDetailVo;
 import net.jjjshop.front.vo.plus.article.ArticleListVo;
 import org.springframework.beans.factory.annotation.Autowired;

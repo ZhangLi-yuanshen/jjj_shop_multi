@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.shop.ShopAccess;
-import net.jjjshop.common.service.shop.ShopAccessService;
 import net.jjjshop.common.vo.shop.ShopAccessVo;
 import net.jjjshop.config.constant.CommonConstant;
 import org.springframework.beans.BeanUtils;

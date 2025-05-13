@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import sun.font.FontDesignMetrics;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -91,8 +90,8 @@ public class ProductPosterUtils {
             // 商品名称处理换行
             Font productNameFont = fontUtils.loadFont(40);
             g.setFont(productNameFont);
-            FontDesignMetrics metrics = FontDesignMetrics.getMetrics(productNameFont);
-            String productName = wrapText(product.getProductName(), metrics, 680);
+            FontMetrics fontMetrics = g.getFontMetrics(productNameFont);
+            String productName = wrapText(product.getProductName(), fontMetrics, 680);
             // 写入商品名称
             g.setColor(new Color(51, 51, 51));
             // 拆分行
@@ -127,15 +126,15 @@ public class ProductPosterUtils {
         }
     }
 
-    private String wrapText(String zh, FontDesignMetrics metrics, int maxWidth) {
+    private String wrapText(String zh, FontMetrics fontMetrics, int maxWidth) {
         StringBuilder sb = new StringBuilder();
         int lineWidth = 0;
         int lineCount = 0;
         for (int i = 0; i < zh.length(); i++) {
             char c = zh.charAt(i);
             sb.append(c);
-            // FontDesignMetrics 的 charWidth() 方法可以计算字符的宽度
-            int charWidth = metrics.charWidth(c);
+            // FontMetrics 的 charWidth() 方法可以计算字符的宽度
+            int charWidth = fontMetrics.charWidth(c);
             lineWidth += charWidth;
             // 如果当前字符的宽度加上之前字符串的已有宽度超出了海报的最大宽度，则换行
             if (lineWidth >= maxWidth - charWidth) {

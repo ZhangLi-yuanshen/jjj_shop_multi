@@ -12,8 +12,6 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.entity.user.User;
-import net.jjjshop.common.enums.OrderTypeEnum;
-import net.jjjshop.common.service.app.AppService;
 import net.jjjshop.common.util.wx.WxPayUtils;
 import net.jjjshop.common.vo.WxPayResult;
 import net.jjjshop.config.properties.SpringBootJjjProperties;

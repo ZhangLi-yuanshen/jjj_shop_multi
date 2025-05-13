@@ -5,7 +5,6 @@ import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import net.jjjshop.common.entity.app.AppWx;
-import net.jjjshop.common.service.app.AppWxService;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.core.util.RequestDetailThreadLocal;
 import org.apache.commons.lang3.StringUtils;

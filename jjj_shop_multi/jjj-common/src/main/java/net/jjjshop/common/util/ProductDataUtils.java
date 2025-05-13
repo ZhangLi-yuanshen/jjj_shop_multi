@@ -8,7 +8,6 @@ import net.jjjshop.common.entity.order.OrderProduct;
 import net.jjjshop.common.entity.product.Product;
 import net.jjjshop.common.mapper.order.OrderProductMapper;
 import net.jjjshop.common.mapper.statistics.ProductRankingMapper;
-import net.jjjshop.common.service.order.OrderProductService;
 import net.jjjshop.common.service.product.ProductService;
 import net.jjjshop.common.vo.order.OrderProductVo;
 import net.jjjshop.common.vo.product.ProductVo;

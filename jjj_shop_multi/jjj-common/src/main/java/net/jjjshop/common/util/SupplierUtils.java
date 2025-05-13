@@ -2,7 +2,6 @@ package net.jjjshop.common.util;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.product.ProductComment;
@@ -10,12 +9,7 @@ import net.jjjshop.common.entity.supplier.Supplier;
 import net.jjjshop.common.entity.supplier.SupplierServiceApply;
 import net.jjjshop.common.entity.supplier.SupplierServiceSecurity;
 import net.jjjshop.common.service.product.ProductCommentService;
-import net.jjjshop.common.service.supplier.SupplierService;
-import net.jjjshop.common.service.supplier.SupplierServiceApplyService;
-import net.jjjshop.common.service.supplier.SupplierServiceSecurityService;
 import net.jjjshop.common.vo.supplier.SupplierSecurityVo;
-import net.jjjshop.framework.core.pagination.Paging;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +17,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Component

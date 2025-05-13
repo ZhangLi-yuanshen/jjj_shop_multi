@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.order.Order;
 import net.jjjshop.common.factory.paysuccess.source.PaySuccessSourceFactoryService;
 import net.jjjshop.common.factory.printer.PrinterFactory;
-import net.jjjshop.common.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

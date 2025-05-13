@@ -26,7 +26,6 @@ import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.framework.util.UploadUtil;
 import net.jjjshop.front.controller.BaseController;
-import net.jjjshop.front.service.file.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

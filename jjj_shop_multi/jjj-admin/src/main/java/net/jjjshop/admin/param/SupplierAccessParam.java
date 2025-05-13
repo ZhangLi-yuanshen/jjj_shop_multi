@@ -1,5 +1,3 @@
-
-
 package net.jjjshop.admin.param;
 
 import io.swagger.annotations.ApiModel;

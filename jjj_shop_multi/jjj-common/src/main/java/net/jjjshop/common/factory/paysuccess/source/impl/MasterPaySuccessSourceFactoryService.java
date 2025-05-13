@@ -5,12 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.order.Order;
 import net.jjjshop.common.entity.order.OrderProduct;
 import net.jjjshop.common.enums.DeliveryTypeEnum;
-import net.jjjshop.common.enums.OrderTypeEnum;
 import net.jjjshop.common.factory.paysuccess.source.PaySuccessSourceFactoryService;
 import net.jjjshop.common.factory.printer.PrinterFactory;
-import net.jjjshop.common.factory.product.vo.UpdateProductStockVo;
-import net.jjjshop.common.service.order.OrderProductService;
-import net.jjjshop.common.service.order.OrderService;
 import net.jjjshop.common.util.OrderUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 支付成功

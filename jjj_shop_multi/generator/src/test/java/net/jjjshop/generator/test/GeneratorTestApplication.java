@@ -1,5 +1,3 @@
-
-
 package net.jjjshop.generator.test;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;

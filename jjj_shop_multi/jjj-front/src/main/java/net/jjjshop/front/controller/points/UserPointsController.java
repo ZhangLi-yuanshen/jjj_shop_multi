@@ -7,7 +7,6 @@ import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.front.controller.BaseController;
 import net.jjjshop.front.param.points.UserPointsLogPageParam;
-import net.jjjshop.front.service.points.UserPointsLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;

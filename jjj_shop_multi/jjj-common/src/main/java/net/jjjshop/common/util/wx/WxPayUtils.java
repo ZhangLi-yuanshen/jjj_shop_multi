@@ -1,16 +1,11 @@
 package net.jjjshop.common.util.wx;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
-import com.github.binarywang.wxpay.v3.auth.Verifier;
 import net.jjjshop.common.entity.app.App;
 import net.jjjshop.common.entity.app.AppMp;
 import net.jjjshop.common.entity.app.AppWx;
-import net.jjjshop.common.service.app.AppMpService;
-import net.jjjshop.common.service.app.AppService;
-import net.jjjshop.common.service.app.AppWxService;
 import net.jjjshop.common.vo.WxPayResult;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.core.util.RequestDetailThreadLocal;

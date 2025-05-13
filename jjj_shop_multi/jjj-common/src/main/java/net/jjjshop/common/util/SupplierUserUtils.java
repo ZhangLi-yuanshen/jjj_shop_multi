@@ -3,7 +3,6 @@ package net.jjjshop.common.util;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.supplier.SupplierUser;
-import net.jjjshop.common.service.supplier.SupplierUserService;
 import net.jjjshop.config.constant.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

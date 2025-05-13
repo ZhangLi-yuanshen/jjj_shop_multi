@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.settings.Printer;
 import net.jjjshop.common.factory.printer.PrinterFactoryService;
-import net.jjjshop.common.service.settings.PrinterService;
 import net.jjjshop.common.util.SettingUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;

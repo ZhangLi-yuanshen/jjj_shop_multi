@@ -2,15 +2,12 @@
 
 package net.jjjshop.front.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.user.User;
-import net.jjjshop.config.constant.CommonConstant;
 import net.jjjshop.framework.common.api.ApiCode;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.shiro.vo.LoginUserRedisVo;
 import net.jjjshop.framework.util.LoginUtil;
-import net.jjjshop.front.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 

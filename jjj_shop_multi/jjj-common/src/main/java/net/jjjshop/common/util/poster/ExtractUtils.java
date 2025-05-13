@@ -9,7 +9,6 @@ import net.jjjshop.common.entity.order.Order;
 import net.jjjshop.common.entity.user.User;
 import net.jjjshop.common.enums.DeliveryTypeEnum;
 import net.jjjshop.common.enums.OrderPayStatusEnum;
-import net.jjjshop.common.service.order.OrderService;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
 import net.jjjshop.framework.common.exception.BusinessException;
 import org.apache.commons.codec.digest.DigestUtils;
