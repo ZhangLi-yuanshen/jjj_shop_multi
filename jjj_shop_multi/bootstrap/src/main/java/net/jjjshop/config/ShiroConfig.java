@@ -14,7 +14,6 @@ import net.jjjshop.framework.shiro.exception.ShiroConfigException;
 import net.jjjshop.framework.shiro.jwt.JwtCredentialsMatcher;
 import net.jjjshop.framework.shiro.jwt.JwtFilter;
 import net.jjjshop.framework.shiro.jwt.JwtRealm;
-import net.jjjshop.framework.shiro.service.ShiroLoginService;
 import net.jjjshop.framework.util.IniUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;

@@ -8,7 +8,6 @@ import net.jjjshop.common.entity.product.ProductComment;
 import net.jjjshop.common.entity.supplier.Supplier;
 import net.jjjshop.common.entity.supplier.SupplierServiceApply;
 import net.jjjshop.common.entity.supplier.SupplierServiceSecurity;
-import net.jjjshop.common.service.product.ProductCommentService;
 import net.jjjshop.common.vo.supplier.SupplierSecurityVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

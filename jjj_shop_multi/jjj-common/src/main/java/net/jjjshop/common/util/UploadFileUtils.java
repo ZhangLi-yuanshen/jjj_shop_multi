@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.file.UploadFile;
 import net.jjjshop.common.entity.product.ProductImage;
 import net.jjjshop.common.enums.StorageEnum;
-import net.jjjshop.common.service.file.UploadFileService;
-import net.jjjshop.common.service.product.ProductImageService;
 import net.jjjshop.config.properties.SpringBootJjjProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

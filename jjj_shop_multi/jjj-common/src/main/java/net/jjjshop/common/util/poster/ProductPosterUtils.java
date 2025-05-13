@@ -9,7 +9,6 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.product.Product;
 import net.jjjshop.common.entity.user.User;
-import net.jjjshop.common.service.product.ProductService;
 import net.jjjshop.common.util.UploadFileUtils;
 import net.jjjshop.common.util.wx.AppWxUtils;
 import net.jjjshop.config.properties.SpringBootJjjProperties;

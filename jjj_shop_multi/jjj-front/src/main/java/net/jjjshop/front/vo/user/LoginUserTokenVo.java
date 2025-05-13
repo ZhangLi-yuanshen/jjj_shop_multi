@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import net.jjjshop.framework.shiro.service.LoginToken;
 import net.jjjshop.framework.shiro.vo.LoginUserVo;
 
 @Data

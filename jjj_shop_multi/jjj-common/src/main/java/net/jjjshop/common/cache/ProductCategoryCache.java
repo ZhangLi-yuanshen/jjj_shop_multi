@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.common.entity.product.ProductCategory;
-import net.jjjshop.common.service.product.ProductCategoryService;
 import net.jjjshop.common.util.UploadFileUtils;
 import net.jjjshop.common.vo.product.CategoryVo;
 import net.jjjshop.config.constant.CommonRedisKey;

@@ -9,7 +9,6 @@ import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.shiro.cache.AdminLoginRedisService;
 import net.jjjshop.framework.shiro.cache.ShopLoginRedisService;
 import net.jjjshop.framework.shiro.cache.SupplierLoginRedisService;
-import net.jjjshop.framework.shiro.service.ShiroLoginService;
 import net.jjjshop.framework.shiro.util.JwtTokenUtil;
 import net.jjjshop.framework.shiro.util.JwtUtil;
 import net.jjjshop.framework.util.HttpServletResponseUtil;
