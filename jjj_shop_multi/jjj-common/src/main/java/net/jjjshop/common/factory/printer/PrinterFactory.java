@@ -1,38 +1,38 @@
-package net.jjjshop.common.factory.printer;
-
-import cn.hutool.core.date.DateUtil;
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import net.jjjshop.common.entity.order.Order;
-import net.jjjshop.common.entity.order.OrderAddress;
-import net.jjjshop.common.entity.order.OrderExtract;
-import net.jjjshop.common.entity.order.OrderProduct;
-import net.jjjshop.common.entity.settings.Printer;
-import net.jjjshop.common.entity.user.User;
-import net.jjjshop.common.enums.DeliveryTypeEnum;
-import net.jjjshop.common.enums.PrinterTypeEnum;
-import net.jjjshop.common.enums.SettingEnum;
-import net.jjjshop.common.settings.vo.PrinterVo;
-import net.jjjshop.common.settings.vo.StoreVo;
-import net.jjjshop.common.util.SettingUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-
-/**
- * 文件上传工厂
- */
-@Component
-public class PrinterFactory {
-
-    private static final String packageName = "net.jjjshop.common.factory.printer.impl.%sPrinterFactoryService";
-
-    @Autowired
-    private Map<String, PrinterFactoryService> map;//关键在这个，原理：当一个接口有多个实现类的时候，key为实现类名，value为实现类对象
+//package net.jjjshop.common.factory.printer;
+//
+//import cn.hutool.core.date.DateUtil;
+//import com.alibaba.fastjson.JSONObject;
+//import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+//import net.jjjshop.common.entity.order.Order;
+//import net.jjjshop.common.entity.order.OrderAddress;
+//import net.jjjshop.common.entity.order.OrderExtract;
+//import net.jjjshop.common.entity.order.OrderProduct;
+//import net.jjjshop.common.entity.settings.Printer;
+//import net.jjjshop.common.entity.user.User;
+//import net.jjjshop.common.enums.DeliveryTypeEnum;
+//import net.jjjshop.common.enums.PrinterTypeEnum;
+//import net.jjjshop.common.enums.SettingEnum;
+//import net.jjjshop.common.settings.vo.PrinterVo;
+//import net.jjjshop.common.settings.vo.StoreVo;
+//import net.jjjshop.common.util.SettingUtils;
+//import org.apache.commons.lang3.StringUtils;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Component;
+//
+//import java.math.BigDecimal;
+//import java.util.List;
+//import java.util.Map;
+//
+///**
+// * 文件上传工厂
+// */
+//@Component
+//public class PrinterFactory {
+//
+//    private static final String packageName = "net.jjjshop.common.factory.printer.impl.%sPrinterFactoryService";
+//
+//    @Autowired
+//    private Map<String, PrinterFactoryService> map;//关键在这个，原理：当一个接口有多个实现类的时候，key为实现类名，value为实现类对象
 
 //    @Autowired
 //    private SettingUtils settingUtils;
@@ -134,4 +134,4 @@ public class PrinterFactory {
 //        content.append("<RIGHT>实付款：<BOLD><B>").append(order.getPayPrice()).append("</B></BOLD>元</RIGHT><BR>");
 //        return content.toString();
 //    }
-}
+//}

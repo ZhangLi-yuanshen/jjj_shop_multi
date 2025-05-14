@@ -79,6 +79,10 @@
             <groupId>net.jjjshop</groupId>
             <artifactId>config</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.jjjshop</groupId>
+            <artifactId>jjj-admin</artifactId>
+        </dependency>
 
     </dependencies>
 
