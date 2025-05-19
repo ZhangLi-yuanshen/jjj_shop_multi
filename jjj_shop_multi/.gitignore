@@ -5,5 +5,5 @@
 .vscode/
 
 # 忽略其他个人配置文件
-.yml
+.yml/
 .DS_Store
