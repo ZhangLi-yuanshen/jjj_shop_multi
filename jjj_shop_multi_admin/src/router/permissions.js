@@ -4,37 +4,43 @@
 import { useUserStore } from '@/store';
 // import dealWithRoute from './dealWithRoute.js';
 export async function setupPermissions(router) {
-	let load = 0;
-	router.beforeEach(async (to, from, next) => {
-		const { token } = useUserStore(); 
-		const whiteList = ['/login'];
-		if (!token) {
-			if (whiteList.includes(to.path)) {
-				next();
-				return;
-			}
-			next('/login');
-		} else {
-			if (to.path == '/login') {
-				next({
-					path: '/Home'
-				});
-				return;
-			}
-			// if (menus && load == 0) {
-			if (load == 0) {
-				load++;
-				console.log("kkkk")
-				// dealWithRoute(menus);
-				next({
-					...to,
-					replace: true
-				});
-				return;
-			}
-			console.log("走了",load)
-			next();
-		}
-	});
+  let load = 0;
+  router.beforeEach(async (to, from, next) => {
+    const { token } = useUserStore();
+    const whiteList = ['/login'];
+    if (!token) {
+      if (whiteList.includes(to.path)) {
+        next();
+        return;
+      }
+      next('/login');
+    } else {
+      if (to.path == '/login') {
+        next({
+          path: '/Home'
+        });
+        return;
+      }
+      // if (menus && load == 0) {
+      if (load == 0) {
+        load++;
+        console.log("kkkk")
+        // dealWithRoute(menus);
+        next({
+          ...to,
+          replace: true
+        });
+        return;
+      }
+      console.log("走了",load)
+      next();
+    }
+  });
 
 }
+// export async function setupPermissions(router) {
+//   router.beforeEach((to, from, next) => {
+//     next(); // 直接放行所有路由
+//   });
+// }
+

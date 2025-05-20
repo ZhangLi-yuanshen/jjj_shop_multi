@@ -20,9 +20,9 @@ import net.jjjshop.framework.shiro.util.SaltUtil;
 import net.jjjshop.framework.shiro.vo.LoginAdminUserVo;
 import net.jjjshop.framework.util.PasswordUtil;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.subject.Subject;
+//import org.apache.shiro.SecurityUtils;
+//import org.apache.shiro.authc.AuthenticationException;
+//import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -44,9 +44,9 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
     @Autowired
     private AdminUserMapper adminUserMapper;
 
-    @Lazy
-    @Autowired
-    private SpringBootJjjProperties springBootJjjProperties;
+//    @Lazy
+//    @Autowired
+//    private SpringBootJjjProperties springBootJjjProperties;
 
     @Lazy
     @Autowired
@@ -60,19 +60,25 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
     @Autowired
     private AdminLoginRedisService adminLoginRedisService;
 
+    //登录
     public LoginAdminUserTokenVo login(String username, String password){
+        //查询用户
         AdminUser adminUser = adminUserMapper.selectOne(new LambdaQueryWrapper<AdminUser>()
                 .eq(AdminUser::getUserName, username));
+
         if(adminUser == null){
-            throw new AuthenticationException("用户名或密码错误");
+            throw new RuntimeException("用户名或密码错误");
         }
-//        String encryptPassword = PasswordUtil.encrypt(password, adminUser.getSalt());
-//        if (!encryptPassword.equals(adminUser.getPassword())) {
-//            throw new AuthenticationException("用户名或密码错误");
-//        }
+        //密码验证
+        String encryptPassword = PasswordUtil.encrypt(password, adminUser.getSalt());
+        if (!encryptPassword.equals(adminUser.getPassword())) {
+            throw new RuntimeException("用户名或密码错误");
+        }
+
         // 将系统用户对象转换成登录用户对象
         LoginAdminUserVo loginAdminUserVo = new LoginAdminUserVo();
         BeanUtils.copyProperties(adminUser, loginAdminUserVo);
+
         // 获取数据库中保存的盐值
         String newSalt = SaltUtil.getSalt(adminUser.getSalt(), jwtProperties);
 
@@ -81,26 +87,34 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
         String token = JwtUtil.generateToken(username, newSalt, Duration.ofSeconds(expireSecond));
         log.debug("token:{}", token);
 
-        // 创建AuthenticationToken
-        JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
-
-        boolean enableShiro = springBootJjjProperties.getShiro().isEnable();
-        if (enableShiro) {
-            // 从SecurityUtils里边创建一个 subject
-            Subject subject = SecurityUtils.getSubject();
-            // 执行认证登录
-            subject.login(jwtToken);
-        } else {
-            log.warn("未启用Shiro");
-        }
+//        // 创建AuthenticationToken
+//        JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
+//
+//        boolean enableShiro = springBootJjjProperties.getShiro().isEnable();
+//        if (enableShiro) {
+//            // 从SecurityUtils里边创建一个 subject
+//            Subject subject = SecurityUtils.getSubject();
+//            // 执行认证登录
+//            subject.login(jwtToken);
+//        } else {
+//            log.warn("未启用Shiro");
+//        }
 
         // 缓存登录信息到Redis
-        adminLoginRedisService.cacheLoginInfo(jwtToken, loginAdminUserVo);
-        log.debug("登录成功,username:{}", username);
+//        adminLoginRedisService.cacheLoginInfo(jwtToken, loginAdminUserVo);
+//        log.debug("登录成功,username:{}", username);
 
         // 缓存登录信息到redis
         String tokenSha256 = DigestUtils.sha256Hex(token);
         redisTemplate.opsForValue().set(tokenSha256, loginAdminUserVo, 1, TimeUnit.DAYS);
+
+        // 7. 缓存用户信息到Redis
+        redisTemplate.opsForValue().set(
+                String.format(CommonRedisKey.ADMIN_LOGIN_USER, username),
+                loginAdminUserVo,
+                expireSecond,
+                TimeUnit.SECONDS
+        );
 
         // 返回token和登录用户信息对象
         LoginAdminUserTokenVo loginAdminUserTokenVo = new LoginAdminUserTokenVo();
@@ -115,20 +129,74 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
      * @return
      */
     public Boolean renew(String password){
-        AdminUser adminUser = adminUserMapper.selectOne(new LambdaQueryWrapper<AdminUser>());
+        // 从Redis中获取当前登录用户信息
+        String token = JwtTokenUtil.getToken("admin");
+        String username = JwtUtil.getUsername(token);
+        if (username == null) {
+            throw new IllegalArgumentException("用户未登录");
+        }
 
+        // 从Redis中获取用户信息
+        String tokenSha256 = DigestUtils.sha256Hex(token);
+        LoginAdminUserVo loginAdminUserVo = (LoginAdminUserVo) redisTemplate.opsForValue().get(tokenSha256);
+        if (loginAdminUserVo == null) {
+            throw new IllegalArgumentException("登录已过期，请重新登录");
+        }
+
+        //查询用户信息
+        AdminUser adminUser = adminUserMapper.selectOne(new LambdaQueryWrapper<AdminUser>()
+                .eq(AdminUser::getUserName, username));
+
+        if (adminUser == null) {
+            throw new IllegalArgumentException("用户不存在");
+        }
+
+        // 验证密码格式
+        if (password == null || password.length() < 8) {
+            throw new IllegalArgumentException("密码长度必须至少为8位");
+        }
+
+        // 验证密码是否包含数字、大小写字母和特殊符号
+        boolean hasDigit = false;
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        boolean hasSpecial = false;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isDigit(c)) {
+                hasDigit = true;
+            } else if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            } else if (Character.isLowerCase(c)) {
+                hasLowerCase = true;
+            } else if (!Character.isLetterOrDigit(c)) {
+                hasSpecial = true;
+            }
+        }
+
+        if (!hasDigit || !hasUpperCase || !hasLowerCase || !hasSpecial) {
+            throw new IllegalArgumentException("密码必须包含数字、大小写字母和特殊符号");
+        }
+
+        // 验证新密码不能与旧密码相同
         String encryptPassword = PasswordUtil.encrypt(password, adminUser.getSalt());
+        if (encryptPassword.equals(adminUser.getPassword())) {
+            throw new IllegalArgumentException("新密码不能与旧密码相同");
+        }
+
+        //更新密码
         AdminUser updateBean = new AdminUser();
         updateBean.setAdminUserId(adminUser.getAdminUserId());
         updateBean.setPassword(encryptPassword);
         return this.updateById(updateBean);
-    }
 
+    }
+    //退出
     @Override
     public void logout(HttpServletRequest request) throws Exception {
-        Subject subject = SecurityUtils.getSubject();
-        //注销
-        subject.logout();
+//        Subject subject = SecurityUtils.getSubject();
+//        //注销
+//        subject.logout();
         // 获取token
         String token = JwtTokenUtil.getToken(request, "admin");
         String username = JwtUtil.getUsername(token);
