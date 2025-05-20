@@ -1,6 +1,8 @@
 # Compiled class file
 *.class
-
+.idea
+.yml
+.vscode
 # Log file
 *.log
 

@@ -6,7 +6,7 @@ import net.jjjshop.framework.shiro.vo.JwtTokenRedisVo;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-14T14:14:40+0800",
+    date = "2025-05-14T19:02:55+0800",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 1.8.0_452 (Amazon.com Inc.)"
 )
 public class ShiroMapstructConvertImpl implements ShiroMapstructConvert {

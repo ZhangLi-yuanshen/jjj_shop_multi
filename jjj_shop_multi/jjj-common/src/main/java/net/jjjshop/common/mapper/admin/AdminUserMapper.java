@@ -2,6 +2,8 @@ package net.jjjshop.common.mapper.admin;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import net.jjjshop.common.entity.admin.AdminUser;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AdminUserMapper extends BaseMapper<AdminUser> {
+    //登录
 
 }
