@@ -5,4 +5,4 @@
 .vscode/
 
 # 忽略其他个人配置文件
-application-dev.yml/
+/config/src/main/resources/config/
