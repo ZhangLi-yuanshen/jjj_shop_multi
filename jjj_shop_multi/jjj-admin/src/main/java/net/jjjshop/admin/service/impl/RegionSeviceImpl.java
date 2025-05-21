@@ -54,4 +54,66 @@ public class RegionSeviceImpl extends BaseServiceImpl<RegionMapper, Region> impl
         IPage<Region> iPage = regionMapper.selectPage(page, wrapper);
         return new Paging(iPage);
     }
+
+    @Override
+    public boolean add(RegionParam regionParam) {
+        Region region = new Region();
+        BeanUtils.copyProperties(regionParam, region);
+        region.setPid(getPid(regionParam));
+        return this.save(region);
+    }
+
+
+
+    private Integer getPid(RegionParam regionParam) {
+        if (regionParam.getLevel() == 1) {
+            return 0;
+        } else if (regionParam.getLevel() == 2) {
+            return regionParam.getProvinceId();
+        }else if (regionParam.getLevel() == 3){
+            return regionParam.getCityId();
+        }
+        return 0;
+    }
+
+    /*删除*/
+    @Override
+    public boolean delete(Integer id){
+        Region updateBean = new Region();
+        updateBean.setId(id);
+        updateBean.setIsDelete(true);
+        return this.updateById(updateBean);
+    }
+
+
+    /*修改*/
+    @Override
+    public boolean update(RegionParam regionParam){
+        Region region = new Region();
+        BeanUtils.copyProperties(regionParam, region);
+        region.setPid(getPid(regionParam));
+        return this.updateById(region);
+    }
+
+
+    /*编辑*/
+    @Override
+    public RegionVo getEditData(Integer id) {
+        Region region = this.getById(id);
+        RegionVo vo = new RegionVo();
+        BeanUtils.copyProperties(region, vo);
+        if(region.getLevel() == 1){
+            vo.setProvinceId("");
+            vo.setCityId("");
+        }
+        if(region.getLevel() == 2){
+            vo.setProvinceId(""+region.getPid());
+            vo.setCityId("");
+        }
+        if(region.getLevel() == 3){
+            vo.setProvinceId(""+this.getById(region.getPid()).getPid());
+            vo.setCityId(""+region.getPid());
+        }
+        return vo;
+    }
 }
