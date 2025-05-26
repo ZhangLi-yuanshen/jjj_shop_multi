@@ -24,7 +24,7 @@ public class FontUtils {
             return dynamicFontPt;
         } catch (Exception e){
             log.info("获取字体文件异常{}",e.getMessage());
-            return new java.awt.Font(null, Font.PLAIN, fontSize);
+            return new Font(null, Font.PLAIN, fontSize);
         }
     }
 }

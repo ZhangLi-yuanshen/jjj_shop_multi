@@ -24,7 +24,7 @@ import net.jjjshop.framework.core.pagination.PageInfo;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.framework.shiro.util.SaltUtil;
 import net.jjjshop.framework.util.PasswordUtil;
-import net.jjjshop.shop.service.user.UserGradeService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
