@@ -6,3 +6,6 @@
 
 # 忽略其他个人配置文件
 /config/src/main/resources/config/
+*.log
+/target/
+*.iml
