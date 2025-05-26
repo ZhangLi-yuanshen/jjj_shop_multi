@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.admin.param.AppPageParam;
 import net.jjjshop.admin.param.AppParam;
 import net.jjjshop.admin.service.AppService;
+import net.jjjshop.admin.service.impl.AppServiceImpl;
 import net.jjjshop.admin.vo.AppVo;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.core.pagination.Paging;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/admin/shop")
 public class ShopController {
     @Autowired
-    private AppService appService;
+    private AppServiceImpl appService;
 
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     @OperationLog(name = "index")
