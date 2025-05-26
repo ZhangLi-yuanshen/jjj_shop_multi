@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.admin.param.AppPageParam;
+import net.jjjshop.admin.param.AppParam;
 import net.jjjshop.admin.service.AppService;
 import net.jjjshop.admin.vo.AppVo;
 import net.jjjshop.framework.common.api.ApiResult;
@@ -30,5 +31,24 @@ public class ShopController {
     @ApiOperation(value = "index", response = String.class)
     public ApiResult<Paging<AppVo>> index(@Validated @RequestBody AppPageParam appPageParam) {
         return ApiResult.ok(appService.getList(appPageParam));
+    }
+
+    // 更新
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+    @OperationLog(name = "updateStatus")
+    @ApiOperation(value = "updateStatus", response = String.class)
+    public ApiResult<String> updateStatus(Integer appId) {
+        if(appService.editStatusById(appId)) {
+            return ApiResult.ok(null, "更新成功");
+        }else{
+            return ApiResult.fail("更新失败");
+        }
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @OperationLog(name = "add")
+    @ApiOperation(value = "add", response = String.class)
+    public ApiResult<String> add(@RequestBody @Validated AppParam appParam) {
+        return null;
     }
 }
