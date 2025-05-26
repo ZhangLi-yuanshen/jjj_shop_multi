@@ -13,19 +13,19 @@ import java.util.Map;
 @Component
 public class ProductFactory {
     private static String packageName = "net.jjjshop.common.factory.product.impl.%sProductFactoryService";
-//    @Autowired
-//    private Map<String, ProductFactoryService> factory;
-//    /**
-//     * 获取service
-//     * @param orderSource
-//     * @return
-//     */
-//    public ProductFactoryService getFactory(Integer orderSource){
-//        String className = String.format(packageName, OrderSourceEnum.getEName(orderSource));
-//        ProductFactoryService service = factory.get(className);
-//        if(service == null){
-//            throw new BusinessException("参数异常，未找到商品工厂类");
-//        }
-//        return service;
-//    }
+    @Autowired
+    private Map<String, ProductFactoryService> factory;
+    /**
+     * 获取service
+     * @param orderSource
+     * @return
+     */
+    public ProductFactoryService getFactory(Integer orderSource){
+        String className = String.format(packageName, OrderSourceEnum.getEName(orderSource));
+        ProductFactoryService service = factory.get(className);
+        if(service == null){
+            throw new BusinessException("参数异常，未找到商品工厂类");
+        }
+        return service;
+    }
 }
