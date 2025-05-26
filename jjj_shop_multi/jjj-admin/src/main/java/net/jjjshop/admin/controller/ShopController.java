@@ -45,10 +45,36 @@ public class ShopController {
         }
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @OperationLog(name = "delete")
+    @ApiOperation(value = "delete", response = String.class)
+    public ApiResult<String> delete(Integer appId) {
+        if(appService.setDelete(appId)) {
+            return ApiResult.ok(null, "删除成功");
+        }else{
+            return ApiResult.fail("删除失败");
+        }
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @OperationLog(name = "add")
     @ApiOperation(value = "add", response = String.class)
     public ApiResult<String> add(@RequestBody @Validated AppParam appParam) {
-        return null;
+        if(appService.add(appParam)) {
+            return ApiResult.ok(null, "新增成功");
+        }else{
+            return ApiResult.fail("新增失败");
+        }
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @OperationLog(name = "edit")
+    @ApiOperation(value = "edit", response = String.class)
+    public ApiResult<String> edit(@RequestBody @Validated AppParam appParam) {
+        if(appService.edit(appParam)) {
+            return ApiResult.ok(null, "修改成功");
+        }else{
+            return ApiResult.fail("修改失败");
+        }
     }
 }
