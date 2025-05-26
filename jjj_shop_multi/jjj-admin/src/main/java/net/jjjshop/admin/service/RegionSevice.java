@@ -13,4 +13,18 @@ public interface RegionSevice extends BaseService<Region> {
 
     /*地区列表*/
     Paging<Region> getList(RegionPageParam regionPageParam);
+
+    /*新增*/
+    boolean add(RegionParam regionParam);
+
+    /*删除*/
+    boolean delete(Integer id);
+
+
+    /*修改*/
+    boolean update(RegionParam regionParam);
+
+
+    /*编辑*/
+    RegionVo getEditData(Integer id);
 }

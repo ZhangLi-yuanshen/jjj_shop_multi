@@ -36,6 +36,8 @@ public class RegionController {
         System.out.println(regionCache.getCache());
         return null;
     }
+
+    /*地区列表*/
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     @OperationLog(name = "index")
     @ApiOperation(value = "index", response = String.class)
@@ -46,4 +48,57 @@ public class RegionController {
         return ApiResult.ok(map);
     }
 
+    /*增加功能*/
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @OperationLog(name = "add")
+    @ApiOperation(value = "add", response = String.class)
+    public ApiResult<String> add(@Validated @RequestBody RegionParam regionParam) {
+        if (regionService.add(regionParam)) {
+            return ApiResult.ok(null,"新增成功");
+        }else {
+            return ApiResult.fail("新增失败");
+        }
+    }
+    /*这个接口是打开添加页面时，把已有的地区层级数据喂给前端，方便选择新地区的上级是谁*/
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @OperationLog(name = "add")
+    @ApiOperation(value = "add", response = String.class)
+    public ApiResult<List<RegionVo>> toAdd() {
+        return ApiResult.ok(regionCache.getCacheTree());
+    }
+
+    /*删除功能*/
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @OperationLog(name = "delete")
+    @ApiOperation(value = "delete",response = String.class)
+    public ApiResult<String> delete(Integer id){
+        if(regionService.delete(id)){
+            return ApiResult.ok(null,"删除成功");
+        } else {
+            return ApiResult.fail("删除失败");
+        }
+    }
+
+    /*修改功能*/
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @OperationLog(name = "edit")
+    @ApiOperation(value = "edit", response = String.class)
+    public ApiResult<String> edit(@RequestBody @Validated RegionParam regionParam) {
+        if(regionService.update(regionParam)) {
+            return ApiResult.ok(null, "修改成功");
+        }else{
+            return ApiResult.fail("修改失败");
+        }
+    }
+
+    /*编辑功能*/
+    @RequestMapping(value = "/edit",method = RequestMethod.GET)
+    @OperationLog(name = "edit")
+    @ApiOperation(value = "edit",response = String.class)
+    public ApiResult<Map<String,Object>> toEdit(Integer id){
+        Map<String,Object> map = new HashMap<>();
+        map.put("model", regionService.getEditData(id));
+        map.put("regionData", regionCache.getCacheTree());
+        return ApiResult.ok(map,"编辑成功");
+    }
 }
