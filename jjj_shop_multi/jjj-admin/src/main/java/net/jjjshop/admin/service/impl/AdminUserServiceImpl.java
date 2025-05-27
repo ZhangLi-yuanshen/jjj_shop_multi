@@ -72,10 +72,10 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
             throw new RuntimeException("用户名或密码错误");
         }
         //密码验证
-//        String encryptPassword = PasswordUtil.encrypt(password, adminUser.getSalt());
-//        if (!encryptPassword.equals(adminUser.getPassword())) {
-//            throw new RuntimeException("用户名或密码错误");
-//        }
+        String encryptPassword = PasswordUtil.encrypt(password, adminUser.getSalt());
+        if (!encryptPassword.equals(adminUser.getPassword())) {
+            throw new RuntimeException("用户名或密码错误");
+        }
 
         // 将系统用户对象转换成登录用户对象
         LoginAdminUserVo loginAdminUserVo = new LoginAdminUserVo();
@@ -109,6 +109,9 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
         // 缓存登录信息到redis
         String tokenSha256 = DigestUtils.sha256Hex(token);
         redisTemplate.opsForValue().set(tokenSha256, loginAdminUserVo, 1, TimeUnit.DAYS);
+        // 登录方法中统一使用MD5
+        //String tokenKey = DigestUtils.md5Hex(token);
+        //redisTemplate.opsForValue().set(tokenKey, loginAdminUserVo, expireSecond, TimeUnit.SECONDS);
 
         // 7. 缓存用户信息到Redis
         redisTemplate.opsForValue().set(
@@ -132,6 +135,7 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
      */
     public Boolean renew(String password){
         // 从Redis中获取当前登录用户信息
+        //String token = JwtTokenUtil.getToken(request, "admin");
         String token = JwtTokenUtil.getToken("admin");
         String username = JwtUtil.getUsername(token);
         if (username == null) {
