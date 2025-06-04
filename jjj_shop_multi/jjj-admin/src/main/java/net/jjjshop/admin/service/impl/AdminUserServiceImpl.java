@@ -23,6 +23,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 //import org.apache.shiro.SecurityUtils;
 //import org.apache.shiro.authc.AuthenticationException;
 //import org.apache.shiro.subject.Subject;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -44,9 +46,9 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
     @Autowired
     private AdminUserMapper adminUserMapper;
 
-//    @Lazy
-//    @Autowired
-//    private SpringBootJjjProperties springBootJjjProperties;
+    @Lazy
+    @Autowired
+    private SpringBootJjjProperties springBootJjjProperties;
 
     @Lazy
     @Autowired
@@ -87,26 +89,29 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
         String token = JwtUtil.generateToken(username, newSalt, Duration.ofSeconds(expireSecond));
         log.debug("token:{}", token);
 
-//        // 创建AuthenticationToken
-//        JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
-//
-//        boolean enableShiro = springBootJjjProperties.getShiro().isEnable();
-//        if (enableShiro) {
-//            // 从SecurityUtils里边创建一个 subject
-//            Subject subject = SecurityUtils.getSubject();
-//            // 执行认证登录
-//            subject.login(jwtToken);
-//        } else {
-//            log.warn("未启用Shiro");
-//        }
+        // 创建AuthenticationToken
+        JwtToken jwtToken = JwtToken.build(token, username, newSalt, expireSecond);
 
-        // 缓存登录信息到Redis
-//        adminLoginRedisService.cacheLoginInfo(jwtToken, loginAdminUserVo);
-//        log.debug("登录成功,username:{}", username);
+        boolean enableShiro = springBootJjjProperties.getShiro().isEnable();
+        if (enableShiro) {
+            // 从SecurityUtils里边创建一个 subject
+            Subject subject = SecurityUtils.getSubject();
+            // 执行认证登录
+            subject.login(jwtToken);
+        } else {
+            log.warn("未启用Shiro");
+        }
+
+         //缓存登录信息到Redis
+        adminLoginRedisService.cacheLoginInfo(jwtToken, loginAdminUserVo);
+        log.debug("登录成功,username:{}", username);
 
         // 缓存登录信息到redis
         String tokenSha256 = DigestUtils.sha256Hex(token);
         redisTemplate.opsForValue().set(tokenSha256, loginAdminUserVo, 1, TimeUnit.DAYS);
+        // 登录方法中统一使用MD5
+        //String tokenKey = DigestUtils.md5Hex(token);
+        //redisTemplate.opsForValue().set(tokenKey, loginAdminUserVo, expireSecond, TimeUnit.SECONDS);
 
         // 7. 缓存用户信息到Redis
         redisTemplate.opsForValue().set(
@@ -130,6 +135,7 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserMapper, Admin
      */
     public Boolean renew(String password){
         // 从Redis中获取当前登录用户信息
+        //String token = JwtTokenUtil.getToken(request, "admin");
         String token = JwtTokenUtil.getToken("admin");
         String username = JwtUtil.getUsername(token);
         if (username == null) {

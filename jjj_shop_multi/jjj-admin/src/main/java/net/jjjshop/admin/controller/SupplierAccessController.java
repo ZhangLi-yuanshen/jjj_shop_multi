@@ -31,6 +31,7 @@ public class SupplierAccessController {
         System.out.println(supplierAccessUtils.getAll());
         return null;
     }
+    //页面
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     @OperationLog(name = "index")
     @ApiOperation(value = "index", response = String.class)
@@ -38,7 +39,7 @@ public class SupplierAccessController {
         List<SupplierAccessVo> list = supplierAccessUtils.getAll();
         return ApiResult.ok(list);
     }
-
+    //状态
     @RequestMapping(value = "/status", method = RequestMethod.POST)
     @OperationLog(name = "status")
     @ApiOperation(value = "status", response = String.class)
@@ -46,7 +47,7 @@ public class SupplierAccessController {
         Boolean result = supplierAccessService.editStatusById(id, status);
         return ApiResult.ok(result);
     }
-
+    //删除
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @OperationLog(name = "delete")
     @ApiOperation(value = "delete", response = String.class)
@@ -57,7 +58,7 @@ public class SupplierAccessController {
             return ApiResult.fail("删除失败");
         }
     }
-
+    //新增
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @OperationLog(name = "add")
     @ApiOperation(value = "add", response = String.class)
@@ -68,7 +69,7 @@ public class SupplierAccessController {
             return ApiResult.fail("新增失败");
         }
     }
-
+    //修改
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     @OperationLog(name = "edit")
     @ApiOperation(value = "edit", response = String.class)

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import net.jjjshop.common.util.ShopAccessUtils;
+//import net.jjjshop.common.util.ShopAccessUtils;
 
 import java.util.List;
 
@@ -27,13 +27,14 @@ public class AccessController {
     @Autowired
     private ShopAccessService shopAccessService;
     @Autowired
-    private ShopAccessUtils shopAccessUtils;
+//    private ShopAccessUtils shopAccessUtils;
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     @OperationLog(name = "index")
     @ApiOperation(value = "index", response = String.class)
     public ApiResult<List<ShopAccessVo>> index() {
-        List<ShopAccessVo> list = shopAccessUtils.getAll();
-        return ApiResult.ok(list);
+//        List<ShopAccessVo> list = shopAccessUtils.getAll();
+//        return ApiResult.ok(list);
+        return null;
     }
 
     @RequestMapping(value = "/status", method = RequestMethod.POST)

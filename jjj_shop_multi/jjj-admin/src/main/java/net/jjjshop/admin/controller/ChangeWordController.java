@@ -41,12 +41,17 @@ public class ChangeWordController {
             boolean result = adminUserService.renew(pass);
             if (result) {
                 // 先返回成功状态码，让前端显示成功提示
-                ApiResult<String> successResult = ApiResult.ok("密码修改成功，请重新登录");
-                // 密码修改成功后，调用退出登录
-                adminUserService.logout(request);
+                ApiResult<String> successResult = ApiResult.ok(null,"密码修改成功，请重新登录");
                 // 修改状态码为未登录
                 successResult.setCode(ApiCode.NOT_LOGIN.getCode());
+                // 密码修改成功后，调用退出登录
+                adminUserService.logout(request);
                 return successResult;
+
+                // 先调用退出登录，清除Redis中的token
+                //adminUserService.logout(request);
+                // 返回未登录状态码，让前端立即跳转到登录页面
+                //return ApiResult.fail(ApiCode.NOT_LOGIN.getCode(), "密码修改成功，请重新登录");
             } else {
                 return ApiResult.fail("密码修改失败");
             }

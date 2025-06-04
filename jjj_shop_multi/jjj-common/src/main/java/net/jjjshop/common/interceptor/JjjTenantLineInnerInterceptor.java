@@ -391,10 +391,10 @@ public class JjjTenantLineInnerInterceptor extends JsqlParserSupport implements 
     public boolean equals(final Object o) {
         if (o == this) {
             return true;
-        } else if (!(o instanceof net.jjjshop.common.interceptor.JjjTenantLineInnerInterceptor)) {
+        } else if (!(o instanceof JjjTenantLineInnerInterceptor)) {
             return false;
         } else {
-            net.jjjshop.common.interceptor.JjjTenantLineInnerInterceptor other = (net.jjjshop.common.interceptor.JjjTenantLineInnerInterceptor)o;
+            JjjTenantLineInnerInterceptor other = (JjjTenantLineInnerInterceptor)o;
             if (!other.canEqual(this)) {
                 return false;
             } else if (!super.equals(o)) {
@@ -416,7 +416,7 @@ public class JjjTenantLineInnerInterceptor extends JsqlParserSupport implements 
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof net.jjjshop.common.interceptor.JjjTenantLineInnerInterceptor;
+        return other instanceof JjjTenantLineInnerInterceptor;
     }
 
     public int hashCode() {
