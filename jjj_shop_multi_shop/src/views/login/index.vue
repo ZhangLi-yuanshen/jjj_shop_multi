@@ -55,6 +55,8 @@ export default {
       loading: true,
       /*背景图片*/
       bgimg_url: "",
+      /*商城名称*/
+      shop_name: "",
       /*是否正在提交*/
       logining: false,
       /*表单对象*/
