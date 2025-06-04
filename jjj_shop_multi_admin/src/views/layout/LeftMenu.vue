@@ -75,19 +75,19 @@ export default defineComponent({
       active_child: 0,
       /*菜单数据*/
       menuList: [
-        {
-          name: "插件",
-          icon: "icon-chajian1",
-          path: "/plus",
-          redirect: "/plus/Index",
-          children: [
-            {
-              name: "全部插件",
-              icon: null,
-              path: "/plus/Index",
-            },
-          ],
-        },
+        // {
+        //   name: "插件",
+        //   icon: "icon-chajian1",
+        //   path: "/plus",
+        //   redirect: "/plus/Index",
+        //   children: [
+        //     {
+        //       name: "全部插件",
+        //       icon: null,
+        //       path: "/plus/Index",
+        //     },
+        //   ],
+        // },
         {
           name: "后台权限",
           icon: "icon-authority",
