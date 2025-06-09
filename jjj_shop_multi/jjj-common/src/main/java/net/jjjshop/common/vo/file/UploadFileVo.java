@@ -1,4 +1,4 @@
-package net.jjjshop.shop.vo.file;
+package net.jjjshop.common.vo.file;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

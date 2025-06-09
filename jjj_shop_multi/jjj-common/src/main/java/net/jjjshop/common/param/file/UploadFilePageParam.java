@@ -1,6 +1,6 @@
 
 
-package net.jjjshop.shop.param.file;
+package net.jjjshop.common.param.file;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
