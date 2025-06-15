@@ -34,6 +34,7 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * 所有文件分组
      * @return
      */
+    @Override
     public List<UploadGroup> getAll(String groupType){
         return this.list(new LambdaQueryWrapper<UploadGroup>().eq(UploadGroup::getGroupType, groupType)
                 .eq(UploadGroup::getShopSupplierId, 0)
@@ -47,11 +48,32 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @param groupType
      * @return
      */
+    @Override
     public boolean addGroup(String groupName, String groupType){
         UploadGroup group = new UploadGroup();
         group.setGroupName(groupName);
         group.setGroupType(groupType);
         return this.save(group);
+    }
+
+    @Override
+    public boolean deleteById(Integer groupId) {
+        UploadGroup group = this.getById(groupId);
+        if(group == null){
+            throw new BusinessException("分组不存在");
+        }
+        // 更新该分组下的所有文件
+        uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().eq(UploadFile::getGroupId, groupId)
+                .set(UploadFile::getGroupId, 0));
+        // 删除分组
+        this.update(new LambdaUpdateWrapper<UploadGroup>().eq(UploadGroup::getGroupId, groupId)
+                .set(UploadGroup::getIsDelete, 1));
+        return true;
+    }
+
+    @Override
+    public boolean editGroup(String groupId, String groupName) {
+        return false;
     }
 
     /**
@@ -60,6 +82,7 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @param groupName
      * @return
      */
+    @Override
     public boolean editGroup(Integer groupId, String groupName){
         UploadGroup group = this.getById(groupId);
         if(group == null){
@@ -74,6 +97,7 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
      * @param groupId
      * @return
      */
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteGroup(Integer groupId){
         UploadGroup group = this.getById(groupId);
@@ -106,6 +130,5 @@ public class UploadGroupServiceImpl extends BaseServiceImpl<UploadGroupMapper, U
         return uploadFileService.update(new LambdaUpdateWrapper<UploadFile>().in(UploadFile::getFileId, this.transFileIds(fileIds))
                 .set(UploadFile::getIsDelete, 1));
     }
-
 
 }

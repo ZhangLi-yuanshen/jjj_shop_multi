@@ -1,4 +1,4 @@
-package net.jjjshop.shop.controller.statistics;
+package net.jjjshop.shop.controller.setting.statistics;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.admin.param.ShopAccessParam;
 import net.jjjshop.admin.service.ShopAccessService;
+import net.jjjshop.common.util.ShopAccessUtils;
 import net.jjjshop.common.vo.shop.ShopAccessVo;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
@@ -27,14 +28,13 @@ public class AccessController {
     @Autowired
     private ShopAccessService shopAccessService;
     @Autowired
-//    private ShopAccessUtils shopAccessUtils;
+    private ShopAccessUtils shopAccessUtils;
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     @OperationLog(name = "index")
     @ApiOperation(value = "index", response = String.class)
     public ApiResult<List<ShopAccessVo>> index() {
-//        List<ShopAccessVo> list = shopAccessUtils.getAll();
-//        return ApiResult.ok(list);
-        return null;
+        List<ShopAccessVo> list = shopAccessUtils.getAll();
+        return ApiResult.ok(list);
     }
 
     @RequestMapping(value = "/status", method = RequestMethod.POST)
