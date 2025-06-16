@@ -1,6 +1,6 @@
 # 忽略IDE配置文件
 .idea/
-
+config/src/main/resources/config/
 # 忽略编译器配置文件
 .vscode/
 
@@ -9,3 +9,4 @@
 *.log
 /target/
 *.iml
+
