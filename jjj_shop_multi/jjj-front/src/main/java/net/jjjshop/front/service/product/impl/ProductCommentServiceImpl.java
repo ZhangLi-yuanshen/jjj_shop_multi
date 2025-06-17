@@ -2,6 +2,7 @@ package net.jjjshop.front.service.product.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
@@ -131,6 +132,7 @@ public class ProductCommentServiceImpl extends BaseServiceImpl<ProductCommentMap
         });
         return true;
     }
+
 
     /**
      * 保存商品评论图片

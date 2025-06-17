@@ -12,7 +12,10 @@ import net.jjjshop.shop.service.order.OrderService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +33,7 @@ public class OrderOperateController {
     @RequiresPermissions("/order/operate/export")
     @OperationLog(name = "export")
     @ApiOperation(value = "export", response = String.class)
-    public ApiResult<String> export( @RequestParam String dataType, @RequestParam String tokenshop, HttpServletResponse httpServletResponse) throws Exception{
+    public ApiResult<String> export(String dataType, HttpServletResponse httpServletResponse) throws Exception{
         OrderPageParam orderPageParam = new OrderPageParam();
         orderPageParam.setDataType(dataType);
         orderService.exportList(orderPageParam, httpServletResponse);

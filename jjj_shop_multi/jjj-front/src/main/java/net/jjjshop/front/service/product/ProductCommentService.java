@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * 订单评价记录表 服务类
  * @author jjjshop
- * @since 2025-06-12
+ * @since 2022-06-28
  */
 public interface ProductCommentService extends BaseService<ProductComment> {
 

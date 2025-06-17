@@ -7,7 +7,7 @@ import net.jjjshop.framework.common.service.BaseService;
  * 外部交易号跟内部订单对应关系表 服务类
  *
  * @author jjjshop
- * @since 2025-06-11
+ * @since 2022-11-03
  */
 public interface OrderTradeService extends BaseService<OrderTrade> {
 

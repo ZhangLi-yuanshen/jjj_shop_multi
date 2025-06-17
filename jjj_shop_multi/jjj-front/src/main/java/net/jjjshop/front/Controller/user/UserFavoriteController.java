@@ -1,5 +1,6 @@
 package net.jjjshop.front.Controller.user;
 
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +8,7 @@ import net.jjjshop.common.entity.user.User;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.framework.log.annotation.OperationLog;
-import net.jjjshop.front.Controller.index.BaseController;
+import net.jjjshop.front.Controller.BaseController;
 import net.jjjshop.front.param.user.UserFavoritePageParam;
 import net.jjjshop.front.param.user.UserFavoriteParam;
 import net.jjjshop.front.service.user.UserFavoriteService;
