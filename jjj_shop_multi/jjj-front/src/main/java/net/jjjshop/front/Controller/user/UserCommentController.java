@@ -30,7 +30,7 @@ public class UserCommentController extends BaseController {
     @OperationLog(name = "toOrder")
     @ApiOperation(value = "toOrder", response = String.class)
     public ApiResult<List<OrderCommentVo>> toOrder(Integer orderId) {
-        return ApiResult.ok(productCommentService.toOder(this.getUser(true), orderId));
+        return ApiResult.ok(productCommentService.toOrder(this.getUser(true), orderId));
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)

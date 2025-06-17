@@ -38,7 +38,7 @@ public interface ProductCommentService extends BaseService<ProductComment> {
      * @param orderId
      * @return
      */
-    List<OrderCommentVo> toOder(User user, Integer orderId);
+    List<OrderCommentVo> toOrder(User user, Integer orderId);
 
     /**
      * 查询商品评论数量
