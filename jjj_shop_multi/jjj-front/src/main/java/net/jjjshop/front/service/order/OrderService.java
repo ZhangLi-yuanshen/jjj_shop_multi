@@ -50,12 +50,12 @@ public interface OrderService extends BaseService<Order> {
      */
     Map<String, Object> orderPay(OrderPayParam orderPayParam, User user);
 
-//    /**
-//     * 我的订单
-//     * @param orderPageParam
-//     * @return
-//     */
-//    Paging<OrderListVo> getList(OrderPageParam orderPageParam);
+    /**
+     * 我的订单
+     * @param orderPageParam
+     * @return
+     */
+    Paging<OrderListVo> getList(OrderPageParam orderPageParam);
 
     /**
      * 用户取消订单
@@ -88,27 +88,27 @@ public interface OrderService extends BaseService<Order> {
      */
     Boolean receipt(Integer orderId);
 
-//    /**
-//     * 根据类型查询订单数量
-//     * @param userId
-//     * @param type
-//     * @return
-//     */
-//    Integer getCount(Integer userId, String type);
+    /**
+     * 根据类型查询订单数量
+     * @param userId
+     * @param type
+     * @return
+     */
+    Integer getCount(Integer userId, String type);
 
-//    /**
-//     * 通过订单编号获取订单详情
-//     * @param orderNo
-//     * @return
-//     */
-//    OrderDetailVo detailByNo(String orderNo);
+    /**
+     * 通过订单编号获取订单详情
+     * @param orderNo
+     * @return
+     */
+    OrderDetailVo detailByNo(String orderNo);
 
-//    /**
-//     * 通过订单Id获取订单详情
-//     * @param orderId
-//     * @return
-//     */
-//    OrderDetailVo detail(Integer orderId);
+    /**
+     * 通过订单Id获取订单详情
+     * @param orderId
+     * @return
+     */
+    OrderDetailVo detail(Integer orderId);
 
     /**
      * 订单核销
@@ -118,13 +118,13 @@ public interface OrderService extends BaseService<Order> {
      */
     Boolean verificationOrder(Integer orderId,Integer extractClerkId);
 
-//    /**
-//     * 累计成交笔数
-//     */
-//    Integer getTotalPayOrder(Integer shopSupplierId);
+    /**
+     * 累计成交笔数
+     */
+    Integer getTotalPayOrder(Integer shopSupplierId);
 
-//    /**
-//     * 累计当天成交数
-//     */
-//    Integer getTodayPayOrder(Integer shopSupplierId);
+    /**
+     * 累计当天成交数
+     */
+    Integer getTodayPayOrder(Integer shopSupplierId);
 }
