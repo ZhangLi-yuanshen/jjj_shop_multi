@@ -3,6 +3,7 @@ package net.jjjshop.shop.service.user.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -61,52 +62,82 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
      * @return
      */
     public Paging<UserVo> getList(UserPageParam userPageParam) {
-        // 用户列表
         Page<User> page = new PageInfo<>(userPageParam);
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getIsDelete, 0);
-        if(StringUtils.isNotEmpty(userPageParam.getSearch())){
+
+        // 搜索条件
+        if (StringUtils.isNotEmpty(userPageParam.getSearch())) {
             wrapper.like(User::getNickname, userPageParam.getSearch());
         }
-        if(StringUtils.isNotEmpty(userPageParam.getNickname())){
-            wrapper.and(i->i.or().like(User::getNickname, userPageParam.getNickname())
+
+        // 昵称/手机号搜索
+        if (StringUtils.isNotEmpty(userPageParam.getNickname())) {
+            wrapper.and(i -> i.or().like(User::getNickname, userPageParam.getNickname())
                     .or().like(User::getMobile, userPageParam.getNickname()));
         }
-        if(userPageParam.getGradeId() != null && userPageParam.getGradeId() != 0){
+
+        // 等级筛选
+        if (userPageParam.getGradeId() != null && userPageParam.getGradeId() != 0) {
             wrapper.eq(User::getGradeId, userPageParam.getGradeId());
         }
-        if(userPageParam.getSex() != null && userPageParam.getSex() != -1){
-            wrapper.eq(User::getGender,userPageParam.getSex());
+
+        // 性别筛选
+        if (userPageParam.getSex() != null && userPageParam.getSex() != -1) {
+            wrapper.eq(User::getGender, userPageParam.getSex());
         }
-        if(userPageParam.getStartDate() != null){
-            wrapper.ge(User::getCreateTime,  DateUtil.format(userPageParam.getStartDate(), "yyyy-MM-dd 00:00:00"));
+
+        // 日期范围筛选
+        if (userPageParam.getStartDate() != null) {
+            String start = DateUtil.format(userPageParam.getStartDate(), "yyyy-MM-dd 00:00:00");
+            wrapper.ge(User::getCreateTime, start);
+
+            String end = userPageParam.getEndDate() != null
+                    ? DateUtil.format(userPageParam.getEndDate(), "yyyy-MM-dd 23:59:59")
+                    : DateUtil.format(userPageParam.getStartDate(), "yyyy-MM-dd 23:59:59");
+
+            wrapper.le(User::getCreateTime, end);
         }
-        if(userPageParam.getEndDate() != null){
-            wrapper.le(User::getCreateTime,DateUtil.format(userPageParam.getEndDate(), "yyyy-MM-dd 23:59:59"));
-        }else if(userPageParam.getStartDate() != null){
-            wrapper.le(User::getCreateTime,  DateUtil.format(userPageParam.getStartDate(), "yyyy-MM-dd 23:59:59"));
-        }
-        if(userPageParam.getTagId() != null && userPageParam.getTagId() != 0){
-            List<Integer> list = userTagService.list(new LambdaQueryWrapper<UserTag>().eq(UserTag::getTagId, userPageParam.getTagId()).groupBy(UserTag::getUserId)).stream().map(e -> {
-                return e.getUserId();
-            }).collect(Collectors.toList());
-            if(CollectionUtils.isNotEmpty(list)){
-                wrapper.in(User::getUserId, list);
-            }else {
-                wrapper.eq(User::getUserId, -1);
+
+        // 标签筛选 - 修复类型转换问题
+        if (userPageParam.getTagId() != null && userPageParam.getTagId() != 0) {
+            // 使用Long类型接收user_id
+            List<Long> userIds = userTagService.listObjs(
+                    new QueryWrapper<UserTag>()
+                            .select("DISTINCT user_id")
+                            .eq("tag_id", userPageParam.getTagId()),
+                    o -> (Long) o  // 改为Long类型转换
+            );
+
+            if (CollectionUtils.isNotEmpty(userIds)) {
+                wrapper.in(User::getUserId, userIds);
+            } else {
+                wrapper.eq(User::getUserId, -1L); // 使用Long类型的-1
             }
         }
+
         wrapper.orderByDesc(User::getCreateTime);
         IPage<User> iPage = this.page(page, wrapper);
-        // 最终返回分页对象
+
+        // 转换VO并设置等级名称
         IPage<UserVo> resultPage = iPage.convert(item -> {
             UserVo vo = new UserVo();
             BeanUtil.copyProperties(item, vo);
-            vo.setGradeName(userGradeService.getById(vo.getGradeId()).getName());
+
+            // 获取等级名称 - 添加空检查
+            if (vo.getGradeId() != null) {
+                UserGrade grade = userGradeService.getById(vo.getGradeId());
+                if (grade != null) {
+                    vo.setGradeName(grade.getName());
+                } else {
+                    vo.setGradeName("未知等级");
+                }
+            }
+
             return vo;
         });
-        return new Paging(resultPage);
 
+        return new Paging(resultPage);
     }
 
     /**
