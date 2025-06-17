@@ -39,17 +39,16 @@ public class BaseController {
             }
             return null;
         }
-//        User user = userService.getById(vo.getUserId());
-//        if(user == null && isForce){
-//            throw new BusinessException(-1, "未找到用户信息");
-//        }
+        User user = userService.getById(vo.getUserId());
+        if(user == null && isForce){
+            throw new BusinessException(-1, "未找到用户信息");
+        }
         // 用户存在
-//        if(user != null){
-////            if(user.getIsDelete() == 1){
-////                throw new BusinessException(-2, "账号已禁用");
-////            }
-////        }
-////        return user;
-        return null;
+        if(user != null){
+            if(user.getIsDelete() == 1){
+                throw new BusinessException(-2, "账号已禁用");
+            }
+        }
+        return user;
     }
 }

@@ -17,7 +17,6 @@ import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.log.annotation.OperationLog;
-import net.jjjshop.front.Controller.BaseController;
 import net.jjjshop.front.service.order.OrderService;
 import net.jjjshop.front.service.page.CenterMenuService;
 import net.jjjshop.front.vo.supplier.SupplierUserVo;

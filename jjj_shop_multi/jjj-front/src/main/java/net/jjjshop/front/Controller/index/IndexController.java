@@ -1,4 +1,4 @@
-package net.jjjshop.front.Controller;
+package net.jjjshop.front.Controller.index;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
@@ -9,6 +9,7 @@ import net.jjjshop.common.enums.SettingEnum;
 import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
+import net.jjjshop.front.Controller.index.BaseController;
 import net.jjjshop.front.service.page.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

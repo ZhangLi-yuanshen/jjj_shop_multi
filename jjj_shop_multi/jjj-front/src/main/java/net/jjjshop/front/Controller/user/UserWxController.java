@@ -7,7 +7,6 @@ import net.jjjshop.common.entity.user.User;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.framework.shiro.util.JwtTokenUtil;
-import net.jjjshop.front.Controller.BaseController;
 import net.jjjshop.front.param.AppWxParam;
 import net.jjjshop.front.service.user.SmsService;
 import net.jjjshop.front.service.user.UserService;

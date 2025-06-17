@@ -1,4 +1,4 @@
-package net.jjjshop.front.Controller;
+package net.jjjshop.front.Controller.index;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -11,6 +11,7 @@ import net.jjjshop.common.service.settings.RegionService;
 import net.jjjshop.common.util.SettingUtils;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
+import net.jjjshop.front.Controller.index.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

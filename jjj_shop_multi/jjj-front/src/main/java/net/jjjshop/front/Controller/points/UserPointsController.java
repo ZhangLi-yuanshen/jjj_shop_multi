@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
-import net.jjjshop.front.Controller.BaseController;
+import net.jjjshop.front.Controller.index.BaseController;
 import net.jjjshop.front.param.points.UserPointsLogPageParam;
 import net.jjjshop.front.service.points.UserPointsLogService;
 import org.springframework.beans.factory.annotation.Autowired;

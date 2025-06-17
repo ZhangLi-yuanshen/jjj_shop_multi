@@ -6,7 +6,6 @@ import net.jjjshop.common.entity.supplier.SupplierUser;
 import net.jjjshop.common.entity.user.User;
 import net.jjjshop.common.service.supplier.SupplierUserService;
 import net.jjjshop.framework.common.exception.BusinessException;
-import net.jjjshop.front.Controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
