@@ -12,6 +12,7 @@ import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.common.exception.BusinessException;
 import net.jjjshop.framework.core.pagination.Paging;
 import net.jjjshop.framework.log.annotation.OperationLog;
+import net.jjjshop.front.Controller.index.BaseController;
 import net.jjjshop.front.param.product.ProductParam;
 import net.jjjshop.front.service.product.ProductService;
 import net.jjjshop.front.vo.product.ProductListVo;

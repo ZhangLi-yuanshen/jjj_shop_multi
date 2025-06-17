@@ -7,6 +7,7 @@ import net.jjjshop.common.entity.user.User;
 import net.jjjshop.framework.common.api.ApiResult;
 import net.jjjshop.framework.log.annotation.OperationLog;
 import net.jjjshop.framework.shiro.util.JwtTokenUtil;
+import net.jjjshop.front.Controller.index.BaseController;
 import net.jjjshop.front.param.user.PhoneRegisterParam;
 import net.jjjshop.front.service.user.UserService;
 import net.jjjshop.front.vo.user.LoginUserTokenVo;
