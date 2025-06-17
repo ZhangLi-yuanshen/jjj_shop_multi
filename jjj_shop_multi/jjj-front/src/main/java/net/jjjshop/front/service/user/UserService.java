@@ -9,13 +9,7 @@ import net.jjjshop.front.vo.user.LoginUserTokenVo;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * 用户记录表 服务类
- * @author jjjshop
- * @since 2022-07-01
- */
 public interface UserService extends BaseService<User> {
-
     /**
      * 手机号密码登录
      * @param mobile
@@ -91,4 +85,5 @@ public interface UserService extends BaseService<User> {
 
     //h5注册
     boolean phoneRegister(PhoneRegisterParam phoneRegisterParam);
+
 }

@@ -334,7 +334,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
             throw new BusinessException("手机号已存在");
         }
     }
-
     /**
      * 注册之后的操作
      */
