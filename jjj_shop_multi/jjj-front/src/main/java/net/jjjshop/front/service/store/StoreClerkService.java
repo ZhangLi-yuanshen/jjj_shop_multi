@@ -6,7 +6,7 @@ import net.jjjshop.framework.common.service.BaseService;
 /**
  * 商家门店店员表 服务类
  * @author jjjshop
- * @since 2025-06-12
+ * @since 2022-07-27
  */
 public interface StoreClerkService extends BaseService<StoreClerk> {
 

@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "store", tags = {"订单核销"})
 @RestController
 @RequestMapping("/front/supplier/product")
-public class SupplierProductController extends BaseController {
+public class SupplierProductController  extends BaseController {
     @Autowired
     private ProductService productService;
     @Autowired

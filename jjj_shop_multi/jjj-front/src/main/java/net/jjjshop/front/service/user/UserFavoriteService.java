@@ -7,6 +7,7 @@ import net.jjjshop.front.param.user.UserFavoritePageParam;
 import net.jjjshop.front.param.user.UserFavoriteParam;
 import net.jjjshop.front.vo.supplier.SupplierListVo;
 import net.jjjshop.front.vo.user.UserFavoriteVo;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 我的收藏 服务类

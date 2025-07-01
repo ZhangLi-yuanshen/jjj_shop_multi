@@ -2,13 +2,14 @@ package net.jjjshop.front.service.user;
 
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import net.jjjshop.common.entity.user.User;
+import net.jjjshop.framework.common.service.BaseService;
 import net.jjjshop.front.param.AppWxParam;
 import net.jjjshop.front.param.user.PhoneRegisterParam;
 import net.jjjshop.front.vo.user.LoginUserTokenVo;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface UserService {
+public interface UserService extends BaseService<User> {
     /**
      * 手机号密码登录
      * @param mobile
